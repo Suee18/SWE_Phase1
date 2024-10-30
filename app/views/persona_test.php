@@ -11,11 +11,11 @@
     <title>Persona Quiz</title>
     <link rel="stylesheet" href="../../public_html/css/persona_test.css">
     <link rel="stylesheet" href="../../public_html/css/global_styles.css">
-    <link rel="stylesheet" href="../../public_html/css/nav_bar.css">
+    <link rel="stylesheet" href="../../public_html/css/userNavbar.css">
 </head>
 
 <body>
-    <?php include '../../public_html/components/nav_bar.php'; ?>
+    <?php include '../../public_html/components/userNavbar.php'; ?>
 
     <div class="background-images">
         <img src="../../public_html/media/Persona_Test_Images/Test_images/background.jpg" alt="Background Image 1"

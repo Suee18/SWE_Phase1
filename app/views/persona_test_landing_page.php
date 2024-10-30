@@ -18,7 +18,7 @@
 
     <title>Car Recommendation App</title>
     <link rel="stylesheet" href="../../public_html/css/persona_test_landing_page.css">
-    <link rel="stylesheet" href="../../public_html/css/nav_bar.css">
+    <link rel="stylesheet" href="../../public_html/css/userNavbar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="../../public_html/js/persona_test_landing_page.js" defer></script>
@@ -26,7 +26,7 @@
 
 <body>
 
-    <?php include '../../public_html/components/nav_bar.php'; ?>
+    <?php include '../../public_html/components/userNavbar.php'; ?>
     <div class="landing-page">
         <div class="content">
             <h1>Discover Your Perfect Car Persona.</h1>

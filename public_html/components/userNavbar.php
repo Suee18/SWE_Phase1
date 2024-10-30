@@ -48,7 +48,7 @@
             </li>
 
             <li>
-                <img src="../../../public_html/media/persona-icon.png" alt="persona-icon" />
+                <img src="../../public_html/media/persona-icon.png" alt="persona-icon" />
                 <a href="#">Your Persona</a>
             </li>
             <li class="logout-link">

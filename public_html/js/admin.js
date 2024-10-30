@@ -2,7 +2,7 @@
 const radios = document.querySelectorAll('input[name="nav"]');
 const div0 = document.getElementById('div0');
 const div1 = document.getElementById('div1');
-const div2 = document.getElementById('div2');
+// const div2 = document.getElementById('div2');
 const div3 = document.getElementById('div3');
 const div4 = document.getElementById('div4');
 const div5 = document.getElementById('div5');
@@ -19,9 +19,9 @@ radios.forEach(radio => {
             case 'statistics':
                 showDiv(div1);
                 break;
-            case 'post':
-                showDiv(div2);
-                break;
+            // case 'post':
+            //     showDiv(div2);
+            //     break;
             case 'usersControl':
                 showDiv(div3);
                 break;
@@ -47,7 +47,7 @@ radios.forEach(radio => {
 function showDiv(divToShow) {
     div0.style.display = 'none';
     div1.style.display = 'none';
-    div2.style.display = 'none';
+    // div2.style.display = 'none';
     div3.style.display = 'none';
     div4.style.display = 'none';  
      div5.style.display = 'none';

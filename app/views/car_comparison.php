@@ -16,7 +16,7 @@
 
     <link rel="stylesheet" href="../../public_html/css/car_comparison.css">
     <link rel="stylesheet" href="../../public_html/css/global_styles.css">
-    <link rel="stylesheet" href="../../public_html/css/nav_bar.css">
+    <link rel="stylesheet" href="../../public_html/css/userNavbar.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    <?php include '../../public_html/components/nav_bar.php'; ?>
+    <?php include '../../public_html/components/userNavbar.php'; ?>
 
     <div id="comparing-cars-banner">
         <h1>Compare Cars Models</h1>

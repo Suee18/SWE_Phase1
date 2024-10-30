@@ -12,6 +12,11 @@ body {
     background-color: var(--blue_gray_dark);
 }
 
+.sidebar{
+    z-index: 100000;
+}
+
+
 /* Setting up the landing page layout */
 .landing-page,
 .third-section {
@@ -21,7 +26,9 @@ body {
     min-height: 100vh;
     padding: 50px;
     color: var(--white);
+    margin-left: 300px;
 }
+
 
 /* Content styling */
 .content {

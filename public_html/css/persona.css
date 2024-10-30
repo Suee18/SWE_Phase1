@@ -7,9 +7,10 @@ body {
     margin: 0;
 }
 
-.navbar {
-    top: 0;
+.sidebar{
+    z-index: 100000;
 }
+
 
 .content-container {
     display: flex;
@@ -44,6 +45,7 @@ body {
     display: flex;
     /* margin: 100px auto; */
     margin: 100px auto 100px;
+    margin-left: 300px;
     width: 90%;
     max-width: 1200px;
     background-color: #fff;

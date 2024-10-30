@@ -4,14 +4,11 @@ html,
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--white_blue_light);
+    background-color: var(--navy);
 }
 
-.navbar {
-    top: 0;
-    width: 100%;
-    position: fixed;
-    z-index: 10;
+.sidebar{
+    z-index: 100000;
 }
 
 #comparing-cars-banner {
@@ -20,7 +17,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 50vh;
-    margin-top: 100px;
+    margin-top: 0;
     color: var(--white);
     background: url("../../public_html/media/Car_Comparison_Page_Images/car-banner.jpg")
         no-repeat center center;

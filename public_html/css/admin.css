@@ -10,7 +10,7 @@
 }
 
 html {
-    background-image: url('../media/mostr_lp8\ -\ Copy.jpg');
+    background-image: url('../media/mostr_lp6LOW.jpg');
     /* background-image: url('../media/animationGIF1.gif');  */
     /* background-image: url('../media/animationGIF2.gif');  */
     /* background-image: url('../media/mostr_lp3\ -\ Copy.jpg'); GALAXY ELEMENT  */
@@ -89,7 +89,7 @@ html {
     align-items: center;
 
     border-radius: 0.6rem;
-    background: linear-gradient(160deg, #000000a2, #252525ad, #252525ad, #000000a2);
+    background: linear-gradient(160deg, #000000a2, #1f1f1f62, #1f1f1f62, #000000a2);
     /* background:linear-gradient(160deg, #000000d5, #050505b4,#050505b4, #000000d5); */
     backdrop-filter: blur(6px);
 
@@ -215,7 +215,7 @@ input:not(:disabled):hover, select:not(:disabled):hover, textarea:not(:disabled)
    flex-direction: column;
    justify-content: center;
 
-   background: linear-gradient(160deg, #000000a2, #21054ead, #21054ead, #000000a2);
+   background: linear-gradient(160deg, #000000a2, #0a0e47ad, #0a0e47ad, #000000a2);
    backdrop-filter: blur(1px);
    border-radius: 0.2rem;
 }
@@ -282,7 +282,7 @@ color: white;
   margin-left: 3rem;
 
     padding: 0rem 0rem 0rem 0rem;
-    background: linear-gradient(160deg, #000000a2, #21054ead, #21054ead, #000000a2);
+    background: linear-gradient(160deg, #000000a2, #0a0e47ad, #0a0e47ad, #000000a2);
     backdrop-filter: blur(1px);
     border-radius: 0.2rem;
     box-shadow: 9px 8px 5px rgba(14, 14, 14, 0.582);
@@ -431,11 +431,91 @@ margin-top: 0rem;
     background:linear-gradient(160deg, #770a0af6, #ff0000d0, #ff0000ad, #770a0af6);
 } 
 
-
-
-
-
 .input-error {
     border-bottom: 1px solid red;
     font-size: 2px;
 }
+/*===========Reviews table===============*/
+
+
+.table-container-adminReview {
+    position: relative;
+    overflow: auto;
+    max-height: 70vh;
+
+}
+
+.table-adminReview thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #555555;
+border-radius: 5rem;
+}
+
+.table-container-adminReview {
+    width: 80%;
+    margin-left: 8rem;
+    margin-top: 1rem;
+    border-collapse: collapse;
+
+
+}
+
+
+.table-adminReview {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-adminReview th,
+.table-adminReview td {
+    padding: 2rem;
+    text-align:left;
+    border-bottom: 1px solid #0082aa;
+}
+
+.table-adminReview th {
+    /* background-color: #f4f4f4; */
+background-color: #d3d3d336;
+    color: #040913;
+    font-weight: bold;
+}
+
+.table-adminReview tr:hover {
+    background: linear-gradient(160deg, #000000c5, #3a3a3a93, #3a3a3a93, #000000c5);
+}
+
+.delete-icon-adminReview {  cursor: pointer;
+    /* width: 2rem;
+    height: 100%;
+    color: red;
+    font-weight: bold;
+    text-align: center; */  
+
+}
+
+.delete-icon-adminReview:hover {      cursor: pointer;
+
+ color: darkred;
+text-shadow: 5px 5px 15px rgb(133, 15, 15);
+      /*  transform: scale(1.1);
+    transition: color 0.3s ease, transform 0.3s ease; */
+}
+
+/* 
+.fa-bounce {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+} */
