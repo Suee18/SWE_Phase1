@@ -1,213 +1,197 @@
-@import url('./global_styles.css');
-
+@import url("./global_styles.css");
 
 html,
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #020925;
-    color: #dad3d3;
-
+  font-family: Arial, sans-serif;
+  background-color: #020925;
+  color: #dad3d3;
 }
 /*===============================PART 1====================================*/
 
-.slideShowContainer_lp 
-{
-    position: relative;
-    width: 100%;
-    height: 100%;
-
+.slideShowContainer_lp {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .slide {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .slide-bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .text-overlay {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    padding: 0;
-    color: white;
-    background: linear-gradient(250deg, #031d35, #01031f8f, #615a5a48, #070707a4, #000103e1);
-    backdrop-filter: blur(2.5px);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 0;
+  color: white;
+  background: linear-gradient(
+    250deg,
+    #031d35,
+    #01031f8f,
+    #615a5a48,
+    #070707a4,
+    #000103e1
+  );
+  backdrop-filter: blur(2.5px);
 
-    /* background: linear-gradient(210deg, #1a334abd,#000000c2 );  */
-    /* background: linear-gradient(210deg, #1a334abd,#000000c2 );  */
+  /* background: linear-gradient(210deg, #1a334abd,#000000c2 );  */
+  /* background: linear-gradient(210deg, #1a334abd,#000000c2 );  */
 }
 
 /*slide1*/
 
 .slide1Title_lp {
-    font-family: var(--racing_font);
-    font-size: 4rem;
-    font-weight: 100;
-    margin-bottom: 0.5rem;
-    margin-top: 20rem;
-
+  font-family: var(--racing_font);
+  font-size: 4rem;
+  font-weight: 100;
+  margin-bottom: 0.5rem;
+  margin-top: 20rem;
 }
 
 .slide1paragraph_lp {
-    font-family: var(--paragraph_font);
-    font-size: 2rem;
-    font-weight: 100;
-
+  font-family: var(--paragraph_font);
+  font-size: 2rem;
+  font-weight: 100;
 }
 
 .videoBG_lp {
-    position: absolute;
-    width: 100%;
-    height: 115%;
-    object-fit: cover;
-    z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 115%;
+  object-fit: cover;
+  z-index: -1;
 }
-
 
 /*slide 2*/
 
 .slide2Title_lp {
-    font-family: var(--technoRace_font);
-    color: #B4C3CC;
-    text-shadow: 2px 2px 4px #58717D;
-    font-size: 4rem;
-    font-weight: 100;
-    margin-top: 29rem;
+  font-family: var(--technoRace_font);
+  color: #b4c3cc;
+  text-shadow: 2px 2px 4px #58717d;
+  font-size: 4rem;
+  font-weight: 100;
+  margin-top: 29rem;
 }
 
 .slide2paragraph_lp {
-    font-family: var(--paragraph_font);
-    font-size: 2rem;
-    font-weight: 100;
-    margin-top: -3rem;
-
+  font-family: var(--paragraph_font);
+  font-size: 2rem;
+  font-weight: 100;
+  margin-top: -3rem;
 }
 
 /*slide 3*/
 .slide3Title_lp {
-    font-family: var(--technoRace_font);
-    color: #B4C3CC;
-    text-shadow: 2px 2px 4px #58717D;
-    font-size: 4rem;
-    font-weight: 100;
-    margin-top: 20rem;
+  font-family: var(--technoRace_font);
+  color: #b4c3cc;
+  text-shadow: 2px 2px 4px #58717d;
+  font-size: 4rem;
+  font-weight: 100;
+  margin-top: 20rem;
 }
 
 .slide3paragraph_lp {
-    font-family: var(--header_font);
-    font-size: 2rem;
-    font-weight: 100;
+  font-family: var(--header_font);
+  font-size: 2rem;
+  font-weight: 100;
 }
 
 /*slide 4*/
 .slide4Title_lp {
-    font-family: var(--technoRace_font);
-    color: #B4C3CC;
-    font-size: 3rem;
-    font-weight: 100;
-    margin-top: 20rem;
+  font-family: var(--technoRace_font);
+  color: #b4c3cc;
+  font-size: 3rem;
+  font-weight: 100;
+  margin-top: 20rem;
 }
-
 
 /*=================== slides Navigation ================*/
 .dots {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 0.5rem;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
 .dot {
-    height: 5px;
-    width: 40px;
-    margin: 0 5px;
-    background-color: #1e3a46;
-    border-radius: 15%;
-    display: inline-block;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  height: 5px;
+  width: 40px;
+  margin: 0 5px;
+  background-color: #1e3a46;
+  border-radius: 15%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .dot:hover,
 .active {
-    background-color: #a5cea7;
-    box-shadow: 0 0 10px #020b0f;
-    transform: translateY(-2px);
+  background-color: #a5cea7;
+  box-shadow: 0 0 10px #020b0f;
+  transform: translateY(-2px);
 }
-
 
 /*===============================parts 2,3 headers ====================================*/
 
 /*titles headers */
 .partsTitles_lp {
-    height: 5rem;   
-     padding-left: 20px;
+  height: 5rem;
+  padding-left: 20px;
 
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 
-    background:var(--grad1);
-    backdrop-filter: blur(1px);
+  background: var(--grad1);
+  backdrop-filter: blur(1px);
 
-    font-family: var(--technoRace_font);
-    font-weight: 100;
-    color: white;
-    font-size: 3rem;
-
+  font-family: var(--technoRace_font);
+  font-weight: 100;
+  color: white;
+  font-size: 3rem;
 }
-
-    
-  
-    
-
-
-
 
 /*===============================PART 2: most recommended====================================*/
 /* Landing Page Part 2 */
 .landingPage_part2 {
-    display: flex;
-    flex-direction: column;
- width: 100%; 
-   box-sizing: border-box; 
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
 
-     background-color: #e200005e;  
-    background-repeat: no-repeat;
-    background-size: cover; 
-    background-attachment: fixed; 
-    background-position: center; 
-    /* background-image: url('../media/lp_mostRecommended4.jpg'); */
-    /* background-image: url('../media//mostr_lp11.jpg');  */
-    /* background-image: url('../media/mostr_lp8.jpg'); */
-    /* background-image: url('../media/animationGIF1.gif'); */
-    background-image: url('../media/mostr_lp6LOW.jpg');
-
-
-
+  background-color: #e200005e;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  /* background-image: url('../media/lp_mostRecommended4.jpg'); */
+  /* background-image: url('../media//mostr_lp11.jpg');  */
+  /* background-image: url('../media/mostr_lp8.jpg'); */
+  /* background-image: url('../media/animationGIF1.gif'); */
+  background-image: url("../media/mostr_lp6LOW.jpg");
 }
-
-
 
 /* background-image: url('../media/lp_mostRecommended.jpg'); NOT THE VIBE  ligh holograPH
     background-image:url('../media/mostr_lp11.jpg'); 10-10 not the vibe mystrey sqy=uares 
@@ -239,19 +223,196 @@ round chromw 10-10     background-image: url('../media/mostr_lp2.jpg');
 
 */
 
-
-
-
-.mostRecommendedCarsTitle_lp{
-    white-space: nowrap; 
+.mostRecommendedCarsTitle_lp {
+  white-space: nowrap;
 }
-
-
-
 
 /*===============================PART 3: reviews====================================*/
 
+.landingPage_part3 {
+  height: 50rem;
+  background-image: url("../../../SWE_Phase1/public_html/media/reviewBG2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+}
 
-.landingPage_part3{
-    height:50rem;
+.reviews-section {
+  text-align: center;
+}
+
+.header {
+  font-family: var(--racing_font);
+  font-size: 3rem;
+  margin-bottom: 70px;
+  margin-top: 50px;
+}
+
+.swiper-container {
+  width: 30%;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4cm;
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.216);
+  backdrop-filter: blur(30px);
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s ease;
+  overflow: hidden;
+}
+
+.review-card {
+  text-align: center;
+  padding: 20px;
+}
+
+.review-card h4 {
+  font-size: 1.2rem;
+  color: var(--white);
+  margin-bottom: 10px;
+  margin-top: 50px;
+}
+
+.swiper-slide-active {
+  transform: scale(1.2);
+  transition: transform 0.5s ease-in-out;
+}
+.review-paragraph {
+  font-size: 1.3rem;
+  font-family: var(--paragraph_font);
+  color: var(--white);
+  margin-top: 50px;
+  margin-left: 60px;
+  text-align: center;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 300px;
+}
+
+.reviewBtn {
+  margin-top: 60px;
+  margin-left: 41.5%;
+  background: rgba(24, 163, 183, 0.2);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.reviewBtn:hover {
+  background: rgba(24, 163, 183, 0.4);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2),
+    0 8px 10px rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+.reviewBtn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 300%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  transform: skewX(-45deg);
+  transition: left 0.6s ease;
+  z-index: 0;
+}
+.reviewBtn:hover::before {
+  left: 100%;
+}
+.reviewBtn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(24, 163, 183, 0.5);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-content {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 60px;
+  border-radius: 15px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.overlay-content h2 {
+  color: #fff;
+  margin-bottom: 40px;
+}
+
+.overlay-content textarea {
+  width: 90%;
+  height: 150px;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  margin-right: 30px;
+  font-size: 1rem;
+  color: var(--white);
+  background-color: transparent;
+  resize: none;
+  outline: none;
+}
+
+.submitBtn {
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.submitBtn:hover {
+  background-color: var(--light_blue);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.closeBtn:hover {
+  color: var(--red);
+}
+
+.errorMessage {
+  color: var(--red);
+  margin-top: 10px;
+  font-size: 0.9rem;
 }

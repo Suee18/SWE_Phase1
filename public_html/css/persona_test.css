@@ -2,13 +2,45 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: var(--blue_gray_dark);
     height: 100vh;
     margin: 0;
 }
 
 .navbar {
     top: 0;
+}
+
+.background-images {
+    pointer-events: none;
+}
+
+#background-image-one {
+    position: absolute;
+    top: 130px;
+    left: 40px;
+    z-index: 1;
+    width: 50%;
+    height: 50%;
+    opacity: 0.8;
+}
+
+#background-image-two {
+    position: absolute;
+    top: 280px;
+    right: 30px;
+    z-index: 1;
+    width: 50%;
+    height: 50%;
+    opacity: 0.8;
+}
+
+.background-image {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    max-height: 80%;
+    object-fit: cover;
 }
 
 .progress-bar-container {
@@ -25,15 +57,18 @@ body {
 .progress-bar {
     height: 100%;
     width: 0;
-    background-color: #007bff;
+    background-color: var(--light_blue);
     transition: width 0.3s ease;
 }
 
 /* Center the Swiper */
 .swiper {
-    width: 80%;
-    height: 80vh;
-    margin: 50px auto 40px;
+    width: 70%;
+    height: 75vh;
+    margin: 115px auto 25px;
+    background: rgba(0, 0, 0, 0.327);
+    backdrop-filter: blur(15px);
+    z-index: 2;
 }
 
 /* Center the content inside the swiper slide */
@@ -47,38 +82,175 @@ body {
     text-align: center;
 }
 
+.question-container h1,
+.question-container p {
+    color: white;
+}
+
+.question-number {
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+.question-text {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
 .options-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 180px;
     gap: 20px;
     margin-top: 20px;
     justify-items: center;
 }
 
-.option {
-    width: 200px; /* Increased width */
-    height: 180px; /* Increased height */
+.options-container-five {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #f0f0f0;
+}
+
+.first-options-five {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.second-options-five {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.option {
+    width: 180px;
+    height: 160px;
+    display: flex;
+    padding: 5px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(162, 161, 161, 0.241);
+    backdrop-filter: blur(20px);
+    color: var(--white);
+    backdrop-filter: blur(20px);
     cursor: pointer;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-size: 16px; /* Increased font size */
+    font-size: 16px;
     text-align: center;
+    transition: background-color, transform 0.3s ease;
+}
+
+.option:hover {
+    background-color: rgba(255, 255, 255, 0.241);
+    transform: scale(1.03);
+}
+
+.option p {
+    color: var(--white);
+    font-weight: 600;
 }
 
 .option img {
-    width: 60px; /* Increased width */
-    height: 60px; /* Increased height */
+    width: 60px;
+    height: 60px;
     margin-bottom: 8px;
+    filter: invert(1) brightness(200%);
 }
 
 .option.selected {
-    background-color: #007bff;
+    background-color: var(--powder_blue);
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.last-option {
+    margin-left: 50px;
+}
+
+/* Make the navigation buttons thicker and white */
+.swiper-button-next,
+.swiper-button-prev {
+    color: white;
+    width: 80px;
+    height: 40px;
+    font-size: 50px;
+    font-weight: 900;
+    transform: scale(1.6);
+}
+
+.swiper-button-next.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Style for the last slide */
+.swiper-slide.last-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.swiper-slide.last-slide h3 {
+    font-size: 28px;
+    color: var(--white);
+    margin-bottom: 13px;
+}
+
+/* Button style */
+.submit-button {
+    background-color: var(--powder_blue);
+    color: var(--white);
+    font-size: 18px;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Button hover effect */
+.submit-button:hover {
+    background-color: rgba(255, 255, 255, 0.241);
+    transform: scale(1.05);
+}
+
+/* Button active state */
+.submit-button:active {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+}
+
+/* Make the last slide stand out a bit more */
+.swiper-slide.last-slide {
+    margin-top: 20px;
+    width: 60%; /* Adjust the width for a centered look */
+}
+
+.subtext {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 20px;
+}
+
+.persona-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    filter: invert(1) brightness(1.2); /* Adjust if necessary to match your design */
+}

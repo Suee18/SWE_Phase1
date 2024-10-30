@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
@@ -102,7 +106,7 @@
 
     </div>
 
-    <button class="animated-button">
+    <button class="animated-button open-modal-button">
         <svg xmlns="http://www.w3.org/2000/svg" class="arr-2" viewBox="0 0 24 24">
             <path
                 d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
@@ -250,6 +254,79 @@
             </div>
         </div>
     </div>
+
+    <!-- <div id="comparison-modal">
+        <span class="close-button">&times;</span>
+        <h3 class="modal-header">Check Out The Specs</h3>
+
+        <div class="comparison-slider">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="spec-card">
+                            <h4>Engine Fuel Type</h4>
+                            <p class="spec-value">Gasoline</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="spec-card">
+                            <h4>Engine HP</h4>
+                            <p class="spec-value">250 HP</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="spec-card">
+                            <h4>Engine Cylinders</h4>
+                            <p class="spec-value">6 Cylinders</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="spec-card">
+                            <h4>Transmission Type</h4>
+                            <p class="spec-value">Automatic</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="spec-card">
+                            <h4>Driven Wheels</h4>
+                            <p class="spec-value">AWD</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="spec-card">
+                            <h4>No. Of Doors</h4>
+                            <p class="spec-value">4 Doors</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="spec-card">
+                            <h4>Market Category</h4>
+                            <p class="spec-value">SUV</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="spec-card">
+                            <h4>Vehicle Size</h4>
+                            <p class="spec-value">Mid-size</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="spec-card">
+                            <h4>Vehicle Style</h4>
+                            <p class="spec-value">Crossover</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="spec-card">
+                            <h4>MSRP</h4>
+                            <p class="spec-value">$35,000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
 
 </body>
 

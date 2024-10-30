@@ -1,0 +1,248 @@
+@import url("../../../SWE_Phase1/public_html/css/global_styles.css");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100%;
+}
+
+.sidebar {
+  position: fixed;
+  color: var(--white_blue_light);
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3 ease;
+}
+
+.collapse-btn {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(25px);
+  border: none;
+  border-radius: 0px 10px 10px 0px;
+  padding: 20px 5px 20px 0px;
+  color: var(--white_blue_light);
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 105.5%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  transition: right 0.3s ease;
+}
+
+.sidebar.collapsed .collapse-btn {
+  left: 123px;
+}
+.sidebar.collapsed {
+  width: 110px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 25px 10px 15px;
+}
+
+.A-logo {
+  color: var(--white_blue_light);
+  font-weight: 600;
+  font-family: var(--header_font);
+  font-size: 3rem;
+  display: none;
+}
+
+.Apex-text {
+  color: var(--white_blue_light);
+  font-weight: 600;
+  margin-left: 15px;
+  font-family: var(--header_font);
+  font-size: 2rem;
+  text-decoration: none;
+  display: block;
+}
+.sidebar.collapsed .Apex-text {
+  display: none;
+}
+.sidebar.collapsed .A-logo {
+  display: block;
+  color: var(--white_blue_light);
+  font-weight: 600;
+  font-family: var(--header_font);
+  font-size: 3rem;
+}
+
+.sidebar .links {
+  list-style: none;
+  margin-top: 20px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  height: calc(100% - 140px);
+}
+
+.sidebar .links::-webkit-scrollbar {
+  display: none;
+}
+
+.links li {
+  display: flex;
+  border-radius: 4px;
+  align-items: center;
+  padding: 7px;
+}
+
+.links li:hover {
+  cursor: pointer;
+  background: #ffffff25;
+  transition: all 0.2s ease-in-out;
+}
+
+.links h4 {
+  color: var(--white_blue_light);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.sidebar.collapsed .links h4 {
+  display: none;
+}
+
+.links hr {
+  margin: 10px 8px;
+  border: 1px solid var(--white_blue_light);
+}
+
+.sidebar.collapsed .links hr {
+  border-color: transparent;
+}
+
+.links li span {
+  padding: 12px 10px;
+  color: var(--white);
+}
+
+.links li img {
+  filter: invert(100%) brightness(200%);
+  width: 30px;
+  height: 30px;
+  margin-right: 6px;
+  margin-left: 7px;
+}
+
+.links li a {
+  padding: 10px;
+  color: var(--white_blue_light);
+  display: block;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.sidebar.collapsed .links li a {
+  display: none;
+}
+
+.links .logout-link {
+  margin-top: 10px;
+}
+
+.deletion-link a {
+  color: red !important;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 25px;
+  width: 400px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 10;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.popup i {
+  color: red;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.popup h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--white_blue_light);
+}
+
+.popup h3 {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: var(--white_blue_light);
+}
+
+.popup .buttons {
+  display: flex;
+  margin-left: 210px;
+  width: 100%;
+}
+
+.popup button {
+  padding: 8px 16px;
+  background-color: red;
+  color: var(--white_blue_light);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.popup button#cancel {
+  background-color: gray;
+  margin-left: 30px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.219);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 9;
+  display: none;
+}
+
+.overlay.show {
+  display: block;
+}

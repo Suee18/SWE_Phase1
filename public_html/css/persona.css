@@ -1,0 +1,327 @@
+@import url("../css/global_styles.css");
+
+body {
+    font-family: "DM Sans", Arial, sans-serif;
+    background-color: var(--blue_gray_dark);
+    height: auto;
+    margin: 0;
+}
+
+.navbar {
+    top: 0;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0.2rem auto;
+    padding: 1rem 2rem;
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 8px;
+    position: relative;
+    top: 90px; /* Adjust this value to add space below the navbar */
+}
+
+.content-container h2 {
+    color: var(--white);
+    font-size: 2em;
+    margin-bottom: 0.3rem;
+    font-style: oblique;
+}
+
+.content-container h4 {
+    color: var(--white);
+    font-size: 1.2em;
+    margin-bottom: 0.5rem;
+    font-weight: normal;
+    font-style: oblique;
+}
+
+.persona-container {
+    display: flex;
+    /* margin: 100px auto; */
+    margin: 100px auto 100px;
+    width: 90%;
+    max-width: 1200px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-bottom: 1.5rem !important;
+}
+
+.persona-container::before {
+    content: "";
+    background-color: var(--blue_gray_dark);
+    width: 2rem; /* Width of the separator */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 35%; /* Position it between the columns */
+}
+
+.left-column,
+.right-column {
+    padding: 2rem;
+}
+
+.left-column {
+    width: 35%;
+    background-color: #e0f7fa;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 65%;
+    position: relative;
+    z-index: 1;
+}
+
+.left-column h2 {
+    color: #00796b;
+}
+
+.persona-image {
+    max-width: 60%;
+}
+
+.persona-info h2 {
+    color: #00796b;
+}
+
+.persona-title h3 {
+    font-size: 1.5em;
+    color: #004d40;
+}
+
+/* */
+
+.right-column h4 {
+    color: #00796b;
+    font-size: 1.8em;
+    /* margin-bottom: 1rem; */
+}
+
+.car-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.car-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
+}
+
+.car-info h4 {
+    color: #004d40;
+    font-size: 2em;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    margin-top: 0rem;
+}
+
+.car-preferences h5 {
+    color: #004d40;
+    font-size: 1.5em;
+    margin-bottom: 0.5rem;
+}
+
+.car-preferences ul {
+    list-style-type: none;
+    padding-left: 0;
+    color: #333;
+    font-size: 1.1em;
+    text-align: left;
+}
+
+.car-preferences li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.persona-slider-section {
+    text-align: center;
+}
+
+.header {
+    font-family: "DM Sans", var(--racing_font);
+    font-style: italic;
+    font-size: 3rem;
+    color: var(--white);
+    margin-bottom: 70px;
+    margin-top: 50px;
+}
+.slider-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.swiper-container {
+    width: 30%;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.swiper-slide {
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4cm;
+    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.216);
+    backdrop-filter: blur(30px);
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease;
+}
+
+.persona-card {
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.persona-icon {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin-bottom: 50px;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.persona-card h4 {
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 10px;
+    margin-top: 100px;
+}
+
+.swiper-slide-active {
+    transform: scale(1.2);
+    transition: transform 0.5s ease-in-out;
+}
+
+.persona-paragraph {
+    font-size: 1.3rem;
+    font-family: "DM Sans", var(--paragraph_font);
+    color: var(--white);
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    word-wrap: normal;
+    white-space: pre-line;
+    max-width: 300px;
+}
+
+.animated-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding: 16px 36px;
+    border: 4px solid;
+    border-color: var(--white);
+    font-size: 16px;
+    background-color: inherit;
+    border-radius: 100px;
+    font-weight: 600;
+    color: var(--white);
+    box-shadow: 0 0 0 2px var(--white);
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    left: 44.5%;
+}
+
+.animated-button svg {
+    position: absolute;
+    width: 24px;
+    fill: var(--white);
+    z-index: 9;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .arr-1 {
+    right: 16px;
+}
+
+.animated-button .arr-2 {
+    left: -25%;
+}
+
+.animated-button .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .text {
+    position: relative;
+    z-index: 1;
+    transform: translateX(-12px);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button:hover {
+    box-shadow: 0 0 0 12px transparent;
+    color: var(--white);
+    border-radius: 12px;
+}
+
+.animated-button:hover .arr-1 {
+    right: -25%;
+}
+
+.animated-button:hover .arr-2 {
+    left: 16px;
+}
+
+.animated-button:hover .text {
+    transform: translateX(12px);
+}
+
+.animated-button:hover svg {
+    fill: var(--white);
+}
+
+.animated-button:active {
+    scale: 0.95;
+    box-shadow: 0 0 0 4px white;
+}
+
+.animated-button:hover .circle {
+    width: 220px;
+    height: 220px;
+    opacity: 1;
+}
