@@ -4,10 +4,23 @@ html,
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--navy);
+    color: var(--white);
 }
 
-.sidebar{
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url("../../public_html/media/platformBG.png") no-repeat center
+        center;
+    background-size: cover;
+    transform-origin: center;
+    z-index: -1;
+}
+.sidebar {
     z-index: 100000;
 }
 
@@ -64,7 +77,8 @@ body {
 }
 
 .car-card {
-    background-color: var(--white);
+    background: rgba(0, 0, 0, 0.605);
+    backdrop-filter: blur(10px);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     width: 32%;
@@ -74,7 +88,7 @@ body {
 .car-image img {
     max-width: 100%;
     border-radius: 8px;
-    background-color: var(--gray-blue);
+    background-color: transparent;
 }
 
 .car-card:first-child .car-image img {
@@ -85,7 +99,7 @@ body {
     font-size: 34px;
     font-family: "DM Sans", "Roboto", var(--paragraph_font);
     margin: 15px 0 10px 0;
-    color: #212121;
+    color: var(--white);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -115,15 +129,17 @@ label {
 
 select {
     width: 85%;
-    padding: 8px;
+    padding: 10px;
     border-radius: 14px;
-    border: 1px solid #ccc;
+    border: none;
     height: 45px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 5px;
     font-family: "DM Sans", monospace;
     font-size: large;
     font-weight: bold;
+    background-color: rgba(90, 89, 89, 0.411);
+    color: var(--white);
 }
 
 select:focus {
@@ -171,6 +187,7 @@ select:focus {
     margin-right: 10px;
     width: 35px;
     height: 35px;
+    filter: invert(100%) brightness(200%);
 }
 
 .car-column {
@@ -214,13 +231,13 @@ h2 {
     margin-bottom: 20px;
     padding: 16px 36px;
     border: 4px solid;
-    border-color: var(--navy);
+    border-color: var(--light_blue);
     font-size: 16px;
     background-color: inherit;
     border-radius: 100px;
     font-weight: 600;
-    color: var(--navy);
-    box-shadow: 0 0 0 2px var(--navy);
+    color: var(--light_blue);
+    box-shadow: 0 0 0 2px var(--light_blue);
     cursor: pointer;
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -265,7 +282,7 @@ h2 {
 
 .animated-button:hover {
     box-shadow: 0 0 0 12px transparent;
-    color: black;
+    color: var(--white);
     border-radius: 12px;
 }
 
@@ -327,20 +344,15 @@ h2 {
     margin-top: 50px;
     overflow: hidden;
 }
-
 .close-button {
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
     cursor: pointer;
-    position: absolute; /* Absolute positioning */
-    top: 10px; /* Position from the top */
-    right: 15px; /* Position from the right */
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: black; /* Change color on hover */
+    color: var(--red);
 }
 
 .comparison-slider {
@@ -348,26 +360,6 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.swiper-container {
-    width: 100%; /* Adjusted to fit the modal */
-    height: 100%; /* Adjusted to fit the modal */
-    margin: 0 auto;
-}
-
-.swiper-slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 250px; /* Adjust height as needed */
-    width: 80%; /* Set a fixed width for slides */
-    max-width: 400px; /* Limit maximum width if needed */
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(30px);
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.5s ease;
 }
 
 .spec-card {
@@ -388,17 +380,100 @@ h2 {
     margin-top: 10px;
 }
 
-.swiper-slide-active {
-    transform: scale(1.1); /* Slightly smaller scale for non-active */
-    transition: transform 0.5s ease-in-out;
+/* OVERLAY OUTPUT  */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-@media (max-width: 768px) {
+.overlay::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(70px);
+    background: rgba(39, 38, 38, 0.166);
+    z-index: -1;
+}
+
+.modal-content {
+    position: relative;
+    background: rgba(0, 0, 0, 0.733);
+    backdrop-filter: blur(30px);
+    padding: 20px;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.modal-content::-webkit-scrollbar {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    #comparing-cars-banner h1 {
+        font-size: 2.5rem;
+    }
+
+    #comparing-cars-banner p {
+        font-size: 1.2rem;
+    }
+
+    .comparison-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .car-card {
+        width: 90%;
+        margin: 10px 0;
+    }
+
+    .car-details h2 {
+        font-size: 24px;
+    }
+
     .comparison-grid {
-        grid-template-columns: 1fr; /* Stack features vertically */
+        grid-template-columns: 1fr;
     }
 
     .car-column {
         border-left: none;
+    }
+
+    .car-column h3 {
+        font-size: 1.2rem;
+    }
+
+    .animated-button {
+        padding: 12px 24px;
+        font-size: 14px;
+        margin-left: 100px;
+    }
+
+    .modal-header {
+        left: 0;
+        text-align: center;
+    }
+    .modal-content {
+        width: 80%;
+        padding: 15px;
+        max-height: 80vh;
+        margin-left: 40px;
+    }
+    .overlay::before {
+        backdrop-filter: blur(50px);
     }
 }

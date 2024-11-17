@@ -231,7 +231,7 @@ round chromw 10-10     background-image: url('../media/mostr_lp2.jpg');
 
 .landingPage_part3 {
   height: 50rem;
-  background-image: url("../../../SWE_Phase1/public_html/media/reviewBG2.jpg");
+  background-image: url("../../../SWE_Phase1/public_html/media/comparison_background.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -287,10 +287,13 @@ round chromw 10-10     background-image: url('../media/mostr_lp2.jpg');
 }
 .review-paragraph {
   font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--paragraph_font);
   color: var(--white);
-  margin-top: 50px;
-  margin-left: 60px;
+  /* margin-top: 50px; */
+  margin-left: 10px;
   text-align: center;
   word-wrap: break-word;
   white-space: pre-wrap;

@@ -10,7 +10,11 @@
 }
 
 html {
-    background-image: url('../media/mostr_lp6LOW.jpg');
+    /* background-image: url('../media/admin-bg-1.jpg'); */
+    background-image: url('../media/admin-bg-4.jpg'); /* Dark circles */
+    /* background-image: url('../media/admin-bg-8.jpg'); TECH*/
+
+    /* background-image: url('../media/mostr_lp6LOW.jpg'); */
     /* background-image: url('../media/animationGIF1.gif');  */
     /* background-image: url('../media/animationGIF2.gif');  */
     /* background-image: url('../media/mostr_lp3\ -\ Copy.jpg'); GALAXY ELEMENT  */
@@ -27,7 +31,7 @@ html {
 
 /* ===================Navbar ====================== */
 .admin-navbar {
-    background-color: #000000da;
+    background:linear-gradient(160deg, #000000e1, #1f1f1fd0, #1f1f1fd0, #000000e7);
     /* background: var(--grad2); */
     padding: 10px;
     text-align: center;
@@ -67,14 +71,42 @@ html {
     display: none;
 }
 
-.welcome {
-    font-family: var(--technoRace_font);
+.welcome{
+      font-family: var(--technoRace_font);
     font-weight: 100;
+    margin-left: 18rem;
+
     font-size: 5rem;
-    margin-left: 25rem;
-    margin-top: 10rem;
+    margin-top: 5rem;
+
 }
 
+.welcomeParagraph{
+margin-left: 10rem;
+font-family: var(--paragraph_font);
+font-size: 2rem;
+text-align: center;
+width:70%;
+color:#7e7e7e;
+}
+.welcomeIcon{
+    background-image: url('../media/admin-iconn.png');
+    background-size: cover;
+  width:100px;
+  height: 100px;
+  margin-left: 60rem;
+  margin-top: 4.5rem;
+
+}
+.welcomeIcon1
+{
+background-image: url('../media/admin-icon2.png');
+    background-size: cover;
+  width:100px;
+  height: 100px;
+  margin-left: 1.2rem;
+  margin-top: 0.5rem;
+}
 /*=========== Big container==================== */
 .content {
     margin-top: 2rem;
@@ -91,7 +123,8 @@ html {
     border-radius: 0.6rem;
     background: linear-gradient(160deg, #000000a2, #1f1f1f62, #1f1f1f62, #000000a2);
     /* background:linear-gradient(160deg, #000000d5, #050505b4,#050505b4, #000000d5); */
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(30px); */
 
     box-shadow: 8px 6px 5px rgba(0, 0, 0, 0.37);
 
@@ -100,7 +133,7 @@ html {
 .content-div {
     background: var(--grad2);
     /* display: none; */
-    border: 2px solid #280952;
+    border: 2px solid #302f31;
     border-radius: 0.3rem;
     background-color: #cc171700;
 
@@ -191,24 +224,24 @@ form {
 /*Disabled */
 /* disabled fields  */
 input:disabled, select:disabled, textarea:disabled {
-    background-color: #131313; 
+    background-color: #131313;
 }
 /*  enabled fields */
 input:not(:disabled), select:not(:disabled), textarea:not(:disabled) {
-    background-color: #38383898; 
-    color: #ffffffd3; 
+    background-color: #38383898;
+    color: #ffffffd3;
     border:#00ffff solid 1px;
 
 }
 input:not(:disabled):hover, select:not(:disabled):hover, textarea:not(:disabled):hover {
-    background-color: #5a5a5a71; 
-    box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.39); 
+    background-color: #5a5a5a71;
+    box-shadow: 2px 2px 2px rgba(255, 255, 255, 0.39);
 }
 
 /*---------left-------------*/
 .formInputfields {
     margin-top: 1.5rem;
-   margin-left: 10rem; 
+   margin-left: 10rem;
   width: 35%;
    height: auto;
   display: flex;
@@ -253,18 +286,18 @@ select {
 
 /*error message validation*/
 .error {
-    color: red; 
-    font-size: 0.9em; 
-    margin-top: 5px; 
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
     margin-left: 25%;
 }
 
 
 #userSelect{
     border: 2px solid #10c295;
-    
+
     background-color: #949494a4;
-    
+
 }
 
 #age{
@@ -277,7 +310,7 @@ color: white;
 
 
 .CRUD_bigcontainer{
-   
+
   margin-top: 6.2rem;
   margin-left: 3rem;
 
@@ -296,7 +329,7 @@ color: white;
 
     width: 100%;
     height: 100%;
-    
+
     display:flex;
     flex-direction: row;
     justify-content: center;
@@ -346,19 +379,19 @@ margin-top: 0rem;
     background-color: #e50000;
     overflow: hidden;
   }
-  
+
   .button,
   .button__icon,
   .button__text {
     transition: all 0.3s;
   }
-  
+
   .button .button__text {
     transform: translateX(35px);
     color: #fff;
     font-weight: 600;
   }
-  
+
   .button .button__icon {
     position: absolute;
     transform: translateX(109px);
@@ -369,39 +402,39 @@ margin-top: 0rem;
     align-items: center;
     justify-content: center;
   }
-  
+
   .button .svg {
     width: 20px;
   }
-  
+
   .button:hover {
     background: #cc0000;
   }
-  
+
   .button:hover .button__text {
     color: transparent;
   }
-  
+
   .button:hover .button__icon {
     width: 148px;
     transform: translateX(0);
   }
-  
+
   .button:active .button__icon {
     background-color: #b20000;
   }
-  
+
   .button:active {
     border: 1px solid #b20000;
   }
-  
+
 #editButton{
     color: #fff;
 
     border: 2px solid #10c295;
     background-color: #35363bb7;
     backdrop-filter: blur(1px);
-    
+
 }
 #saveButton{
     border: 1px solid #f5f5f5;
@@ -429,7 +462,7 @@ margin-top: 0rem;
 #deleteButton:hover {
     box-shadow: 0px 0px 10px   rgba(255, 0, 0, 0.849);
     background:linear-gradient(160deg, #770a0af6, #ff0000d0, #ff0000ad, #770a0af6);
-} 
+}
 
 .input-error {
     border-bottom: 1px solid red;
@@ -473,12 +506,13 @@ border-radius: 5rem;
     padding: 2rem;
     text-align:left;
     border-bottom: 1px solid #0082aa;
+    color: #cecece;
 }
 
 .table-adminReview th {
     /* background-color: #f4f4f4; */
-background-color: #d3d3d336;
-    color: #040913;
+background-color: #00000083;
+    color: #c9c9c9;
     font-weight: bold;
 }
 
@@ -491,7 +525,7 @@ background-color: #d3d3d336;
     height: 100%;
     color: red;
     font-weight: bold;
-    text-align: center; */  
+    text-align: center; */
 
 }
 
@@ -503,7 +537,7 @@ text-shadow: 5px 5px 15px rgb(133, 15, 15);
     transition: color 0.3s ease, transform 0.3s ease; */
 }
 
-/* 
+/*
 .fa-bounce {
     animation: bounce 2s infinite;
 }

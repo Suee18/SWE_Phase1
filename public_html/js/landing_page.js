@@ -95,15 +95,15 @@ const submitReviewBtn = document.getElementById("submitReview");
 const reviewText = document.getElementById("reviewText");
 const errorMessage = document.createElement("p");
 
-function validateReview(input) {
-  const validPattern = /^[a-zA-Z0-9\s!?.,]+$/; // Allow letters, numbers, spaces, and basic punctuation (!, ?, ., ,)
-  if (input.trim() === "") {
-    return "Please enter your review before submitting.";
-  } else if (!validPattern.test(input)) {
-    return "Please enter a valid input.";
-  }
-  return null;
-}
+// function validateReview(input) {
+//   const validPattern = /^[a-zA-Z0-9\s!?.,]+$/; // Allow letters, numbers, spaces, and basic punctuation (!, ?, ., ,)
+//   if (input.trim() === "") {
+//     return "Please enter your review before submitting.";
+//   } else if (!validPattern.test(input)) {
+//     return "Please enter a valid input.";
+//   }
+//   return null;
+// }
 
 openOverlayBtn.addEventListener("click", () => {
   overlay.style.display = "flex";
@@ -122,19 +122,18 @@ window.addEventListener("click", (e) => {
   }
 });
 
-submitReviewBtn.addEventListener("click", () => {
-  const reviewValue = reviewText.value;
-  const error = validateReview(reviewValue);
+// submitReviewBtn.addEventListener("click", () => {
+//   const reviewValue = reviewText.value;
+//   const error = validateReview(reviewValue);
 
-  if (error) {
-    errorMessage.textContent = error;
-    errorMessage.classList.add("errorMessage");
-    reviewText.insertAdjacentElement("afterend", errorMessage);
-  } else {
-    console.log("Review submitted:", reviewValue);
-    alert("Thank you for your review!");
-    reviewText.value = "";
-    errorMessage.textContent = "";
-    overlay.style.display = "none";
-  }
-});
+//   if (error) {
+//     errorMessage.textContent = error;
+//     errorMessage.classList.add("errorMessage");
+//     reviewText.insertAdjacentElement("afterend", errorMessage);
+//   } else {
+//     console.log("Review submitted:", reviewValue);
+//     reviewText.value = "";
+//     errorMessage.textContent = "";
+//     overlay.style.display = "none";
+//   }
+// });

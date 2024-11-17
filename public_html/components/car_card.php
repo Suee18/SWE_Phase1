@@ -4,8 +4,6 @@
 <div class="car-cards-container">
     <div class="container2">
 
-
-
         <div class="car-card">
             <div class="car-card-inner">
                 <!-- Front of the card -->

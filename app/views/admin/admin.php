@@ -1,9 +1,10 @@
 <?php
 
-include_once "../../config/db_config.php"; 
+include_once "../../config/db_config.php";
+include 'C:\xampp\htdocs\SWE Project\SWE_Phase1\models\ReviewsClass.php';
 
 $users = [];
-$sql = "select id, username,age, gender, password, email,type FROM users";
+$sql = "select id, username,birthdate, gender, password, email,type FROM users";
 $result = mysqli_query($conn, $sql);
 
 if ($result) {
@@ -11,32 +12,36 @@ if ($result) {
         $users[] = $row; // Store each user in the $users array
     }
 } else {
-    echo "Error fetching users: " . mysqli_error($conn); 
+    echo "Error fetching users: " . mysqli_error($conn);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $action = $_POST['action'] ?? 'read'; 
+    $action = $_POST['action'] ?? 'read';
 
     switch ($action) {
         case 'add':
-          
             include 'add_user.php';
             break;
-
-       case 'update':
-           
+        case 'update':
             include 'update_user.php';
             break;
-
-            case 'delete':
-           
-                include 'delete_user.php';
-                break;
-
+        case 'delete':
+            include 'delete_user.php';
+            break;
     }
 }
 
+$reviews = Reviews::getAllReviews();
 
+if (isset($_POST['deleteReview'])) {
+    $reviewID = $_POST['reviewID'];
+
+    if (Reviews::deleteReviewFromDB($reviewID)) {
+        header("Location: admin.php");
+    } else {
+        echo "<alert>Error deleting review</alert>";
+    }
+}
 
 ?>
 
@@ -50,8 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="../../../public_html/css/admin.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha384-4oVU5+BHEfuDd4Q6+lcl6v+9XYWQ0JN+DNJeSoDgxGfCxGp3h66laXK9N/5ay2ad" crossorigin="anonymous">
-     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha384-4oVU5+BHEfuDd4Q6+lcl6v+9XYWQ0JN+DNJeSoDgxGfCxGp3h66laXK9N/5ay2ad" crossorigin="anonymous">
+
 
     <title>Admin dashboard</title>
 </head>
@@ -61,7 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <header class="header_admin">
         <nav class="admin-navbar">
             <label>
-                <input type="radio" name="nav" value="home" id="home" checked onclick="redirectTo('../../../public_html')">
+                <input type="radio" name="nav" value="home" id="home" checked
+                    onclick="redirectTo('../../../public_html')">
                 Home
             </label>
             <label>
@@ -95,7 +102,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="content">
 
         <div id="div0" class="content-div" style="display: block;">
-            <div class="welcome">welcome</div>
+        <div class="welcomeIcon1"></div>
+
+            <div class="welcome">welcome, Admin</div>
+            <div class="welcomeParagraph">Access the website insights and have full control over everything through this dashboard</div>
+<div class="welcomeIcon"></div>
         </div>
 
 
@@ -159,69 +170,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="small-container">
                 <div class="formContainer">
-               <form id="userForm" method="POST" action="admin.php" onsubmit="return validate(this)">
+                    <form id="userForm" method="POST" action="admin.php" onsubmit="return validate(this)">
 
                         <div class="formInputfields">
                             <div>
                                 <label class="userformLabels" for="userSelect">Select User:</label>
                                 <select id="userSelect" name="user_id" onchange="populateForm()">
-                <option value="" disabled selected>Select a user</option>
-                <?php foreach ($users as $user): ?>
-                   <option value="<?php echo $user['id']; ?>" 
-            data-username="<?php echo htmlspecialchars($user['username']); ?>"  
-            data-age="<?php echo htmlspecialchars($user['age']); ?>"  
-            data-gender="<?php echo htmlspecialchars($user['gender']); ?>"  
-            data-email="<?php echo htmlspecialchars($user['email']); ?>"   
-            data-password="<?php echo htmlspecialchars($user['password']); ?>"
-            data-type="<?php echo htmlspecialchars($user['type']); ?>">
-        <?php echo htmlspecialchars($user['username']); ?>
-    </option>
-                <?php endforeach; ?>
-            </select>
+                                    <option value="" disabled selected>Select a user</option>
+                                    <?php foreach ($users as $user): ?>
+                                        <option value="<?php echo $user['id']; ?>"
+                                            data-username="<?php echo htmlspecialchars($user['username']); ?>"
+                                            data-age="<?php echo htmlspecialchars($user['birthdate']); ?>"
+                                            data-gender="<?php echo htmlspecialchars($user['gender']); ?>"
+                                            data-email="<?php echo htmlspecialchars($user['email']); ?>"
+                                            data-password="<?php echo htmlspecialchars($user['password']); ?>"
+                                            data-type="<?php echo htmlspecialchars($user['type']); ?>">
+                                            <?php echo htmlspecialchars($user['username']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
 
                             <!-- hidden input to get the user id from DB -->
                             <input type="hidden" name="user_id" id="user_id" value="">
                             <div>
                                 <label class="userformLabels" for="username">Username :</label>
-                                <input type="text" name="username" id="username" readonly disabled  >
-                                <span id="usernameERR" class="error"></span> 
+                                <input type="text" name="username" id="username" readonly disabled>
+                                <span id="usernameERR" class="error"></span>
                             </div>
 
                             <div>
                                 <label class="userformLabels" for="email">e-mail :</label>
-                                <input type="email" name="email" id="email" readonly disabled  >
+                                <input type="email" name="email" id="email" readonly disabled>
                                 <span id="emailERR" class="error"></span>
                             </div>
 
                             <div>
                                 <label class="userformLabels" for="password">Password :</label>
-                                <input type="password" name="password"  id="password"  readonly disabled >
+                                <input type="password" name="password" id="password" readonly disabled>
                                 <span id="passERR" class="error"></span>
                             </div>
 
 
                             <label class="userformLabels" for="age">Date of Birth:</label>
-                            <input  type="date" id="age" name="age"  disabled>
+                            <input type="date" id="age" name="age" disabled>
                             <span id="birthDateERR" class="error"></span>
                             <div>
 
-                       
-                         
-                             <label class="userformLabels" for="gender">Gender :</label>
-                             <select id="gender" name="gender"  disabled > 
-                             <option value="" ></option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            </select>
-                            <span id="genderERR" class="error"></span>
-                           </div>
 
-                          
+
+                                <label class="userformLabels" for="gender">Gender :</label>
+                                <select id="gender" name="gender" disabled>
+                                    <option value=""></option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                                <span id="genderERR" class="error"></span>
+                            </div>
+
+
 
                             <div>
                                 <label class="userformLabels" for="user_type">User Type :</label>
-                                <select id="user_type"  name="user_type"  disabled >
+                                <select id="user_type" name="user_type" disabled>
 
                                     <option value=""></option>
                                     <option value="admin">Admin</option>
@@ -230,10 +241,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <span id="userTypeERR" class="error"></span>
                             </div>
 
-                           
+
                         </div>
-    <!-- Hidden field for form action -->
-   <input type="hidden" name="action" id="formAction" value="">
+                        <!-- Hidden field for form action -->
+                        <input type="hidden" name="action" id="formAction" value="">
                         <div class="CRUD_bigcontainer">
                             <p class="controlPanel_text">control panel</p>
 
@@ -241,35 +252,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="CRUD_control">
                                 <div class="CRUDcontainer">
                                     <!-- add -->
-                                    <button class="button" name="addUser" type="button" id="adduserButton" onclick="enableFormFields(); switchAddButtons();">
-                                    <span class="button__text">Add user</span>
-                                    <span class="button__icon">
-                                    <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
-                                    </span>
+                                    <button class="button" name="addUser" type="button" id="adduserButton"
+                                        onclick="enableFormFields(); switchAddButtons();">
+                                        <span class="button__text">Add user</span>
+                                        <span class="button__icon">
+                                            <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
+                                        </span>
                                     </button>
 
-                                    <button style="display:none" class="button" name="addButton" type="submit" id="addButton" onclick="setAction('add')">
-                                    <span class="button__text">Add user</span>
-                                    <span class="button__icon">
-                                    <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
-                                    </span>
+                                    <button style="display:none" class="button" name="addButton" type="submit"
+                                        id="addButton" onclick="setAction('add')">
+                                        <span class="button__text">Add user</span>
+                                        <span class="button__icon">
+                                            <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
+                                        </span>
                                     </button>
 
                                     <!-- edit -->
-                                    <button class="button" type="button" id="editButton" onclick="showSaveButton()" style=" display:none">
+                                    <button class="button" type="button" id="editButton" onclick="showSaveButton()"
+                                        style=" display:none">
                                         <span class="button__text">Edit info</span>
                                         <span class="button__icon">
                                             <i class="fa-solid fa-user-pen" style="color: #ffffff;"></i>
                                         </span>
                                     </button>
                                     <!-- save -->
-                                    <button style="display:none" class="button" type="submit" id="saveButton" onclick=" setAction('update')"  >
+                                    <button style="display:none" class="button" type="submit" id="saveButton"
+                                        onclick=" setAction('update')">
                                         <span class="button__text"> Save info</span>
                                         <span class="button__icon">
                                             <i class="fa-regular fa-floppy-disk" style="color: #ffffff;"></i>
                                     </button>
                                     <!-- delete -->
-                                    <button class="button" type="submit" id="deleteButton" style="display:none" onclick="setAction('delete')">
+                                    <button class="button" type="submit" id="deleteButton" style="display:none"
+                                        onclick="setAction('delete')">
                                         <span class="button__text">Delete user</span>
                                         <span class="button__icon">
                                             <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
@@ -304,63 +320,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <th>Review ID</th>
                                 <th>Username</th>
                                 <th>Review Content</th>
+                                <th>Date</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>101</td>
-                                <td>JohnDoe</td>
-                                <td>Great experience! Really enjoyed using it.</td>
-                                <td class="delete-icon-adminReview">
-                                <i class="fa-solid fa-trash fa-bounce" style="color: #e51515;"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>102</td>
-                                <td>JaneSmith</td>
-                                <td>Good quality, but took a while to arrive.</td>
-                                <td class="delete-icon-adminReview">
-                                <i class="fa-solid fa-trash fa-bounce" style="color: #e51515;"></i>
+                            <?php foreach ($reviews as $review): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($review->id); ?></td>
+                                    <td><?php echo htmlspecialchars($review->reviewUserName); ?></td>
+                                    <td><?php echo htmlspecialchars($review->reviewText); ?></td>
+                                    <td><?php echo htmlspecialchars($review->reviewDate); ?></td>
+                                    <td class="delete-icon-adminReview">
+                                        <form method="POST" action="admin.php" style="display:inline;">
+                                            <input type="hidden" name="reviewID"
+                                                value="<?php echo htmlspecialchars($review->id); ?>">
+                                            <input type="submit" value="Delete" name="deleteReview">
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>103</td>
-                                <td>tech lover</td>
-                                <td>"The chatbot feature is fantastic! I initially had some trouble finding the right information on the site, but the chatbot made everything so much easier. It's quick, accurate, and feels like I'm talking to a real person. It even remembers my previous questions, so I don't have to repeat myself. Definitely a must-have feature for customer support – it saved me a lot of time and effort!".</td>
-                                <td class="delete-icon-adminReview">
-                                <i class="fa-solid fa-trash fa-bounce" style="color: #e51515;"></i>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>104</td>
-                                <td>Carenthusiat</td>
-                                <td>"I was really excited about the car comparison feature, but it turned out to be a huge letdown. The interface feels clunky and slow, and half the time, it doesn't even load the cars I want to compare. The data seems outdated, and I found several specs that were just plain wrong. I was hoping to get a clear side-by-side view of different models, but it’s hard to read, and the images are so small they’re practically useless. Honestly, this feature needs a major overhaul to be even remotely useful for serious buyers like me."</td>
-                                <td class="delete-icon-adminReview">
-                                <i class="fa-solid fa-trash fa-bounce" style="color: #e51515;"></i>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>105</td>
-                                <td>JohnDoe</td>
-                                <td>Great experience! Really enjoyed using it.</td>
-                                <!-- <td class="delete-icon-adminReview">&#x1F5D1;</td> -->
-                                <td class="delete-icon-adminReview">
-                                <i class="fa-solid fa-trash fa-bounce" style="color: #e51515;"></i>
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>106</td>
-                                <td>JohnDoe</td>
-                                <td>Great experience! Really enjoyed using it.</td>
-                                <td class="delete-icon-adminReview">
-                                    <i class="fa-solid fa-trash fa-bounce" style="color: #e51515;"></i>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -372,4 +352,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </body>
 
 </html>
-

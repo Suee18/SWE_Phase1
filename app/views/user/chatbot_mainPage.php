@@ -17,10 +17,10 @@
         <div class="toggle-btn">
         <i class="fa-solid fa-user" style="color: #ffffff;"></i>
         </div>
-        <span style="--i:4;"><a href="index.php"><i class="fa-solid fa-house" style="color: #ffffff;"></i></a></span>
-        <span style="--i:3;"><a href="#"><i class="fa-solid fa-user" style="color: #ffffff;"></i></a></span>
-        <span style="--i:2;"><a href="#"><i class="fa-solid fa-heart" style="color: #ffffff;"></i></a></span>
-        <span style="--i:1;"><a href="#"><i class="fa-solid fa-right-from-bracket" style="color: #ffffff;"></i></a></span>
+        <span style="--i:4;"><a href="../../../public_html/index.php"><i class="fa-solid fa-house" style="color: #ffffff;"></i></a></span>
+        <span style="--i:3;"><a href="profile.php"><i class="fa-solid fa-user" style="color: #ffffff;"></i></a></span>
+        <span style="--i:2;"><a href="favorites.php"><i class="fa-solid fa-heart" style="color: #ffffff;"></i></a></span>
+        <span style="--i:1;"><a href="../../../public_html/index.php"><i class="fa-solid fa-right-from-bracket" style="color: #ffffff;"></i></a></span>
     </div>
 </nav>
 

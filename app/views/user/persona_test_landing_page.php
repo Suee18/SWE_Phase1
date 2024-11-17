@@ -17,16 +17,16 @@
         rel="stylesheet">
 
     <title>Car Recommendation App</title>
-    <link rel="stylesheet" href="../../public_html/css/persona_test_landing_page.css">
-    <link rel="stylesheet" href="../../public_html/css/userNavbar.css">
+    <link rel="stylesheet" href="../../../public_html/css/persona_test_landing_page.css">
+    <link rel="stylesheet" href="../../../public_html/css/userNavbar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <script src="../../public_html/js/persona_test_landing_page.js" defer></script>
+    <script src="../../../public_html/js/persona_test_landing_page.js" defer></script>
 </head>
 
 <body>
 
-    <?php include '../../public_html/components/userNavbar.php'; ?>
+    <?php include '../../../public_html/components/userNavbar.php'; ?>
     <div class="landing-page">
         <div class="content">
             <h1>Discover Your Perfect Car Persona.</h1>
@@ -36,7 +36,7 @@
             <a href="persona_test.php" class="cta-button">Find My Car</a>
         </div>
         <div class="image-container">
-            <img src="../../public_html/media/Persona_Test_Images/Landing/red-car.jpg" alt="Car" />
+            <img src="../../../public_html/media/Persona_Test_Images/Landing/red-car.jpg" alt="Car" />
         </div>
     </div>
 
@@ -49,7 +49,7 @@
 
                     <div class="swiper-slide">
                         <div class="persona-card">
-                            <img src="../../public_html/media/Persona_Test_Images/Landing/icons/eco-warrior-icon.png"
+                            <img src="../../../public_html/media/Persona_Test_Images/Landing/icons/eco-warrior-icon.png"
                                 alt="Eco-Warrior Icon" class="persona-icon">
                             <h4>Eco-Warrior</h4>
                             <p class="persona-paragraph">Focuses on eco-conscious vehicles like electric & hybrid cars,
@@ -58,7 +58,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="persona-card">
-                            <img src="../../public_html/media/Persona_Test_Images/Landing/icons/family-first-icon.png"
+                            <img src="../../../public_html/media/Persona_Test_Images/Landing/icons/family-first-icon.png"
                                 alt="Family First Icon" class="persona-icon">
                             <h4>Family First</h4>
                             <p class="persona-paragraph">Prioritizes spacious, safe vehicles for family use, typically
@@ -67,7 +67,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="persona-card">
-                            <img src="../../public_html/media/Persona_Test_Images/Landing/icons/luxury-seeker-icon.png"
+                            <img src="../../../public_html/media/Persona_Test_Images/Landing/icons/luxury-seeker-icon.png"
                                 alt="Luxury Seeker Icon" class="persona-icon">
                             <h4>Luxury Seeker</h4>
                             <p class="persona-paragraph">Focuses on high-end, premium vehicles with luxury features,
@@ -76,7 +76,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="persona-card">
-                            <img src="../../public_html/media/Persona_Test_Images/Landing/icons/tech-geek-icon.png"
+                            <img src="../../../public_html/media/Persona_Test_Images/Landing/icons/tech-geek-icon.png"
                                 alt="Tech Geek Icon" class="persona-icon">
                             <h4>Tech Geek</h4>
                             <p class="persona-paragraph">Wants cutting-edge tech in the car, such as autopilot, driver
@@ -85,7 +85,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="persona-card">
-                            <img src="../../public_html/media/Persona_Test_Images/Landing/icons/performance-enthusiast-icon.png"
+                            <img src="../../../public_html/media/Persona_Test_Images/Landing/icons/performance-enthusiast-icon.png"
                                 alt="Performance Enthusiast Icon" class="persona-icon">
                             <h4>Performance Enthusiast</h4>
                             <p class="persona-paragraph">Prefers high-performance cars with a focus on speed, handling,
@@ -95,7 +95,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="persona-card">
-                            <img src="../../public_html/media/Persona_Test_Images/Landing/icons/budget-conscious-icon.png"
+                            <img src="../../../public_html/media/Persona_Test_Images/Landing/icons/budget-conscious-icon.png"
                                 alt="Budget Conscious Icon" class="persona-icon">
                             <h4>Budget Conscious</h4>
                             <p class="persona-paragraph">Focuses on affordability, looking for the best value within a
@@ -104,7 +104,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="persona-card">
-                            <img src="../../public_html/media/Persona_Test_Images/Landing/icons/classic-car-lover-icon.png"
+                            <img src="../../../public_html/media/Persona_Test_Images/Landing/icons/classic-car-lover-icon.png"
                                 alt="Classic Car Lover Icon" class="persona-icon">
                             <h4>Classic Car Lover</h4>
                             <p class="persona-paragraph">Seeks timeless, vintage, or iconic car designs, sometimes
@@ -118,7 +118,7 @@
 
     <div class="third-section">
         <div class="image-container">
-            <img src="../../public_html/media/Persona_Test_Images/Landing/classic-car.jpg" alt="Car" />
+            <img src="../../../public_html/media/Persona_Test_Images/Landing/classic-car.jpg" alt="Car" />
         </div>
         <div class="content">
             <h1>Uncover Your Ideal Car Match..</h1>

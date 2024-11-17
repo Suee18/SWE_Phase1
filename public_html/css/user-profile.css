@@ -1,3 +1,5 @@
+@import url("./global_styles.css");
+
 body {
   height: 100vh;
   width: 100%;
@@ -20,6 +22,9 @@ body::before {
   z-index: -1;
 }
 
+.sidebar {
+  z-index: 100000000000;
+}
 .user-profile {
   display: flex;
   flex-direction: column;
@@ -144,4 +149,41 @@ body::before {
   color: var(--white);
   margin-left: 300px;
   position: fixed;
+}
+@media (max-width: 600px) {
+  .info-section {
+    width: 90%;
+    padding: 20px;
+    margin-left: 30px;
+  }
+
+  #profile-pic {
+    font-size: 100px;
+    margin-left: 250px;
+    margin-top: 50px;
+  }
+
+  .news-header {
+    width: 90%;
+    right: 5%;
+  }
+
+  .rightSidebar,
+  .news-header {
+    width: 70%;
+    right: 12%;
+    margin-top: 500px;
+    height: auto;
+  }
+
+  .news-card {
+    max-width: 80%;
+  }
+
+  .edit-icon {
+    margin-left: 0;
+    position: relative;
+    display: block;
+    margin-top: 10px;
+  }
 }

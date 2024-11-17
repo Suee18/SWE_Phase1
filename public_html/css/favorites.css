@@ -1,0 +1,33 @@
+body {
+    background-color: black; /* Set the entire webpage background to black */
+    color: white; /* Set the default text color to white for visibility */
+    margin: 0; /* Remove default body margin */
+    padding: 0; /* Remove default body padding */
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures the nav bar stays on top of other elements */
+    background-color: black; /* Optional: Keep the nav bar background black */
+    z-index: 10000;
+}
+
+.fav_cars {
+    margin-top: 200px; /* Adjust this value based on the height of your nav bar plus additional spacing */
+    margin-left: 300px; /* Adjust this value based on the height of your nav bar plus additional spacing */
+}
+
+.partsTitles_lp {
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    margin-top: 20px; /* Adjust the spacing above */
+}
+
+.mostRecommendedCarsTitle_lp {
+    font-size: 32px; /* Adjust the font size as needed */
+    color: white; /* Change to your preferred color */
+    text-align: center; /* Center-align the text itself */
+}

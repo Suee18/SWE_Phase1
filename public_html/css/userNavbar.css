@@ -246,3 +246,34 @@ body {
 .overlay.show {
   display: block;
 }
+@media (max-width: 600px) {
+  .sidebar {
+    width: 200px; 
+  }
+  .sidebar.collapsed{
+    max-width: 50px;
+  }
+  .sidebar.collapsed .collapse-btn {
+    left: 63px;
+  }
+  .collapse-btn {
+    left: 106%; 
+  }
+
+  .Apex-text {
+    font-size: 1.5rem; 
+  }
+
+  .A-logo {
+    font-size: 2.5rem; 
+  }
+
+  .popup {
+    width: 80%; 
+    padding: 15px;
+  }
+
+  .popup .buttons {
+    margin-left: 30 0px;
+  }
+}

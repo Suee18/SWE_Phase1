@@ -24,24 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
             modal.style.display = "none";
         }
     });
-
-    const swiper = new Swiper(".swiper-container", {
-        direction: "vertical",
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: "auto",
-        coverflowEffect: {
-            rotate: 0,
-            stretch: 10,
-            depth: 200,
-            modifier: 1,
-            slideShadows: true,
-        },
-        autoplay: {
-            delay: 2000,
-            disableOnInteraction: false,
-        },
-        loop: true,
-    });
 });
+
+function toggleModal() {
+    const modal = document.getElementById("comparisonModal");
+    modal.style.display = modal.style.display === "flex" ? "none" : "flex";
+}

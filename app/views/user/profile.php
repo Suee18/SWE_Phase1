@@ -12,7 +12,7 @@
 
 <body>
 
-  <?php include "../../../../SWE_Phase1/public_html/components/userNavbar.php" ?>
+  <?php include "../../../public_html/components/userNavbar.php" ?>
 
   <span id="profile-pic" class="material-symbols-outlined">account_circle</span>
 
