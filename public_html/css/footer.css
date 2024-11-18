@@ -1,39 +1,123 @@
-.footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
-}
 
-.footer-container {
+  footer {
+    margin-top:5%; 
+    background-color: rgb(3, 3, 34);
+    color: white;
+    padding: 5px 0px;
+    text-align: center;
+    height:47%;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+
+}
+  
+  /* .main-text-section {
+    margin: 30px 0;
+  } */
+  
+  .main-text {
+    font-size: 4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    letter-spacing: -2px;
+      display: inline;
+  }
+
+  .tire {
+    height: 150px; 
+    width: 100px; 
+    animation: rotate 15s linear infinite;
+    display: inline-block; 
+    vertical-align: middle; 
+    margin: 0;
+  }
+  
+  
+   @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  } 
+
+
+  .footer-sections {
     display: flex;
     justify-content: space-around;
-    padding: 20px;
-}
+    /* margin: 40px 0; */
+  }
+  
+  .footer-sections div {
+    text-align: left;
+  }
+  
+  .footer-sections h4 {
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+  }
+  
+  .footer-sections p{
+    text-align: left;
+  }
 
-.footer-section {
-    max-width: 200px;
-}
-
-.footer-section h3 {
-    color: #f4f4f4;
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.footer-section p,
-.footer-section a {
-    font-size: 14px;
-    color: #bbb;
-    text-decoration: none;
-}
-
-.footer-section a:hover {
-    color: #ddd;
-}
-
-.footer-bottom {
+  .footer-sections ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .footer-sections ul li {
+    margin: 5px 0;
     text-align: center;
-    padding-top: 10px;
-    font-size: 12px;
-    color: #aaa;
-}
+  }
+  
+  .footer-sections ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 0.9em;
+
+  }
+  
+  .footer-sections ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer-bottom {
+    /* margin-top: 20px; */
+    font-size: 0.9em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* .footer-bottom span {
+    margin: 0 10px;
+  } */
+   
+  .socials{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+
+  @media (max-width: 768px) {
+    .footer-sections {
+      flex-direction: column;
+    }
+  
+    .footer-bottom {
+      flex-direction: column;
+      margin-top: 30px;
+    }
+  
+    .main-text {
+      font-size: 2.5rem;
+    }
+  }
+  

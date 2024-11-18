@@ -28,6 +28,7 @@ if (isset($_POST['Submit'])) {
     <link rel="stylesheet" href="css/footer.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <title>Landing Page</title>
 </head>
@@ -167,30 +168,45 @@ if (isset($_POST['Submit'])) {
                 <input class="submitBtn" type="submit" id="submitReview" name="Submit">
             </form>
         </div>
+
+        
         <!-- Footer Section -->
-        <footer class="footer">
-            <div class="footer-container">
-                <div class="footer-section">
-                    <h3>About Us</h3>
-                    <p>Your go-to platform for car comparisons, reviews, and recommendations. Helping you find the
-                        perfect car.</p>
+        <footer>
+  <div class="footer-container">
+  
+
+    <div class="main-text-section">
+      <h1 class="main-text">
+        GET IN T<span class="tire"><img class="tire" src="../public_html/media/tire.png"></span>UCH
+      </h1>
+      
+    </div>
+
+    <div class="footer-sections">
+        <div class="about-us">
+           <h4>About Us</h4>
+                  <p>We’re dedicated to revolutionizing the<br> way you find your perfect car. Our <br>AI-powered platform 
+                   offers personalized <br>car recommendations tailored to your<br> preferences, budget, and lifestyle. </p>
                 </div>
-                <div class="footer-section">
-                    <h3>Contact Us</h3>
-                    <p>Email: support@example.com</p>
-                    <p>Phone: +123 456 7890</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Follow Us</h3>
-                    <p><a href="#">Facebook</a></p>
-                    <p><a href="#">Twitter</a></p>
-                    <p><a href="#">Instagram</a></p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 YourCompanyName. All Rights Reserved.</p>
-            </div>
-        </footer>
+
+      <div class="navigation">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Compare Cars</a></li>
+     
+        </ul>
+      </div>
+      <span>
+        <h4>Social Media</h4>
+        <ul  class="socials">
+          <li><a href="#"><i class="icons fa-solid fa-envelope fa-xl"></i></a></li>
+          <li><a href="#"><i class="icons fa-brands fa-facebook fa-xl"></i></a></li>
+          <li><a href="#"><i class="icons fa-brands fa-instagram fa-xl"></i></a></li>
+        </ul>
+                </span>
+   
+</footer>
 
         <script src="../public_html/js/landing_page.js"></script>
 </body>
