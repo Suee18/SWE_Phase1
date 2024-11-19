@@ -244,7 +244,7 @@ if (isset($_POST['deleteReview'])) {
 
                         </div>
                         <!-- Hidden field for form action -->
-                        <input type="hidden" name="action" id="formAction" value="">
+                        <input type="hidden" name="action" id="userformAction" value="">
                         <div class="CRUD_bigcontainer">
                             <p class="controlPanel_text">control panel</p>
 
@@ -261,7 +261,7 @@ if (isset($_POST['deleteReview'])) {
                                     </button>
 
                                     <button style="display:none" class="button" name="addButton" type="submit"
-                                        id="addButton" onclick="setAction('add')">
+                                        id="addButton" onclick="setAction('userformAction','add')">
                                         <span class="button__text">Add user</span>
                                         <span class="button__icon">
                                             <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
@@ -305,11 +305,88 @@ if (isset($_POST['deleteReview'])) {
             This is Logout loader
         </div>
 
-        <div id="div5" class="content-div" style="display: none;">
-            cars control form goes here
-        </div>
+        <!-- ==========================CAR FORM========================= -->
+    <div id="div5" class="content-div" style="display: none;">
+        <div class="small-container">
+                <div class="formContainer">
+                    <form id="carForm" method="POST" action="admin.php" onsubmit="return validate(this)">
+                      <div class="formInputfields">
+                             <!-- hidden input to get the car id from DB -->
+                              <input type="hidden" name="car_id" id="car_id" value="">
+                             <div>
+                                <label class="carformLabels" for="name">Car Name</label>
+                                <input type="text" name="name" id="name" readonly disabled>
+                                <span id="nameERR" class="error"></span>
+                             </div>
+
+                             <div>
+                                <label class="carformLabels" for="type">Car Type</label>
+                                <input type="text" name="type" id="type" readonly disabled>
+                                <span id="typeERR" class="error"></span>
+                             </div>
+
+                             <div>
+                                <label class="carformLabels" for="engine">Car Engine</label>
+                                <input type="text" name="engine" id="engine" readonly disabled>
+                                <span id="engineERR" class="error"></span>
+                             </div>
+
+                             
+                             <div>
+                                <label class="carformLabels" for="power">Car Power</label>
+                                <input type="text" name="power" id="power" readonly disabled>
+                                <span id="powerERR" class="error"></span>
+                             </div>
+
+                             <div>
+                                <label class="carformLabels" for="fuelEconomy">Fuel Economy</label>
+                                <input type="text" name="fuelEconomy" id="fuelEconomy" readonly disabled>
+                                <span id="fuelEconomyERR" class="error"></span>
+                             </div>
+
+                             <div>
+                                <label class="carformLabels" for="torque">Torque</label>
+                                <input type="text" name="torque" id="torque" readonly disabled>
+                                <span id="torqueERR" class="error"></span>
+                             </div>
+                      </div>
+
+                          <!-- Hidden field for form action -->
+                          <input type="hidden" name="action" id="carformAction" value="">
 
 
+
+                          <div class="CRUD_bigcontainer">
+                          <p class="controlPanel_text">control panel</p>
+  <!-- Buttons -->
+  <div class="CRUD_control">
+                                <div class="CRUDcontainer">
+                                    <!-- add -->
+                                    <button class="button" name="addUser" type="button" id="addCarButton"
+                                        onclick="enableFormFields(); switchAddButtons();">
+                                        <span class="button__text">Add Car</span>
+                                        <span class="button__icon">
+                                            <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
+                                        </span>
+                                    </button>
+
+                                    <button style="display:none" class="button" name="addButton" type="submit"
+                                        id="addButton" onclick="setAction('carformAction','add')">
+                                        <span class="button__text">Add Car</span>
+                                        <span class="button__icon">
+                                            <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
+                                        </span>
+                                    </button>
+                                    </div>
+                          
+                      
+                    </form>
+                </div>
+         </div>
+                             
+    </div>
+
+<!-- ========================Reviews=================== -->
         <div id="div6" class="content-div" style="display: none;">
             <div class="small-container">
 

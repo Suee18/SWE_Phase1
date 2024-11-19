@@ -355,9 +355,11 @@ function clearForm() {
     document.getElementById("saveButton").disabled = false;
 }
 
-//for specifying the crud operation
-function setAction(action) {
-    document.getElementById("formAction").value = action;
+// specifying the crud operation for car/user form
+function setAction(formId, action) {
+    const form = document.getElementById(formId);
+        form.value = action;
+
 }
 
 // Form validation

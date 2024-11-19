@@ -8,7 +8,7 @@ include_once "../../config/db_config.php";
         $email = mysqli_real_escape_string($conn, htmlspecialchars($_POST["email"]));
         $gender = mysqli_real_escape_string($conn, htmlspecialchars($_POST["gender"]));
 
-        $sql = "insert into users (username,age, password, type, email, gender) VALUES ('$username', '$birth_date', '$password', '$type', '$email', '$gender')";
+        $sql = "insert into users (username,birthdate, password, type, email, gender) VALUES ('$username', '$birth_date', '$password', '$type', '$email', '$gender')";
         $result = mysqli_query($conn, $sql);
       
 
