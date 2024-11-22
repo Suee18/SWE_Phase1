@@ -1,5 +1,6 @@
 // Get all the radio buttons and divs
 const radios = document.querySelectorAll('input[name="nav"]');
+const cards = document.querySelectorAll(".card");
 const div0 = document.getElementById("div0");
 const div1 = document.getElementById("div1");
 // const div2 = document.getElementById('div2');
@@ -8,6 +9,51 @@ const div4 = document.getElementById("div4");
 const div5 = document.getElementById("div5");
 const div6 = document.getElementById("div6");
 const div7 = document.getElementById("div7");
+
+
+
+function showNavbar() {
+    const navbar = document.querySelector('.header_admin'); 
+    if (navbar) {
+        navbar.style.display = 'block'; 
+    }
+    document.querySelector('.content').style.marginTop='2rem';
+}
+
+
+// Add event listeners to each card
+cards.forEach((card) => {
+    card.addEventListener("click", function () {
+        showNavbar();
+
+        const value = card.querySelector("[data-value]")?.dataset.value;
+
+        switch (value) {
+            case "home":
+                showDiv(div0);
+                break;
+            case "statistics":
+                showDiv(div1);
+                break;
+            case "usersControl":
+                showDiv(div3);
+                break;
+            case "logout":
+                showDiv(div4);
+                break;
+            case "carsControl":
+                showDiv(div5);
+                break;
+            case "reviewsControl":
+                showDiv(div6);
+                break;
+            default:
+                showDiv(div1); 
+        }
+    });
+});
+
+
 
 // Add event listeners to each radio button
 radios.forEach((radio) => {

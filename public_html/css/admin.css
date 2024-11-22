@@ -11,7 +11,8 @@
 
 html {
     /* background-image: url('../media/admin-bg-1.jpg'); */
-    background-image: url('../media/admin-bg-4.jpg'); /* Dark circles */
+    /* background-image: url('../media/admin-bg-4.jpg'); Dark circles */
+    background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/348b59120390031.60b08d2dde168.png");
     /* background-image: url('../media/admin-bg-8.jpg'); TECH*/
 
     /* background-image: url('../media/mostr_lp6LOW.jpg'); */
@@ -27,7 +28,65 @@ html {
 
 .header_admin {
     margin-top: 1rem;
+    display: none;
 }
+
+/*=================landing page================*/
+.welcom-admin{
+margin-top: 3%;
+color: #30bbe6;
+font-size: 40px;
+margin-left: 37%;
+}
+
+.card-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 4%;
+    flex: 1 1 calc(33.33% - 20px);
+}
+
+.card {
+    border: 1px solid transparent;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 290px;
+    height: 180px;
+    padding: 20px;
+    text-align: center;
+    background-color: #0000006c;
+    backdrop-filter: blur(6px);
+    border-radius: 10%;
+    cursor: pointer;
+
+}
+
+.card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); 
+    background: rgba(38, 38, 41, 0.3); 
+    backdrop-filter: blur(15px); 
+}
+
+.card-icon {
+    font-size: 45px;
+    color: #4194bb;
+    margin-bottom: 5px;
+    margin-top: 10%;
+}
+
+.card-content h3 {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #666;
+}
+
+
+
+
+
 
 /* ===================Navbar ====================== */
 .admin-navbar {
@@ -71,7 +130,7 @@ html {
     display: none;
 }
 
-.welcome{
+/* .welcome{
       font-family: var(--technoRace_font);
     font-weight: 100;
     margin-left: 18rem;
@@ -106,12 +165,12 @@ background-image: url('../media/admin-icon2.png');
   height: 100px;
   margin-left: 1.2rem;
   margin-top: 0.5rem;
-}
+} */
 /*=========== Big container==================== */
 .content {
-    margin-top: 2rem;
+    margin-top: 4.5rem;
     padding: 5px 5px;
-    height: 80vh;
+    height: 85vh;
     width: 80vw;
     margin-left: 8rem;
 

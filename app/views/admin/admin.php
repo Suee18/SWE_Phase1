@@ -1,7 +1,8 @@
 <?php
 
-include_once "../../config/db_config.php";
-include 'C:\xampp\htdocs\SWE Project\SWE_Phase1\models\ReviewsClass.php';
+include_once 'C:\xampp\htdocs\SWE Project\SWE_Phase1\app\config\db_config.php';
+ include 'C:\xampp\htdocs\SWE Project\SWE_Phase1\models\ReviewsClass.php';
+
 
 $users = [];
 $sql = "select id, username,birthdate, gender, password, email,type FROM users";
@@ -100,14 +101,86 @@ if (isset($_POST['deleteReview'])) {
 
     <!-- Content Area -->
     <div class="content">
-
+    
         <div id="div0" class="content-div" style="display: block;">
-        <div class="welcomeIcon1"></div>
-
+        <!-- <div class="welcomeIcon1"></div>
             <div class="welcome">welcome, Admin</div>
             <div class="welcomeParagraph">Access the website insights and have full control over everything through this dashboard</div>
-<div class="welcomeIcon"></div>
+<div class="welcomeIcon"></div> -->
+
+<h1 class="welcom-admin">Admin Dashboard</h1>
+<div class="card-container">
+   
+ <!-- Home Card -->
+ <div class="card" id="card1">
+        <div class="card-icon">
+        <i class="fa-solid fa-house"></i>
+  
         </div>
+        <div class="card-content">
+            <h3 data-value="home">Home</h3> 
+        </div>
+    </div>
+
+
+    <!-- Statstics Card -->
+    <div class="card" id="card2">
+        <div class="card-icon">
+        <i class="fa-solid fa-chart-pie "></i>
+  
+        </div>
+        <div class="card-content">
+            <h3 data-value="statistics"> Statistics</h3>
+        </div>
+    </div>
+
+    <!-- Users Card -->
+    <div class="card" id="card3">
+        <div class="card-icon">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="card-content">
+            <h3 data-value="usersControl">Users</h3>
+        </div>
+    </div>
+
+     <!-- Cars Card -->
+     <div class="card" id="card4">
+        <div class="card-icon">
+        <i class="fa-solid fa-car"></i>
+  
+        </div>
+        <div class="card-content">
+            <h3 data-value="carsControl"> Cars</h3>
+        </div>
+    </div>
+
+     <!-- Reviews Card -->
+     <div class="card" id="card5">
+        <div class="card-icon">
+        <i class="fa-regular fa-note-sticky"></i>
+  
+        </div>
+        <div class="card-content">
+            <h3 data-value="reviewsControl"> Reviews</h3>
+        </div>
+    </div>
+
+     <!-- Logout Card -->
+     <div class="card" id="card6">
+        <div class="card-icon">
+        <i class="fa-solid fa-right-from-bracket"></i>
+  
+        </div>
+        <div class="card-content">
+            <h3 data-value="logout"> Log Out</h3>
+        </div>
+    </div>
+</div>
+
+   
+</div>
+
 
 
         <!--======================= statistics =================================-->
@@ -387,7 +460,7 @@ if (isset($_POST['deleteReview'])) {
     </div>
 
 <!-- ========================Reviews=================== -->
-        <div id="div6" class="content-div" style="display: none;">
+<div id="div6" class="content-div" style="display: none;">
             <div class="small-container">
 
                 <div class="table-container-adminReview">

@@ -1,6 +1,6 @@
 <?php
 
-include_once "../app/config/db_config.php";
+include_once 'C:\xampp\htdocs\SWE Project\SWE_Phase1\app\config\db_config.php';
 
 class Cars{
     public $id;
