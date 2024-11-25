@@ -10,7 +10,7 @@ $result = mysqli_query($conn, $sql);
 
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $users[] = $row; // Store each user in the $users array
+        $users[] = $row; 
     }
 } else {
     echo "Error fetching users: " . mysqli_error($conn);

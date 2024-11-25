@@ -133,43 +133,42 @@ if (isset($_POST['Submit'])) {
     </div>
 
 
-    <!----------------PART 3:Reviews--------------------------->
-    <div class="landingPage_part3">
-        <div class="partsTitles_lp">
-            <P class="reviewsTitle_lp">
-                Reviews
-            </P>
-        </div>
-        <div class="reviews-section">
-            <h2 class="header">What our Clients say!</h2>
+<!----------------PART 3:Reviews--------------------------->
+<div class="landingPage_part3">
+    <div class="partsTitles_lp">
+        <p class="reviewsTitle_lp">Reviews</p>
+    </div>
+    <div class="reviews-section">
+        <h2 class="header">What our Clients say!</h2>
 
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <?php
-                    foreach ($reviewsSliderArray as $review) {
-                        echo '<div class="swiper-slide">
-                                <div class="review-card">
-                                    <h4>' . htmlspecialchars($review->reviewUserName) . '</h4>
-                                    <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
-                                </div>
-                              </div>';
-                    }
-                    ?>
-                </div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <?php
+                foreach ($reviewsSliderArray as $review) {
+                    echo '<div class="swiper-slide">
+                            <div class="review-card">
+                                <h4>' . htmlspecialchars($review->reviewUserName, ENT_QUOTES, 'UTF-8') . '</h4>
+                                <p class="review-paragraph">' . htmlspecialchars($review->reviewText, ENT_QUOTES, 'UTF-8') . '</p>
+                            </div>
+                          </div>';
+                }
+                ?>
             </div>
         </div>
-        <button class="reviewBtn" id="openOverlay">Add your own review!</button>
+    </div>
+    <button class="reviewBtn" id="openOverlay">Add your own review!</button>
 
-        <div class="overlay" id="reviewOverlay">
-            <form class="overlay-content" method="post">
-                <span class="closeBtn" id="closeOverlay">&times;</span>
-                <h2>Write your review</h2>
-                <textarea id="reviewText" placeholder=" Write your review here..." name="reviewText" required></textarea>
-                <input class="submitBtn" type="submit" id="submitReview" name="Submit">
-            </form>
-        </div>
+    <div class="overlay" id="reviewOverlay">
+        <form class="overlay-content" method="post">
+            <span class="closeBtn" id="closeOverlay">&times;</span>
+            <h2>Write your review</h2>
+            <textarea id="reviewText" placeholder=" Write your review here..." name="reviewText" required></textarea>
+            <input class="submitBtn" type="submit" id="submitReview" name="Submit" value="Submit">
+        </form>
+    </div>
+</div>
 
-        
+
         <!-- Footer Section -->
         <footer>
   <div class="footer-container">
