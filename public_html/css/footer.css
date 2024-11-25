@@ -1,16 +1,17 @@
 
   footer {
-    margin-top:5%; 
-    background-color: rgb(3, 3, 34);
-    color: white;
+
+    background: var(--grad1);
+    backdrop-filter: blur(1px);
+    color: #e6d8d8;
     padding: 5px 0px;
     text-align: center;
-    height:47%;
+    height:45%;
   }
   
   .footer-container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin-left: 7%;
 
 }
   
@@ -21,15 +22,17 @@
   .main-text {
     font-size: 3.5rem;
     font-weight: bold;
+    font-family: var(--technoRace_font);
     text-transform: uppercase;
     position: relative;
     letter-spacing: -2px;
       display: inline;
+      margin-left: 5%;
   }
 
   .tire {
-    height: 150px; 
-    width: 100px; 
+    height: 140px; 
+    width: 90px; 
     animation: rotate 15s linear infinite;
     display: inline-block; 
     vertical-align: middle; 
@@ -65,21 +68,18 @@
   
   .footer-sections p{
     text-align: left;
+    font-family: var( --paragraph_font);
   }
 
   .footer-sections ul {
     list-style-type: none;
     padding: 0;
   }
-  
-  .footer-sections ul li {
-    margin: 5px 0;
-    text-align: center;
-  }
+
   
   .footer-sections ul li a {
     text-decoration: none;
-    color: white;
+    color: #e6d8d8;
     font-size: 0.9em;
 
   }
@@ -96,6 +96,11 @@
     align-items: center;
   }
   
+  .nav{
+ text-align: center;
+ padding-right: 5%;
+  }
+
   /* .footer-bottom span {
     margin: 0 10px;
   } */

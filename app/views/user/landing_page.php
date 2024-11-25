@@ -191,8 +191,8 @@ if (isset($_POST['Submit'])) {
       <div class="navigation">
         <h4>Navigation</h4>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Compare Cars</a></li>
+          <li class="nav"><a href="#">Home</a></li>
+          <li class="nav"><a href="#">Compare Cars</a></li>
      
         </ul>
       </div>
