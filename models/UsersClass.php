@@ -123,7 +123,7 @@ class Users
     }
 
     // Update user (prevent updating userTypeID)
-    public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email, $loginMethod)
+    public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email)
     {
         global $conn;
 
@@ -134,11 +134,10 @@ class Users
         $password = mysqli_real_escape_string($conn, htmlspecialchars($password));
         $email = mysqli_real_escape_string($conn, htmlspecialchars($email));
         $gender = mysqli_real_escape_string($conn, htmlspecialchars($gender));
-        $loginMethod = mysqli_real_escape_string($conn, htmlspecialchars($loginMethod));
 
         // Update user data in the database (without modifying userTypeID)
         $sql = "UPDATE User 
-                SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email', loginMethod='$loginMethod' 
+                SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email' 
                 WHERE ID='$user_id'";
         return mysqli_query($conn, $sql);
     }
