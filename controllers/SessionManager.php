@@ -21,7 +21,7 @@ class SessionManager
     {
         // Store user details in the session
         $_SESSION['user'] = $user;
-        $_SESSION['userTypeID'] = $user['userTypeID']; // Set userTypeID from user object
+        $_SESSION['userTypeID'] = $user->userTypeID; // Set userTypeID from user object
     }
 
     public static function destroySession()
@@ -37,19 +37,16 @@ class SessionManager
 
     public static function getUser()
     {
-        if (!isset($_SESSION['user'])) {
-            throw new Exception("User session not found.");
-        }
-        return $_SESSION['user'];
+        return $_SESSION['user'] ?? null;
     }
 
 
     public static function updateLoginCounter()
     {
-        $_SESSION['user']['loginCounter'] += 1;
+        $_SESSION['user']->loginCounter += 1;
 
         global $conn;
-        $sql = "UPDATE user SET loginCounter = loginCounter + 1 WHERE ID = " . $_SESSION['user']['ID'];
+        $sql = "UPDATE user SET loginCounter = loginCounter + 1 WHERE ID = " . $_SESSION['user']->id;
         $result = mysqli_query($conn, $sql);
         return $result;
     }
