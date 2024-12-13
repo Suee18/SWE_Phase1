@@ -9,15 +9,20 @@
 include_once __DIR__ . '\..\..\config\db_config.php';
 include __DIR__ . '\..\..\..\models\ReviewsClass.php';
 include __DIR__ . '\..\..\..\models\UsersClass.php';
+include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
 $reviewsSliderArray = Reviews::getLastNumberOfReviews(7);
 
 if (isset($_POST['Submit'])) {
     $reviewText = mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewText']));
+    $reviewCategory = mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewCategory']));
     $reviewDate = date('Y-m-d H:i:s');
-    $reviewUserName = "Anonymous";
-    $reviewCategory = "General";
 
-    $review = new Reviews($reviewText, $reviewCategory, $reviewDate, 5, 2);
+    $user = SessionManager::getUser();
+    $userID = $user ? $user['ID'] : null;
+
+    $reviewUserName = "Anonymous";
+
+    $review = new Reviews($reviewText, $reviewCategory, $reviewDate, 5, $userID);
     $result = $review->addReviewIntoDB($review);
 }
 ?>
@@ -45,7 +50,7 @@ if (isset($_POST['Submit'])) {
 </head>
 
 <body>
-    
+
     <?php include '../public_html/components/nav_bar.php'; ?>
 
     <div class="slideShowContainer_lp">
@@ -113,7 +118,8 @@ if (isset($_POST['Submit'])) {
 
         <!-- Slide 4: -->
         <div class="slide" id="slide4">
-            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ac03f9160627007.63c65854745ec.jpg" class="slide-bg" alt="Image Background">
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ac03f9160627007.63c65854745ec.jpg"
+                class="slide-bg" alt="Image Background">
             <!-- <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/de399d160627007.63bc726268b18.jpg" class="slide-bg" alt="Image Background" style="margin-top: 10px;"> -->
             <!-- <img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/260f6b160627007.63c655267b415.jpg
 " class="slide-bg" alt="Image Background" style="margin-top: 50px;"> -->
@@ -170,7 +176,7 @@ if (isset($_POST['Submit'])) {
                             foreach ($reviewsSliderArray as $review) {
                                 echo '<div class="swiper-slide">
                                 <div class="review-card">
-                                    <h4 class="reviewUserName">' . htmlspecialchars($review->reviewUserName) . '</h4>
+                                    <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
                                     <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
                                 </div>
                               </div>';
@@ -199,7 +205,7 @@ if (isset($_POST['Submit'])) {
                         <span class="closeBtn" id="closeOverlay">&times;</span>
                         <h2>Write your review</h2>
                         <div class="review-buttons" id="reviewButtons">
-                            <div class="button" data-choice="Apex">
+                            <div class="button" type="submit" name="reviewCategory" data-choice="Apex">
                                 <div class="button-wrapper">
                                     <div class="text">Apex</div>
                                     <span class="icon">
@@ -207,7 +213,7 @@ if (isset($_POST['Submit'])) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="button" data-choice="Comparison">
+                            <div class="button" type="submit" name="reviewCategory" data-choice="Comparison">
                                 <div class="button-wrapper">
                                     <div class="text">Comparison</div>
                                     <span class="icon">
@@ -215,7 +221,7 @@ if (isset($_POST['Submit'])) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="button" data-choice="Search">
+                            <div class="button" type="submit" name="reviewCategory" data-choice="Search">
                                 <div class="button-wrapper">
                                     <div class="text">Search</div>
                                     <span class="icon">
@@ -223,7 +229,7 @@ if (isset($_POST['Submit'])) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="button" data-choice="Persona Test">
+                            <div class="button" type="submit" name="reviewCategory" data-choice="Persona Test">
                                 <div class="button-wrapper">
                                     <div class="text">Persona Test</div>
                                     <span class="icon">
@@ -231,7 +237,7 @@ if (isset($_POST['Submit'])) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="button" data-choice="Turbo">
+                            <div class="button" type="submit" name="reviewCategory" data-choice="Turbo">
                                 <div class="button-wrapper">
                                     <div class="text">Turbo</div>
                                     <span class="icon">
@@ -239,7 +245,7 @@ if (isset($_POST['Submit'])) {
                                     </span>
                                 </div>
                             </div>
-                            <div class="button" data-choice="Apex Community">
+                            <div class="button" type="submit" name="reviewCategory" data-choice="Apex Community">
                                 <div class="button-wrapper">
                                     <div class="text">ApexConnect</div>
                                     <span class="icon">
@@ -248,7 +254,9 @@ if (isset($_POST['Submit'])) {
                                 </div>
                             </div>
                         </div>
-                        <textarea id="reviewText" placeholder=" Write your review here..." name="reviewText" required></textarea>
+                        <textarea id="reviewText" placeholder=" Write your review here..." name="reviewText"
+                            required></textarea>
+                        <input type="hidden" id="reviewCategory" name="reviewCategory" value="">
                         <input class="submitBtn" type="submit" id="submitReview" name="Submit">
                     </form>
                 </div>
