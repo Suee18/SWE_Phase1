@@ -73,15 +73,21 @@ class Reviews
         return $reviews;
     }
 
-    // Add a new review to the database
-    function addReviewIntoDB($review)
+    // Add a review to the database
+    public function addReviewIntoDB($review)
     {
         global $conn;
-        // Adjusted to include new fields from the new DB schema
+
         $sql = "INSERT INTO reviews (reviewText, reviewCategory, reviewDate, reviewRating, userID) 
-                VALUES ('$review->reviewText', '$review->reviewCategory', '$review->reviewDate', '$review->reviewRating', '$review->userID')";
-        $result = mysqli_query($conn, $sql);
-        return $result;
+                VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ssssi', $review->reviewText, $review->reviewCategory, $review->reviewDate, $review->reviewRating, $review->userID);
+
+        if (!$stmt->execute()) {
+            die('Error executing query: ' . $stmt->error);
+        }
+
+        return true;
     }
 
     // Delete a review from the database

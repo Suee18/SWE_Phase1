@@ -491,6 +491,30 @@ body {
   transform: scale(1);
 }
 
+#starRatingContainer {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+  gap: 5px;
+}
+
+.star {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.star.highlighted {
+  color: gold;
+}
+
+textarea.active,
+.submitBtn.active {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
 .closeBtn {
   position: absolute;
   top: 15px;

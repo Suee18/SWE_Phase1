@@ -1,28 +1,26 @@
 <?php
-// include_once 'C:\xampp\htdocs\SWE Project\SWE_Phase1\app\config\db_config.php';
-// include 'C:\xampp\htdocs\SWE Project\SWE_Phase1\models\UsersClass.php';
-// include 'C:\xampp\htdocs\SWE Project\SWE_Phase1\models\ReviewsClass.php';
-
-// include_once 'C:\xampp\htdocs\SWE_Phase1\app\config\db_config.php';
-// include 'C:\xampp\htdocs\SWE_Phase1\models\UsersClass.php';
-// include 'C:\xampp\htdocs\SWE_Phase1\models\ReviewsClass.php';
 include_once __DIR__ . '\..\..\config\db_config.php';
 include __DIR__ . '\..\..\..\models\ReviewsClass.php';
 include __DIR__ . '\..\..\..\models\UsersClass.php';
 include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
+SessionManager::startSession();
+
 $reviewsSliderArray = Reviews::getLastNumberOfReviews(7);
 
 if (isset($_POST['Submit'])) {
     $reviewText = mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewText']));
     $reviewCategory = mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewCategory']));
     $reviewDate = date('Y-m-d H:i:s');
+    $reviewRating = $_POST['starRating'] ?? NULL;
 
     $user = SessionManager::getUser();
-    $userID = $user ? $user['ID'] : null;
+    if ($user) {
+        $userID = $user->id;
+    } else {
+        $userID = null;
+    }
 
-    $reviewUserName = "Anonymous";
-
-    $review = new Reviews($reviewText, $reviewCategory, $reviewDate, 5, $userID);
+    $review = new Reviews($reviewText, $reviewCategory, $reviewDate, $reviewRating, $userID);
     $result = $review->addReviewIntoDB($review);
 }
 ?>
@@ -209,7 +207,7 @@ if (isset($_POST['Submit'])) {
                                 <div class="button-wrapper">
                                     <div class="text">Apex</div>
                                     <span class="icon">
-                                        <img src=" ../public_html/media/website.png" alt="Website Icon">
+                                        <img src="../public_html/media/website.png" alt="Website Icon">
                                     </span>
                                 </div>
                             </div>
@@ -217,7 +215,7 @@ if (isset($_POST['Submit'])) {
                                 <div class="button-wrapper">
                                     <div class="text">Comparison</div>
                                     <span class="icon">
-                                        <img src=" ../public_html/media/compare.png" alt="Website Icon">
+                                        <img src="../public_html/media/compare.png" alt="Website Icon">
                                     </span>
                                 </div>
                             </div>
@@ -225,7 +223,7 @@ if (isset($_POST['Submit'])) {
                                 <div class="button-wrapper">
                                     <div class="text">Search</div>
                                     <span class="icon">
-                                        <img src=" ../public_html/media/website.png" alt="Website Icon">
+                                        <img src="../public_html/media/website.png" alt="Website Icon">
                                     </span>
                                 </div>
                             </div>
@@ -233,7 +231,7 @@ if (isset($_POST['Submit'])) {
                                 <div class="button-wrapper">
                                     <div class="text">Persona Test</div>
                                     <span class="icon">
-                                        <img src=" ../public_html/media/test.png" alt="Website Icon">
+                                        <img src="../public_html/media/test.png" alt="Website Icon">
                                     </span>
                                 </div>
                             </div>
@@ -254,9 +252,10 @@ if (isset($_POST['Submit'])) {
                                 </div>
                             </div>
                         </div>
-                        <textarea id="reviewText" placeholder=" Write your review here..." name="reviewText"
-                            required></textarea>
-                        <input type="hidden" id="reviewCategory" name="reviewCategory" value="">
+                        <input type="hidden" id="reviewCategory" name="reviewCategory">
+                        <textarea id="reviewText" placeholder="Write your review here..." name="reviewText" required></textarea>
+                        <div id="starRatingContainer" style="display: none;"></div>
+                        <input type="hidden" id="starRating" name="starRating">
                         <input class="submitBtn" type="submit" id="submitReview" name="Submit">
                     </form>
                 </div>
