@@ -116,6 +116,17 @@ class Users
             VALUES ('$username', '$birthdate', '$gender', '$password', '$email', '$userTypeID', '$loginMethod', '$timeStamp')";
 
         if (mysqli_query($conn, $sql)) {
+            // Get the last inserted user ID
+            $userId = mysqli_insert_id($conn);
+            $user = new Users($username, $birthdate, $gender, $password, $email, $userTypeID, $loginMethod, null, 0, $timeStamp);
+
+            $user->setId($userId);
+
+            // Initialize session
+            SessionManager::startSession();
+            SessionManager::setSessionUser($user);
+            SessionManager::updateLoginCounter();
+            
             return true;
         }
 
