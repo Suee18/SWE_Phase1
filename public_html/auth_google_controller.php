@@ -46,6 +46,7 @@ if (isset($_GET['code'])) {
         if ($response) {
             // User was successfully signed up
             $user = $response['user'];
+            
 
             SessionManager::startSession();
             SessionManager::setSessionUser($user);

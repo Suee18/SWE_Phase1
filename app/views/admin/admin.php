@@ -6,7 +6,7 @@ include '../../../models/ReviewsClass.php';
 
 
 $users = [];
-$sql = "select id, username,birthdate, gender, password, email,type FROM users";
+$sql = "select id, username,birthdate, gender, password, email,userTypeID FROM user";
 $result = mysqli_query($conn, $sql);
 
 if ($result) {
