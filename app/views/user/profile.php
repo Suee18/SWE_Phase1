@@ -1,3 +1,8 @@
+<?php
+require_once __DIR__ . '/../../../middleware/user_auth.php';
+user_auth("User Profile");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
