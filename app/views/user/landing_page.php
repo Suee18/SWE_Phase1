@@ -172,17 +172,25 @@ if (isset($_POST['Submit'])) {
                         <div class="swiper-wrapper">
                             <?php
                             foreach ($reviewsSliderArray as $review) {
+                                $rating = $review->reviewRating;
+                                $stars = '';
+                                for ($i = 1; $i <= 5; $i++) {
+                                    $stars .= $i <= $rating ? '<span class="rating filled">★</span>' : '<span class="rating">★</span>';
+                                }
+
                                 echo '<div class="swiper-slide">
-                                <div class="review-card">
-                                    <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
-                                    <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
-                                </div>
-                              </div>';
+                        <div class="review-card">
+                            <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
+                            <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
+                            <div class="review-rating">' . $stars . '</div>
+                        </div>
+                    </div>';
                             }
                             ?>
                         </div>
                     </div>
                 </div>
+
 
                 <button class="btn" id="openOverlay">
                     <svg xmlns="http://www.w3.org/2000/svg" class="arr-2" viewBox="0 0 24 24">
