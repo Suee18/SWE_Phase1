@@ -1,11 +1,4 @@
 <?php
-// include_once 'C:\xampp\htdocs\SWE Project\SWE_Phase1\app\config\db_config.php';
-// include 'C:\xampp\htdocs\SWE Project\SWE_Phase1\models\UsersClass.php';
-// include 'C:\xampp\htdocs\SWE Project\SWE_Phase1\models\ReviewsClass.php';
-
-// include_once 'C:\xampp\htdocs\SWE_Phase1\app\config\db_config.php';
-// include 'C:\xampp\htdocs\SWE_Phase1\models\UsersClass.php';
-// include 'C:\xampp\htdocs\SWE_Phase1\models\ReviewsClass.php';
 include_once __DIR__ . '\..\..\config\db_config.php';
 include __DIR__ . '\..\..\..\models\ReviewsClass.php';
 include __DIR__ . '\..\..\..\models\UsersClass.php';
@@ -74,8 +67,6 @@ if (isset($_POST['Submit'])) {
             </div>
         </div>
 
-
-
         <!-- Slide 2 -->
 
         <div class="slide" id="slide2">
@@ -91,9 +82,6 @@ if (isset($_POST['Submit'])) {
             </div>
 
         </div>
-
-
-
 
         <!-- Slide 3:  -->
         <div class="slide" id="slide3">
