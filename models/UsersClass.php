@@ -60,7 +60,7 @@ class Users
     }
 
     // Fetch all users from the database
-    static function getAllUsers()
+    public static function getAllUsers()
     {
         global $conn;
         $sql = "SELECT * FROM User";
@@ -68,7 +68,16 @@ class Users
         $users = [];
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                $user = new Users($row["userName"], $row["birthdate"], $row["gender"], $row["password"], $row["email"], $row["userTypeID"], $row["loginMethod"], $row["personaID"], $row["loginCounter"], $row["Timestamp"]);
+                $user = new Users($row["userName"],
+                 $row["birthdate"], 
+                 $row["gender"], 
+                 $row["password"],
+                  $row["email"],
+                   $row["userTypeID"],
+                    $row["loginMethod"], 
+                    $row["personaID"],
+                     $row["loginCounter"], 
+                     $row["Timestamp"]);
                 $user->id = $row["ID"];
                 array_push($users, $user);
             }
@@ -91,6 +100,26 @@ class Users
         return $user;
     }
 
+    public static function viewAllUsers(){
+        global $conn;  // Ensure the global $conn variable is accessible
+
+        // SQL query to fetch all users
+        $sql = "SELECT * FROM user";
+        $result = mysqli_query($conn, $sql);  // Execute the query
+
+        if (!$result) {
+            // Return an error message if the query fails
+            die("Error fetching users: " . mysqli_error($conn));
+        }
+
+        // Store the results in an array
+        $users = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $users[] = $row;  // Add each user to the $users array
+        }
+
+        return $users;  // Return the array of users
+    }
 
     // Add a new user with userTypeID validation and associate valid pages
     public static function addUser($username, $birthdate, $gender, $password, $email, $userTypeID, $timeStamp, $loginMethod)
@@ -157,7 +186,7 @@ class Users
     }
     
 
-    // Update user (prevent updating userTypeID)
+    // Update user
     public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email,$userType)
     {
         global $conn;
@@ -173,7 +202,7 @@ class Users
 
 
         $userTypeID = ($userType === 'admin') ? 2 : 1; 
-        // Update user data in the database (without modifying userTypeID)
+        // Update user data in the database 
         $sql = "UPDATE User 
                 SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email' , userTypeID='$userTypeID' 
                 WHERE ID='$user_id'";
@@ -190,6 +219,8 @@ class Users
         $sql = "DELETE FROM User WHERE ID='$user_id'";
         return mysqli_query($conn, $sql);
     }
+
+    
 
     // Login user
     static function loginUser($username, $password)

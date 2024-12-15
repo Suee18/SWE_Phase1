@@ -1,3 +1,16 @@
+<?php
+
+include_once __DIR__ . '../../../../controllers/SessionManager.php';
+include __DIR__ . '../../../../models/UsersClass.php';
+SessionManager::startSession();
+
+if (!isset($_SESSION['user'])) {
+  
+    header("Location: login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,13 +34,17 @@
 
       <div class="info-section">
         <h2 class="info-title">Full Name:</h2>
-        <div class="info-content editable" contenteditable="false">John Doe</div>
+        <div class="info-content editable" contenteditable="false">     
+           <?php echo htmlspecialchars($_SESSION['user']->username); ?>
+        </div>
         <span class="material-symbols-outlined edit-icon" onclick="editInfo(this)">edit</span>
       </div>
 
       <div class="info-section">
         <h2 class="info-title">Email:</h2>
-        <div class="info-content editable" contenteditable="false">john.doe@example.com</div>
+        <div class="info-content editable" contenteditable="false">
+           <?php echo htmlspecialchars($_SESSION['user']->email); ?>
+        </div>
         <span class="material-symbols-outlined edit-icon" onclick="editInfo(this)">edit</span>
       </div>
 

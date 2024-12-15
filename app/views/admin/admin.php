@@ -3,20 +3,22 @@
 include_once "../../config/db_config.php";
 include '../../../models/UsersClass.php';
 include '../../../models/ReviewsClass.php';
+include '../../../controllers/UserControllers.php';
 
+// $users = [];
+// $sql = "select * from user";
+// $result = mysqli_query($conn, $sql);
 
-$users = [];
-$sql = "select * from user";
-$result = mysqli_query($conn, $sql);
+// if ($result) {
+//     while ($row = mysqli_fetch_assoc($result)) {
+//         $users[] = $row; // Store each user in the $users array
 
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $users[] = $row; // Store each user in the $users array
+//     }
+// } else {
+//     echo "Error fetching users: " . mysqli_error($conn);
+// }
 
-    }
-} else {
-    echo "Error fetching users: " . mysqli_error($conn);
-}
+$users = UserController::viewAllUsers();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action = $_POST['action'] ?? 'read';
@@ -30,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $userType = $_POST['user_type'];
             $email = $_POST['email'];
             $gender = $_POST['gender'];
-            Users::addUserByAdmin($username, $password, $birthdate, $userType, $email, $gender);
+            UserController::addNewUserCtrl($username, $password, $birthdate, $userType, $email, $gender);
             break;
         case 'update':
             $user_id = $_POST['user_id'];
@@ -40,11 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $userType = $_POST['user_type'];
             $email = $_POST['email'];
             $gender = $_POST['gender'];
-            Users::updateUser($user_id, $username, $birthdate, $gender, $password, $email, $userType);
+            UserController::updateUserCtrl($user_id, $username, $birthdate, $gender, $password, $email, $userType);
             break;
         case 'delete':
             $user_id = $_POST['user_id'];
-            Users::deleteUser($user_id);
+            UserController::deleteUserCtrl($user_id);
             break;
     }
 }
