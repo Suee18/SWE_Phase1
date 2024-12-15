@@ -6,12 +6,13 @@ include '../../../models/ReviewsClass.php';
 
 
 $users = [];
-$sql = "select id, username,birthdate, gender, password, email,userTypeID FROM user";
+$sql = "select * from user";
 $result = mysqli_query($conn, $sql);
 
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
         $users[] = $row; // Store each user in the $users array
+
     }
 } else {
     echo "Error fetching users: " . mysqli_error($conn);
@@ -22,14 +23,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     switch ($action) {
         case 'add':
-            // include 'add_user.php';
+
             $username = $_POST['username'];
             $birthdate = $_POST['age'];
             $password = $_POST['password'];
             $userType = $_POST['user_type'];
             $email = $_POST['email'];
             $gender = $_POST['gender'];
-            Users::addUser($username, $birthdate, $gender, $password, $email, $userType);
+            Users::addUserByAdmin($username, $password, $birthdate, $userType, $email, $gender);
             break;
         case 'update':
             $user_id = $_POST['user_id'];
@@ -268,16 +269,17 @@ if (isset($_POST['deleteReview'])) {
                                 <select id="userSelect" name="user_id" onchange="populateForm()">
                                     <option value="" disabled selected>Select a user</option>
                                     <?php foreach ($users as $user): ?>
-                                        <option value="<?php echo $user['id']; ?>"
-                                            data-username="<?php echo htmlspecialchars($user['username']); ?>"
-                                            data-age="<?php echo htmlspecialchars($user['birthdate']); ?>"
-                                            data-gender="<?php echo htmlspecialchars($user['gender']); ?>"
-                                            data-email="<?php echo htmlspecialchars($user['email']); ?>"
-                                            data-password="<?php echo htmlspecialchars($user['password']); ?>"
-                                            data-type="<?php echo htmlspecialchars($user['type']); ?>">
-                                            <?php echo htmlspecialchars($user['username']); ?>
+                                        <option value="<?php echo isset($user['ID']) ? htmlspecialchars($user['ID']) : ''; ?>"
+                                            data-username="<?php echo isset($user['userName']) ? htmlspecialchars($user['userName']) : ''; ?>"
+                                            data-age="<?php echo isset($user['birthdate']) ? htmlspecialchars($user['birthdate']) : ''; ?>"
+                                            data-gender="<?php echo isset($user['gender']) ? htmlspecialchars($user['gender']) : ''; ?>"
+                                            data-email="<?php echo isset($user['email']) ? htmlspecialchars($user['email']) : ''; ?>"
+                                            data-password="<?php echo isset($user['password']) ? htmlspecialchars($user['password']) : ''; ?>"
+                                            data-type="<?php echo isset($user['userTypeID']) ? htmlspecialchars($user['userTypeID']) : ''; ?>">
+                                            <?php echo isset($user['userName']) ? htmlspecialchars($user['userName']) : 'Unknown User'; ?>
                                         </option>
                                     <?php endforeach; ?>
+
                                 </select>
                             </div>
 
@@ -402,7 +404,7 @@ if (isset($_POST['deleteReview'])) {
                 <button class="no-btn">No</button>
             </span>
         </div>
-        
+
         <div id="div5" class="content-div" style="display: none;">
             cars control form goes here
         </div>

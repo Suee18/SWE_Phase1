@@ -91,6 +91,7 @@ class Users
         return $user;
     }
 
+
     // Add a new user with userTypeID validation and associate valid pages
     public static function addUser($username, $birthdate, $gender, $password, $email, $userTypeID, $timeStamp, $loginMethod)
     {
@@ -126,15 +127,38 @@ class Users
             SessionManager::startSession();
             SessionManager::setSessionUser($user);
             SessionManager::updateLoginCounter();
-            
+
             return true;
         }
 
         return false;
     }
 
+    
+    //Method for admin to add users
+    public static function addUserByAdmin($username, $password, $birthdate, $userType, $email, $gender)
+    {
+        global $conn;
+
+        $username = mysqli_real_escape_string($conn, $username);
+        $password = mysqli_real_escape_string($conn, $password);
+        $birthdate = mysqli_real_escape_string($conn, $birthdate);
+        $email = mysqli_real_escape_string($conn, $email);
+        $gender = mysqli_real_escape_string($conn, $gender);
+   
+        $userTypeID = ($userType === 'admin') ? 2 : 1;  //  'admin' = 2 and 'user' = 1
+    
+        $sql = "INSERT INTO `user` (`userName`, `birthdate`, `gender`, `password`, `email`, `userTypeID`)
+                VALUES ('$username', '$birthdate', '$gender', '$password', '$email', $userTypeID)";
+    
+        $result = mysqli_query($conn, $sql);
+    
+        return $result;
+    }
+    
+
     // Update user (prevent updating userTypeID)
-    public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email)
+    public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email,$userType)
     {
         global $conn;
 
@@ -145,10 +169,13 @@ class Users
         $password = mysqli_real_escape_string($conn, htmlspecialchars($password));
         $email = mysqli_real_escape_string($conn, htmlspecialchars($email));
         $gender = mysqli_real_escape_string($conn, htmlspecialchars($gender));
+        $userType = mysqli_real_escape_string($conn, htmlspecialchars($userType));
 
+
+        $userTypeID = ($userType === 'admin') ? 2 : 1; 
         // Update user data in the database (without modifying userTypeID)
         $sql = "UPDATE User 
-                SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email' 
+                SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email' , userTypeID='$userTypeID' 
                 WHERE ID='$user_id'";
         return mysqli_query($conn, $sql);
     }
@@ -296,7 +323,7 @@ class Users
         } else {
             $result = mysqli_fetch_assoc($sqlResult);
 
-            $user = new Users($result["userName"], $result["birthdate"], $result["gender"] , $result["password"], $result["email"], $result["userTypeID"], $result["loginMethod"], $result["personaID"], $result["loginCounter"], $result["Timestamp"]);
+            $user = new Users($result["userName"], $result["birthdate"], $result["gender"], $result["password"], $result["email"], $result["userTypeID"], $result["loginMethod"], $result["personaID"], $result["loginCounter"], $result["Timestamp"]);
             $user->id = $result["ID"];
             // Check if the user logged in using Google
             if ($user->loginMethod === 'google') {
@@ -315,5 +342,4 @@ class Users
             }
         }
     }
-
 }

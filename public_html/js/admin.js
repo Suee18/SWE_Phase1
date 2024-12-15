@@ -395,6 +395,7 @@ function populateForm() {
         var email = document.getElementById("email");
         var birthdate = document.getElementById("age");
         var userType = document.getElementById("user_type");
+        
         var gender = document.getElementById("gender");
         var password = document.getElementById("password");
         var userId = document.getElementById("user_id");
@@ -404,7 +405,15 @@ function populateForm() {
         if (email) email.value = selectedOption.getAttribute("data-email");
         if (birthdate)
             birthdate.value = selectedOption.getAttribute("data-age");
-        if (userType) userType.value = selectedOption.getAttribute("data-type");
+        
+        if (userType) {
+            var userTypeID = selectedOption.getAttribute("data-type");
+            if (userTypeID == '1') {
+                userType.value = 'user';
+            } else if (userTypeID == '2') {
+                userType.value = 'admin';
+            }
+        }
         if (gender) gender.value = selectedOption.getAttribute("data-gender");
         if (password) {
             password.value = selectedOption.getAttribute("data-password");

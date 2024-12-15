@@ -287,9 +287,9 @@ if (isset($_POST['Submit'])) {
                         <h4>Navigation</h4>
                         <ul>
                             <li class="nav"><a href="#">Home</a></li>
-                            <li class="nav"><a href="#">Compare Cars</a></li>
-                            <li class="nav"><a href="#">Turbo Chatbot</a></li>
-                            <li class="nav"><a href="#">Persona Test</a></li>
+                            <li class="nav"><a href="..\app\views\user\car_comparison.php">Compare Cars</a></li>
+                            <li class="nav"><a href="..\app\views\user\chatbot_mainPage.php">Turbo Chatbot</a></li>
+                            <li class="nav"><a href="..\app\views\user\persona_test_landing_page.php">Persona Test</a></li>
 
                         </ul>
                     </div>
