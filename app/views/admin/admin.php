@@ -3,6 +3,10 @@
 include_once "../../config/db_config.php";
 include '../../../models/UsersClass.php';
 include '../../../models/ReviewsClass.php';
+include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
+include_once __DIR__ . '\..\..\..\middleware\user_auth.php';
+
+user_auth("Admin Dashboard");
 
 
 $users = [];
