@@ -54,7 +54,12 @@ class SessionManager
     public static function updateLoginCounter()
     {
 
-        $user = self::getUser();        
+        $user = self::getUser();     
+        
+        if ($user == null) {
+            return false;
+        }
+
         $user->loginCounter += 1;
         
         global $conn;
