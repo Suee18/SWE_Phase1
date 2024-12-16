@@ -373,4 +373,25 @@ class Users
             }
         }
     }
+    public static function getPersonas(){
+        global $conn;
+        $sql = "SELECT personaName, personaCounter FROM persona"; 
+        $result = $conn->query($sql);
+        $personaNames = [];
+        $personaCounters = [];
+    
+        // Fetch data and store in arrays
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $personaNames[] = $row['personaName'];  
+                $personaCounters[] = $row['personaCounter']; 
+            }
+        } else {
+            echo "No data found";
+        }
+    
+        // Return the data as an associative array
+        return ['personaNames' => $personaNames, 'personaCounters' => $personaCounters];
+    }
+    
 }

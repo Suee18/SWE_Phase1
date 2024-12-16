@@ -5,19 +5,14 @@ include '../../../models/UsersClass.php';
 include '../../../models/ReviewsClass.php';
 include '../../../controllers/UserControllers.php';
 
-// $users = [];
-// $sql = "select * from user";
-// $result = mysqli_query($conn, $sql);
 
-// if ($result) {
-//     while ($row = mysqli_fetch_assoc($result)) {
-//         $users[] = $row; // Store each user in the $users array
+//Statistics Generation part
+$personasData =UserController::getPersonas();
 
-//     }
-// } else {
-//     echo "Error fetching users: " . mysqli_error($conn);
-// }
+$personaNames = $personasData['personaNames'];
+$personaCounters = $personasData['personaCounters'];
 
+//User Cruds 
 $users = UserController::viewAllUsers();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -51,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+//Reviews Cruds
 $reviews = Reviews::getAllReviews();
 
 if (isset($_POST['deleteReview'])) {
@@ -204,6 +200,8 @@ if (isset($_POST['deleteReview'])) {
 
 
         <!--======================= statistics =================================-->
+
+        
         <div id="div1" class="content-div" style="display: none;">
             <div class="small-container">
                 <div id="div1" class="stats-div">
@@ -211,7 +209,7 @@ if (isset($_POST['deleteReview'])) {
                     <canvas id="conversationsChart" width="400" height="200"></canvas>
                 </div>
                 <div id="div1" class="stats-div">
-                    <p class="stat-title">Generated Plans</p>
+                    <p class="stat-title">Average Logins / Signups</p>
                     <canvas id="plansChart" width="400" height="200"></canvas>
                 </div>
 
@@ -238,6 +236,13 @@ if (isset($_POST['deleteReview'])) {
                     <p class="stat-title"> Generated Personas</p>
                     <canvas id="personasChart" width="400" height="200"></canvas></p>
                 </div>
+                
+                <script>
+                     var personaNames = <?php echo json_encode($personaNames); ?>;
+                     var personaCounters = <?php echo json_encode($personaCounters); ?>;
+
+                </script>
+                
                 <div id="div1" class="stats-div">
                     <p>Most recommended car this month</p>
                     <!--waiting on dynamic car car -->

@@ -24,7 +24,17 @@ class UserController{
 
     public static function viewAllUsers() {
      return Users::viewAllUsers();
+
+    
     }
+
+
+
+    public static function getPersonas() {
+        return Users::getPersonas();
+    }
+    
 }
+
 
 ?>
