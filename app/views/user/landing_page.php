@@ -9,8 +9,7 @@ SessionManager::startSession();
 $reviewsSliderArray = Reviews::getLastNumberOfReviews(7);
 
 $reviewController = new ReviewController(new ReviewDatabaseStrategy());
-
-if (isset($_POST['Submit'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
     $reviewData = [
         'reviewText' => mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewText'])),
         'reviewCategory' => mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewCategory'])),
@@ -19,7 +18,12 @@ if (isset($_POST['Submit'])) {
         'userID' => SessionManager::getUser() ? SessionManager::getUser()->id : 0
     ];
 
+    // Add the review to the database
     $reviewController->addReview($reviewData);
+
+    // Redirect to the same page to prevent resubmission
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit();
 }
 
 ?>
