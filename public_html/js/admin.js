@@ -13,11 +13,11 @@ const div7 = document.getElementById("div7");
 
 
 function showNavbar() {
-    const navbar = document.querySelector('.header_admin'); 
+    const navbar = document.querySelector('.header_admin');
     if (navbar) {
-        navbar.style.display = 'block'; 
+        navbar.style.display = 'block';
     }
-    document.querySelector('.content').style.marginTop='2rem';
+    document.querySelector('.content').style.marginTop = '2rem';
 }
 
 
@@ -48,7 +48,7 @@ cards.forEach((card) => {
                 showDiv(div6);
                 break;
             default:
-                showDiv(div1); 
+                showDiv(div1);
         }
     });
 });
@@ -104,329 +104,133 @@ function redirectTo(url) {
     window.location.href = url;
 }
 
-// //CHARTS TRIAL
-
-// const chartOptionsWithWhiteText = {
-//     scales: {
-//         x: {
-//             ticks: {
-//                 color: "white", // White text for x-axis ticks
-//             },
-//         },
-//         y: {
-//             ticks: {
-//                 color: "white", // White text for y-axis ticks
-//             },
-//         },
-//     },
-
-// };
-
-// // Website Views Data (Simulated)
-// const viewsData = {
-//     labels: [
-//         "Monday",
-//         "Tuesday",
-//         "Wednesday",
-//         "Thursday",
-//         "Friday",
-//         "Saturday",
-//         "Sunday",
-//     ],
-//     datasets: [
-//         {
-//             label: "Website Views",
-//             data: [120, 150, 180, 200, 240, 260, 300],
-//             backgroundColor: "rgba(75, 192, 192, 0.2)",
-//             borderColor: "rgba(75, 192, 192, 1)",
-//             borderWidth: 1,
-//         },
-//     ],
-// };
-
-// // Generated Plans Data (Simulated)
-// const plansData = {
-//     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-//     datasets: [
-//         {
-//             label: "Generated Plans",
-//             data: [20, 25, 15, 30],
-//             backgroundColor: "rgba(153, 102, 255, 0.2)",
-//             borderColor: "rgba(153, 102, 255, 1)",
-//             borderWidth: 1,
-//         },
-//     ],
-// };
-
-// // Configuring Website Views Chart
-// const ctxViews = document.getElementById("viewsChart").getContext("2d");
-// const viewsChart = new Chart(ctxViews, {
-//     type: "bar",
-//     data: viewsData,
-//     options: {
-//         scales: {
-//             y: {
-//                 beginAtZero: true,
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//             x: {
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//         },
-//     },
-// });
-
-// // Configuring Generated Plans Chart
-// const ctxPlans = document.getElementById("plansChart").getContext("2d");
-// const plansChart = new Chart(ctxPlans, {
-//     type: "line",
-//     data: plansData,
-//     options: {
-//         scales: {
-//             y: {
-//                 beginAtZero: true,
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//             x: {
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//         },
-//     },
-// });
-
-// // Data for Registered Users per Month (Simulated)
-// const usersData = {
-//     labels: [
-//         "January",
-//         "February",
-//         "March",
-//         "April",
-//         "May",
-//         "June",
-//         "July",
-//         "August",
-//         "September",
-//         "October",
-//         "November",
-//         "December",
-//     ],
-//     datasets: [
-//         {
-//             label: "Registered Users",
-//             data: [30, 50, 40, 60, 70, 80, 100, 90, 110, 130, 120, 150], // Simulated data for users per month
-//             backgroundColor: "rgba(54, 162, 235, 0.2)",
-//             borderColor: "rgba(54, 162, 235, 1)",
-//             borderWidth: 1,
-//         },
-//     ],
-// };
-
-// // Data for Generated Personas (Simulated)
-// const personasData = {
-//     labels: [
-//         "Adventurous",
-//         "Family-Oriented",
-//         "Budget-Friendly",
-//         "Luxury Seeker",
-//     ],
-//     datasets: [
-//         {
-//             label: "Generated Personas",
-//             data: [45, 30, 60, 25], // Simulated persona data
-//             backgroundColor: [
-//                 "rgba(255, 99, 132, 0.2)",
-//                 "rgba(54, 162, 235, 0.2)",
-//                 "rgba(255, 206, 86, 0.2)",
-//                 "rgba(75, 192, 192, 0.2)",
-//             ],
-//             borderColor: [
-//                 "rgba(255, 99, 132, 1)",
-//                 "rgba(54, 162, 235, 1)",
-//                 "rgba(255, 206, 86, 1)",
-//                 "rgba(75, 192, 192, 1)",
-//             ],
-//             borderWidth: 1,
-//         },
-//     ],
-// };
-
-// // Configuring Registered Users Chart
-// const ctxUsers = document.getElementById("usersChart").getContext("2d");
-// const usersChart = new Chart(ctxUsers, {
-//     type: "bar",
-//     data: usersData,
-//     options: {
-//         scales: {
-//             y: {
-//                 beginAtZero: true,
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//             x: {
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//         },
-//     },
-// });
-
-// // Configuring Generated Personas Chart (Pie Chart)
-// const ctxPersonas = document.getElementById("personasChart").getContext("2d");
-// const personasChart = new Chart(ctxPersonas, {
-//     type: "doughnut", // You can change this to 'pie' if you prefer
-//     data: personasData,
-//     options: {
-//         responsive: true,
-//         plugins: {
-//             legend: {
-//                 position: "top",
-//             },
-//         },
-//         scales: {
-//             y: {
-//                 beginAtZero: true,
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//             x: {
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//         },
-//     },
-// });
-
-// // Total Conversations Data (Simulated)
-// const conversationsData = {
-//     labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"],
-//     datasets: [
-//         {
-//             label: "Total Conversations",
-//             data: [50, 75, 60, 80, 120, 90, 150], // Simulated data for total conversations per day
-//             backgroundColor: "rgba(75, 192, 192, 0.2)",
-//             borderColor: "rgba(75, 192, 192, 1)",
-//             borderWidth: 1,
-//         },
-//     ],
-// };
-
-// // Average Session Duration Data (Simulated)
-// const sessionDurationData = {
-//     labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"],
-//     datasets: [
-//         {
-//             label: "Average Session Duration (Minutes)",
-//             data: [4.5, 5, 6.2, 5.5, 7.1, 6.8, 5.9], // Simulated data for average session duration
-//             backgroundColor: "rgba(255, 159, 64, 0.2)",
-//             borderColor: "rgba(255, 159, 64, 1)",
-//             borderWidth: 1,
-//         },
-//     ],
-// };
-
-// // Configuring Total Conversations Chart
-// const ctxConversations = document
-//     .getElementById("conversationsChart")
-//     .getContext("2d");
-// const conversationsChart = new Chart(ctxConversations, {
-//     type: "bar",
-//     data: conversationsData,
-//     options: {
-//         scales: {
-//             y: {
-//                 beginAtZero: true,
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//             x: {
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//         },
-//     },
-// });
-
-// // Configuring Average Session Duration Chart
-// const ctxSessionDuration = document
-//     .getElementById("sessionDurationChart")
-//     .getContext("2d");
-// const sessionDurationChart = new Chart(ctxSessionDuration, {
-//     type: "line",
-//     data: sessionDurationData,
-//     options: {
-//         scales: {
-//             y: {
-//                 beginAtZero: true,
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//             x: {
-//                 ticks: {
-//                     color: "white",
-//                 },
-//             },
-//         },
-//     },
-// });
-
+//CHARTS 
+//Personas Statistics
 var ctx = document.getElementById('personasChart').getContext('2d');
 var personasChart = new Chart(ctx, {
-type: 'doughnut',
-data: {
-labels: personaNames,
-datasets: [{
-label: 'Generated Personas',
-data: personaCounters,
-backgroundColor: [
-'rgba(54, 162, 235, 0.2)', 
-'rgba(255, 99, 132, 0.2)', 
-'rgba(255, 230, 64, 0.2)', 
-'rgba(240, 170, 215, 0.2)',
-'rgba(153, 102, 255, 0.2)',
-'rgba(255, 159, 64, 0.2)'
-],
-borderColor: [
-'rgba(54, 162, 235, 1)', 
-'rgba(255, 99, 132, 1)', 
-'rgb(221, 201, 66)', 
-'rgb(193, 93, 155)',
-'rgba(153, 102, 255, 1)',
-'rgba(255, 159, 64, 1)'
-],
-borderWidth: 1
-}]
-},
-options: {
-responsive: true, // Ensures the chart is responsive to screen size
-plugins: {
-legend: {
-position: 'top', // Places the legend at the top
-},
-tooltip: {
-callbacks: {
-label: function(tooltipItem) {
-   return tooltipItem.label + ': ' + tooltipItem.raw + ' personas'; // Custom tooltip display
-}
-}
-}
-}
-}
+    type: 'doughnut',
+    data: {
+        labels: personaNames,
+        datasets: [{
+            label: 'Generated Personas',
+            data: personaCounters,
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 230, 64, 0.2)',
+                'rgba(240, 170, 215, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgb(221, 201, 66)',
+                'rgb(193, 93, 155)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top', 
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        return tooltipItem.label + ': ' + tooltipItem.raw + ' personas'; 
+                    }
+                }
+            }
+        }
+    }
 });
+
+
+
+//Logins Statistics
+var ctx = document.getElementById('plansChart').getContext('2d');
+var loginsLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: months,
+        datasets: [{
+            label: 'Monthly Logins',
+            data: logins,
+            borderColor: 'rgb(183, 131, 59)',
+            backgroundColor: 'rgba(134, 85, 25, 0.2)',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Month'
+                },
+                ticks: {
+                    callback: function (value, index, values) {
+                        return months[index];
+                    }
+                }
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Total Logins'
+                }
+            }
+        }
+    }
+});
+
+
+
+//Favourites Statistics
+var ctx = document.getElementById('viewsChart').getContext('2d');
+var favoritesChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: categories,
+        datasets: [{
+            label: 'Total Favorites',
+            data: favorites,
+            borderColor: 'rgb(112, 234, 140)',
+            backgroundColor: 'rgba(90, 230, 108, 0.3)',
+            fill: true,
+            tension: 0.1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        return tooltipItem.raw + ' favorites';
+                    }
+                }
+            }
+        }
+    }
+});
+
+
 // CRUD user
 
 function populateForm() {
@@ -438,7 +242,7 @@ function populateForm() {
         var email = document.getElementById("email");
         var birthdate = document.getElementById("age");
         var userType = document.getElementById("user_type");
-        
+
         var gender = document.getElementById("gender");
         var password = document.getElementById("password");
         var userId = document.getElementById("user_id");
@@ -448,7 +252,7 @@ function populateForm() {
         if (email) email.value = selectedOption.getAttribute("data-email");
         if (birthdate)
             birthdate.value = selectedOption.getAttribute("data-age");
-        
+
         if (userType) {
             var userTypeID = selectedOption.getAttribute("data-type");
             if (userTypeID == '1') {

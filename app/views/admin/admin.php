@@ -7,10 +7,24 @@ include '../../../controllers/UserControllers.php';
 
 
 //Statistics Generation part
+//Generating Personas Statistics
 $personasData =UserController::getPersonas();
 
 $personaNames = $personasData['personaNames'];
 $personaCounters = $personasData['personaCounters'];
+
+//Generating Login Statistics
+$LoginData = UserController::getLoginStatistics();
+
+$months = $LoginData['months'];
+$logins = $LoginData['logins'];
+
+
+//Generating Favourited Cars Statistics
+$FavoriteData = UserController::getFavouritesStat();
+
+$categories = $FavoriteData['categories'];
+$favorites = $FavoriteData['favorites'];
 
 //User Cruds 
 $users = UserController::viewAllUsers();
@@ -209,15 +223,25 @@ if (isset($_POST['deleteReview'])) {
                     <canvas id="conversationsChart" width="400" height="200"></canvas>
                 </div>
                 <div id="div1" class="stats-div">
-                    <p class="stat-title">Average Logins / Signups</p>
+                    <p class="stat-title">Logins Per Month  </p>
                     <canvas id="plansChart" width="400" height="200"></canvas>
                 </div>
+     <script> 
+          
+          var months = <?php echo json_encode($months); ?>;
+          var logins = <?php echo json_encode($logins); ?>;
+     </script>
 
                 <div id="div1" class="stats-div">
-                    <p class="stat-title">Website Views</p class="stat-title">
+                    <p class="stat-title">Favourited Cars</p class="stat-title">
                     <canvas id="viewsChart" width="400" height="200"></canvas>
 
                 </div>
+                <script> 
+          
+          var categories = <?php echo json_encode($categories); ?>;
+          var favorites = <?php echo json_encode($favorites); ?>;
+     </script>
                 <div id="div1" class="stats-div">
                     <p class="stat-title"> Average Session Duration (Minutes)</p>
                     <canvas id="sessionDurationChart" width="400" height="200"></canvas>
