@@ -37,10 +37,10 @@ class Reviews
             while ($row = mysqli_fetch_assoc($result)) {
                 // Adjust to include new fields from the new DB schema
                 $review = new Reviews(
-                    $row["reviewText"], 
-                    $row["reviewCategory"], 
-                    $row["reviewDate"], 
-                    $row["reviewRating"], 
+                    $row["reviewText"],
+                    $row["reviewCategory"],
+                    $row["reviewDate"],
+                    $row["reviewRating"],
                     $row["userID"]
                 );
                 $review->reviewID = $row["reviewID"];  // Renamed field from ID to reviewID
@@ -60,10 +60,10 @@ class Reviews
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
                 $review = new Reviews(
-                    $row["reviewText"], 
-                    $row["reviewCategory"], 
-                    $row["reviewDate"], 
-                    $row["reviewRating"], 
+                    $row["reviewText"],
+                    $row["reviewCategory"],
+                    $row["reviewDate"],
+                    $row["reviewRating"],
                     $row["userID"]
                 );
                 $review->reviewID = $row["reviewID"];
@@ -72,6 +72,38 @@ class Reviews
         }
         return $reviews;
     }
+
+    //Get reviews 3 and above
+    static function getReviewsByRating($rating)
+    {
+        global $conn;
+        $sql = "
+        SELECT reviewID, reviewText, reviewCategory, reviewDate, reviewRating, userID
+        FROM reviews
+        WHERE reviewRating >= ?
+        ";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $rating);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $reviews = [];
+        while ($row = $result->fetch_assoc()) {
+            $review = new Reviews(
+                $row['reviewText'],
+                $row['reviewCategory'],
+                $row['reviewDate'],
+                $row['reviewRating'],
+                $row['userID']
+            );
+            $review->reviewID = $row['reviewID'];
+            $reviews[] = $review;
+        }
+
+        return $reviews;
+    }
+
 
     // Add a review to the database
     public function addReviewIntoDB($review)
@@ -99,4 +131,25 @@ class Reviews
         $result = mysqli_query($conn, $sql);
         return $result;
     }
+
+    // Retrieve all unique review categories
+    public static function getAllCategoriesFromDB()
+    {
+        global $conn;
+        $sql = "SELECT reviewCategory, COUNT(*) as count FROM reviews GROUP BY reviewCategory";
+        $result = mysqli_query($conn, $sql);
+    
+        $categories = [];
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $categories[] = [
+                    'category' => $row['reviewCategory'],
+                    'count' => $row['count']
+                ];
+            }
+        }
+    
+        return $categories;
+    }
+    
 }

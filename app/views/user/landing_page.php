@@ -1,28 +1,27 @@
 <?php
 include_once __DIR__ . '\..\..\config\db_config.php';
-include __DIR__ . '\..\..\..\models\ReviewsClass.php';
+// include __DIR__ . '\..\..\..\models\ReviewsClass.php';
+include_once __DIR__ . '\..\..\..\controllers\ReviewController.php';
 include __DIR__ . '\..\..\..\models\UsersClass.php';
 include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
 SessionManager::startSession();
 
 $reviewsSliderArray = Reviews::getLastNumberOfReviews(7);
 
+$reviewController = new ReviewController(new ReviewDatabaseStrategy());
+
 if (isset($_POST['Submit'])) {
-    $reviewText = mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewText']));
-    $reviewCategory = mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewCategory']));
-    $reviewDate = date('Y-m-d H:i:s');
-    $reviewRating = $_POST['starRating'] ?? NULL;
+    $reviewData = [
+        'reviewText' => mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewText'])),
+        'reviewCategory' => mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewCategory'])),
+        'reviewDate' => date('Y-m-d H:i:s'),
+        'reviewRating' => $_POST['starRating'] ?? NULL,
+        'userID' => SessionManager::getUser() ? SessionManager::getUser()->id : 0
+    ];
 
-    $user = SessionManager::getUser();
-    if ($user) {
-        $userID = $user->id;
-    } else {
-        $userID = null;
-    }
-
-    $review = new Reviews($reviewText, $reviewCategory, $reviewDate, $reviewRating, $userID);
-    $result = $review->addReviewIntoDB($review);
+    $reviewController->addReview($reviewData);
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -171,20 +170,28 @@ if (isset($_POST['Submit'])) {
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
                             <?php
+                            include_once __DIR__ . '/../../../controllers/ReviewController.php';
+
+                            $reviewsSliderArray = ReviewController::getHighRatedReviews(3);
+
                             foreach ($reviewsSliderArray as $review) {
                                 $rating = $review->reviewRating;
+
                                 $stars = '';
                                 for ($i = 1; $i <= 5; $i++) {
-                                    $stars .= $i <= $rating ? '<span class="rating filled">★</span>' : '<span class="rating">★</span>';
+                                    $stars .= $i <= $rating
+                                        ? '<span class="rating filled">★</span>'
+                                        : '<span class="rating">★</span>';
                                 }
 
-                                echo '<div class="swiper-slide">
-                        <div class="review-card">
-                            <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
-                            <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
-                            <div class="review-rating">' . $stars . '</div>
-                        </div>
-                    </div>';
+                                echo 
+                                '<div class="swiper-slide">
+                                        <div class="review-card">
+                                            <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
+                                            <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
+                                            <div class="review-rating">' . $stars . '</div>
+                                        </div>
+                                </div>';
                             }
                             ?>
                         </div>
