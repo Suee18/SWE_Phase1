@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchModalContent = document.querySelector(".search-modal-content");
     const searchInput = document.getElementById("searchInput");
     const searchResultsList = document.getElementById("searchResults");
+    const searchSubmitBtn = document.getElementById("searchSubmitBtn");
 
     // Open Modal
     openSearchModalBtn.addEventListener("click", () => {
@@ -48,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     searchTerm: query, // Send the search term
                 },
                 success: function (response) {
-                    try {
+                    try {   
                         console.log('Raw response: ', response);
                         const cars = JSON.parse(response); // Parse the JSON response
                         displayResults(cars); // Display the results
@@ -109,6 +110,15 @@ document.addEventListener("DOMContentLoaded", function () {
             searchResultsList.style.display = "none"; // No results
         }
     }
+
+    // Handle the search button click
+    searchSubmitBtn.addEventListener("click", function () {
+        const query = searchInput.value.trim();
+        if (query.length > 0) {
+                window.location.href = `../app/views/user/search_results.php?query=${query}`;
+            
+        }
+    });
 });
 
 // Function to show the current slide
