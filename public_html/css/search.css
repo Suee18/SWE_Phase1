@@ -1,0 +1,159 @@
+@import url("./global_styles.css");
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: var(--black_navy);
+    color: var(--white);
+    padding: 20px 20px 20px 300px;
+}
+/* Header */
+h1 {
+    font-size: 2rem;
+    font-family: var(--technoRace_font);
+    color: var(--white);
+    margin-bottom: 20px;
+    word-spacing: 1px;
+}
+
+/* Search Form */
+.filter-container {
+    margin-bottom: 20px;
+}
+
+.filter-container input[type="text"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid var(--gray-blue);
+    border-radius: 5px;
+    width: 300px;
+    margin-right: 10px;
+    background-color: var(--white_blue_light);
+    color: var(--navy);
+}
+
+.filter-container button {
+    padding: 10px 15px;
+    background-color: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.filter-container button:hover {
+    background-color: var(--dark_blue);
+}
+
+/* Container for the search results */
+.search-results-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Search result card styles */
+.result-card {
+    display: flex;
+    background-color: var(--blue_gray_dark);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.result-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Left Section (Make, Model, Year, Image) */
+.info-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.info-left h3 {
+    font-size: 1.5rem;
+    color: var(--white_blue_light);
+    margin-bottom: 10px;
+}
+
+.info-left p {
+    font-size: 1rem;
+    color: var(--gray-blue);
+    margin-bottom: 8px;
+}
+
+.info-left img {
+    width: 250px;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* Right Section (Car Details: Type, Engine, Price, etc.) */
+.info-right {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create 3 columns */
+    grid-template-rows: repeat(2, auto); /* Create 2 rows */
+    gap: 20px; /* Space between grid items */
+}
+
+/* Style for each grid item */
+.grid-item {
+    background-color: var(--blue_gray_dark);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.grid-item strong {
+    display: block;
+    font-size: 1.3rem;
+    color: var(--white_blue_light);
+    margin-bottom: 5px;
+}
+
+.grid-item p {
+    font-size: 1rem;
+    color: var(--gray-blue);
+}
+
+/* Styling for hover effect */
+.grid-item:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 768px) {
+    .result-card {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-left {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .info-right {
+        grid-template-columns: 1fr; /* Stack grid items in one column on small screens */
+        grid-template-rows: auto; /* Allow rows to adjust */
+    }
+
+    .info-left img {
+        width: 150px;
+    }
+}

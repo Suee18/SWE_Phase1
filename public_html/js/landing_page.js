@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Add click event to each result item
                 div.addEventListener("click", function () {
-                    window.location.href = `search_results.php?make=${car.make}&model=${car.model}&year=${car.year}`;
+                    window.location.href = `../app/views/user/search_results.php?make=${car.make}&model=${car.model}&year=${car.year}`;
                 });
 
                 searchResultsList.appendChild(div);

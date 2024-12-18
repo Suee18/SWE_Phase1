@@ -5,21 +5,23 @@ if (isset($_POST['action'])) {
     $action = $_POST['action'];
 
     switch ($action) {
-        case 'searchDropList':
+        case 'searchDropList': {
             if (isset($_POST['searchTerm'])) {
                 $searchTerm = $_POST['searchTerm'];
                 echo json_encode(searchDropList($searchTerm));
             }
+        }
             break;
     }
 }
 
-function searchDropList($searchTerm) {
+function searchDropList($searchTerm)
+{
     global $conn;
 
-    $searchTerm = "%" . strtolower($searchTerm) . "%"; // Add wildcards
+    $searchTerm = "%" . strtolower($searchTerm) . "%";
 
-    $sql = "SELECT make, model, year
+    $sql = "SELECT *
     FROM cars 
     WHERE LOWER(make) LIKE '$searchTerm' 
     OR LOWER(model) LIKE '$searchTerm' 
@@ -33,11 +35,29 @@ function searchDropList($searchTerm) {
     $cars = [];
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $cars[] = [
-                'make' => $row['make'],
-                'model' => $row['model'],
-                'year' => $row['year']
-            ];
+            $cars[] = $row;
+        }
+    }
+
+    return $cars;
+}
+
+function searchResults($make, $model, $year)
+{
+    global $conn;
+
+    $sql = "SELECT *
+            FROM cars 
+            WHERE make = '$make' 
+              AND model = '$model' 
+              AND year = '$year'";
+
+    $result = $conn->query($sql);
+
+    $cars = [];
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $cars[] = $row;
         }
     }
 
