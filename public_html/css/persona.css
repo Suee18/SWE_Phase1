@@ -8,20 +8,21 @@ body {
     /* background: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/547d9688444999.5dd65557622db.jpg") center/cover fixed; */
     /* background: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/547d9688444999.5dd65557622db.jpg") center/cover fixed; */
     background: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/aeafac88444999.5dd655576a341.jpg") center/cover fixed;
-scroll-behavior: smooth;
-overflow-x: hidden;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
     height: auto;
     margin: 0;
-    width:100vw;
-    color:#d8d8d8;
+    width: 100vw;
+    color: #d8d8d8;
+
 }
 
 .resultsBiggestContainer {
     height: auto;
     margin: 0;
-    background: #00000062 center/cover fixed;
     backdrop-filter: blur(3px);
-    width:100vw;
+    width: 100vw;
+    background: #00000062 center/cover fixed;
 
 }
 
@@ -70,20 +71,23 @@ overflow-x: hidden;
     font-weight: normal;
     font-style: oblique;
 }
+
 /*========banners below=====*/
 .left-column,
 .right-column {
     padding: 2rem;
 }
+
 /*==============Persona banner =============*/
 
 .persona-container {
     display: flex;
     /* margin: 100px auto; */
-    margin: 100px auto 100px;
-    margin-left: 13rem;
-    width: 90%;
-    max-width: 1200px;
+    /* margin: 100px auto 100px; */
+    /* margin-left: 13rem; */
+    width: 95%;
+    max-width: 1300px;
+    margin-left: 10rem;
     /* background-color: #fff; */
     /* background: linear-gradient(180deg, #ffffff4f, #ffffffa6); */
     border-radius: 8px;
@@ -91,9 +95,10 @@ overflow-x: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     position: relative;
     margin-bottom: 1.5rem !important;
-    border: 2px solid  #e2e2e241;
-box-shadow: 0 0 10px rgba(255, 255, 255, 0.418);
-margin-top: 7rem;
+    border: 2px solid #e2e2e241;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.418);
+    margin-top: 7rem;
+    height: 90vh;
 }
 
 .persona-container::before {
@@ -110,116 +115,203 @@ margin-top: 7rem;
 
 
 .left-column {
-    width: 35%;
-    background: linear-gradient(180deg, #000000, #00000048,#000000);
+    width: 45%;
+    background: linear-gradient(180deg, #000000, #00000048, #000000);
     text-align: center;
     position: relative;
     z-index: 1;
+    height: 100%;
 }
 
 .personaDiscriptionParagraph {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-family: var(--paragraphs_font);
     color: var(--white);
     margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 0.2rem;
     text-align: center;
     word-wrap: normal;
-
     max-width: 100%;
+    overflow: auto;
 }
 
-.persona-title{
+.persona-title {
     font-family: var(--racing_font);
-font-size:3rem;
-color: aliceblue;
-font-weight: 100;
-}
+    font-size: 3rem;
+    color: aliceblue;
+    font-weight: 100;
 
-
-/*=========Best match=======*/
-.right-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 65%;
-    position: relative;
-    z-index: 1;
-    background: linear-gradient(180deg, #9c9c9c94, #03030354, #000000bd);
-    backdrop-filter: blur(2px);
 }
 
 .persona-image {
     max-width: 60%;
+    max-height: 50%;
+    margin-bottom: 1.2rem;
 }
+
+/*=========TOP CAR=======*/
+.right-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, #9c9c9c94, #03030354, #000000bd);
+    backdrop-filter: blur(2px);
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.carList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    /* Space between car cards */
+    width: 100%;
+}
+
+.topCarDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    /* Set a max width for consistent sizing */
+    height: 100%;
+    max-width: 100%;
+    /* Allow shrinking on smaller screens */
+    border-radius: 8px;
+    overflow: hidden;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
+    padding: 1rem;
+}
+
+.topImagediv {
+    display: flex;
+    flex-shrink: 1;
+    /* Allow the image to shrink */
+    justify-content: center;
+    width: 70%;
+    max-height: 400px;
+    /* Set max height for the image */
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.car-image {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    /* Ensure the image scales properly */
+    object-fit: contain;
+    /* Prevent distortion */
+    border-radius: 8px;
+}
+
+.carName {
+    font-size: 1.8rem;
+    margin: 10px 0;
+    color: #cfcfcf;
+    font-family: var(--technoRace_font);
+    text-align: center;
+    letter-spacing: 1.2px;
+}
+
+.car-info {
+    width: 100%;
+    text-align: center;
+}
+
+.topCarDescription {
+    font-size: 1.4rem;
+    font-family: var(--paragraphs_font);
+    color: #cfcfcf;
+    margin-top: 1rem;
+    word-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    font-weight: 100;
+    letter-spacing: 1.1px;
+}
+
+
+.noCarsMessage {
+    font-size: 1.2rem;
+    color: #e74c3c;
+    font-weight: bold;
+    text-align: center;
+}
+
 
 /* -------KEY PREFRENCES -------*/
 .car-info {
-    margin-top: 1rem;
-    padding: 20px;
+    /* margin-top: 1rem; */
+    /* padding: 20px; */
     /* border: 2px solid #cccccc49; */
     /* border-radius: 10px; */
     /* background: linear-gradient(145deg,#00000049, hsla(216, 100%, 71%, 0.192),#00000049); */
     /* background-color: #00000050; */
     /* backdrop-filter: blur(5px); */
     /* box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.589); */
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
-.carName{
-    font-family: var(--header_font);
+
+.carName {
+    /* font-family: var(--header_font);
     font-size: 2.5rem;
     color: #ffffff;
-    font-weight: 100;
+    font-weight: 100; */
 }
 
 .car-preferences {
-    margin: 0;
-    padding: 0;
+    /* margin: 0;
+    padding: 0; */
 }
+
 /* Style for the unordered list */
 
-.keyPreferences{
-    margin-bottom: 10px;
+.keyPreferences {
+    /* margin-bottom: 10px;
     font-size: 1.4rem;
     font-family: var(--header_font);
     color: #bebebe;
     font-weight: 100;
     text-decoration: underline;
-    text-align: center;
+    text-align: center; */
 }
+
 .car-preferences ul {
-    list-style-type: disc;
+    /* list-style-type: disc;
     padding-left: 20px;
     margin: 0;
     color: rgb(198, 205, 211);
-    font-family: var(--paragraphs_font);
+    font-family: var(--paragraphs_font); */
 }
+
 .car-preferences li {
-    margin-bottom: 8px;
-    font-size: 1.2rem;
+    /* margin-bottom: 8px;
+    font-size: 1.2rem; */
 }
-.car-image {
-    width: 100%;
-    max-width: 400px;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
-}
+
 
 
 
 /* =========================================================*/
 
-.resultsSectionHeader{
+.resultsSectionHeader {
     font-family: var(--technoRace_font);
     font-size: 3rem;
-color:#ffffff;
-margin-top: 5rem;
-margin-bottom: 2rem;
-font-weight: 100;
+    color: #ffffff;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    font-weight: 100;
 }
+
 .persona-slider-section {
     text-align: center;
 }
@@ -304,7 +396,7 @@ font-weight: 100;
     font-size: 1.3rem;
     font-family: var(--paragraph_font);
     color: var(--white);
-margin-top: 2rem;
+    margin-top: 2rem;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -411,11 +503,11 @@ margin-top: 2rem;
 /*titles headers */
 .partsTitles_lp {
     height: 5rem;
-    width:100vw;
+    width: 100vw;
 
     display: flex;
     align-items: center;
-    padding-left:25rem;
+    padding-left: 25rem;
     background: linear-gradient(250deg, #55555569, #000000b4);
     backdrop-filter: blur(5px);
 
@@ -437,16 +529,30 @@ margin-top: 2rem;
     background-size: 100%;
     background-attachment: fixed;
     background-position: center;
-   }
+
+    
+}
 
 .mostRecommendedCarsTitle_lp {
     white-space: nowrap;
 }
 
-
+.carCardsContainer_lp{
+    display: flex;
+    flex-direction: column;
+flex-wrap: nowrap;
+    gap: 20px;
+    /* Space between car cards */
+    width: 100%;
+}
 .pageEnd {
     height: 30vh;
     display: flex;
     align-items: center;
     padding: 2rem 2rem 2rem 2rem;
 }
+
+
+
+
+/*=====car card===*/

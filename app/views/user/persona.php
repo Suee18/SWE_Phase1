@@ -1,7 +1,27 @@
 <?php
-require_once __DIR__ . '/../../../middleware/user_auth.php';
-user_auth("Persona Overview");
+session_start();
+
+if (!isset($_SESSION['topPersona'])) {
+    echo "No persona data found. Please retake the test.";
+    exit;
+}
+
+// Load the top persona details from the session
+$topPersona = $_SESSION['topPersona'];
+
+// Include the CarsModel to fetch car details
+require_once __DIR__ . '/../../../models/CarsModel.php';
+require_once __DIR__ . '/../../../app/config/db_config.php';
+
+// Instantiate the CarsModel and fetch cars for the persona
+$carsModel = new CarsModel($conn);
+$cars = $carsModel->getCarsByPersona($topPersona['id']);
+
+// Debugging
+file_put_contents('debug_cars.txt', print_r($cars, true));
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,92 +36,194 @@ user_auth("Persona Overview");
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>Your Persona</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=New+Amsterdam&display=swap" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
-        rel="stylesheet">
-
-    <script src="../../../public_html/js/persona.js"></script>
     <link rel="icon" href="../../../public_html/media/persona-icon.png" alt="persona-icon" />
-    <title>Personality Results</title>
+    <script src="../../../public_html/js/persona.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="../../../public_html/js/favorites.js" defer></script>
 </head>
 
 <body>
+
+
     <?php include '../../../public_html/components/userNavbar.php'; ?>
 
     <div class="resultsBiggestContainer">
 
         <div class="content-container">
-
             <h2 class="titleBanner1">Your car persona</h2>
-            <h4 class="paragraphBanner1">Here are your results based on the persona test you've just completed...<br>
-                Understand more about your persona below, and discover cars that are just your type!</h4>
+            <h4 class="paragraphBanner1">
+                Here are your results based on the persona test you've just completed...<br>
+                Understand more about your persona below, and discover cars that are just your type!
+            </h4>
         </div>
 
         <div class="persona-container">
+
+
+
             <div class="left-column">
-                <!-- <h2>Your Car Persona</h2> -->
                 <div class="persona-info">
-                    <img src="../../../public_html/media/Persona_Page_Images/icons/eco_warrior_icon.png" alt=""
-                        class="persona-image">
-                    <div >
-                        <p class="persona-title" >Eco-Warrior</p>
+                    <img src="<?= htmlspecialchars($topPersona['icon']); ?>" alt="Persona Icon" class="persona-image">
+                    <div>
+                        <p class="persona-title"><?= htmlspecialchars($topPersona['name']); ?></p>
                     </div>
-                    <p class="personaDiscriptionParagraph">Eco-Warriors are environmentally conscious drivers who prioritize fuel efficiency and
-                        sustainability. They prefer cars that minimize carbon footprints and promote a greener future.
-                    </p>
+                    <p class="personaDiscriptionParagraph"><?= htmlspecialchars($topPersona['description']); ?></p>
                 </div>
             </div>
 
 
             <div class="right-column">
-                <img src="../../../public_html/media/Persona_Page_Images/tesla-model-3.png" alt="Tesla Model 3"
-                    class="car-image">
-                    <!-- <h4>Your Perfect Match: </h4> -->
-                <h4 class="carName">Tesla Model 3</h4>
-                <div class="car-info">
+                <?php if (!empty($cars)): ?>
+                    <div class="carList">
+                        <?php
+                        // Get the first car
+                        $firstCar = $cars[0];
+                        ?>
+                        <div class="topCarDiv">
 
-                    <div class="car-preferences">
-                        <h5 class="keyPreferences">Key Preferences:</h5>
-                        <ul>
-                            <li>Electric powertrain for eco-conscious driving</li>
-                            <li>Advanced technology and autopilot features</li>
-                            <li>Minimalist interior design with premium materials</li>
-                            <li>High safety ratings and innovative features</li>
-                            <li>Excellent acceleration and performance</li>
-                        </ul>
+                            <div class="topImagediv">
+                                <img class="car-image"
+                                    src="<?= htmlspecialchars($firstCar['image']); ?>"
+                                    alt="<?= htmlspecialchars($firstCar['make'] . ' ' . $firstCar['model']); ?>">
+                            </div>
+
+                            <h4 class="carName">
+                                <?= htmlspecialchars($firstCar['make'] . ' ' . $firstCar['model']); ?>
+                            </h4>
+
+                            <div class="car-info">
+                                <p class="topCarDescription">
+                                    <?= htmlspecialchars($firstCar['personaDescription']); ?>
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+                <?php else: ?>
+                    <p class="noCarsMessage">No top car available for this persona.</p>
+                <?php endif; ?>
             </div>
+
 
         </div>
 
+        <!-- ======================ALL PERSONA CARS======================================== -->
 
 
-
-
+        <!-- Updated HTML: car_cards.html -->
         <div class="landingPage_part2">
             <div class="filter">
                 <div class="partsTitles_lp">
-                    <P class="mostRecommendedCarsTitle_lp">
-                        Cars matching your persona </P>
+                    <p class="mostRecommendedCarsTitle_lp">
+                        Cars matching your persona
+                    </p>
                 </div>
 
                 <div class="carCardsContainer_lp">
-                    <!-- static -->
-                    <?php include '../../../public_html/components/car_card.php'; ?>
+                    <div class="car-cards-container">
+                        <div class="container2"> <!-- Fixed wrapper for cards -->
+                            <?php foreach ($cars as $car): ?>
+                                <div class="car-card">
+                                    <div class="car-card-inner">
+
+                                        <!-- Front of the card -->
+                                        <div class="car-card-front">
+                                            <div class="img-container">
+                                                <img src="<?php echo $car['image']; ?>" alt="<?php echo htmlspecialchars($car['make']); ?>" class="car-card-img">
+                                            </div>
+
+                                            <div class="car-card-content">
+                                                <div class="car-info-container">
+                                                    <p class="car-name"><?php echo htmlspecialchars($car['make']); ?></p>
+                                                    <p class="carModel"><?php echo htmlspecialchars($car['model']); ?></p>
+                                                </div>
+                                                <?php
+                                                if (!function_exists('limitDescription')) {
+                                                    function limitDescription($description, $wordLimit = 30)
+                                                    {
+                                                        $words = explode(' ', $description);
+                                                        if (count($words) > $wordLimit) {
+                                                            return implode(' ', array_slice($words, 0, $wordLimit)) . '...';
+                                                        }
+                                                        return $description;
+                                                    }
+                                                }
+                                                ?>
+                                                <p class="car-description"><?php echo limitDescription($car['description']); ?></p>
+                                                <p class="car-price"><?php echo '$' . number_format($car['price'], 0); ?></p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Back of the card -->
+                                        <div class="car-card-back">
+                                            <div class="car-specs-content">
+                                                <h3 class="specs-title">Car Specifications</h3>
+                                                <table class="specs-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="spec-in-table">Engine</td>
+                                                            <td><?php echo htmlspecialchars($car['Engine']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="spec-in-table">Power</td>
+                                                            <td><?php echo htmlspecialchars($car['horsePower']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="spec-in-table">Torque</td>
+                                                            <td><?php echo htmlspecialchars($car['Torque']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="spec-in-table">0-60 mph</td>
+                                                            <td><?php echo htmlspecialchars($car['acceleration']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="spec-in-table">Fuel Economy (City/Highway)</td>
+                                                            <td><?php echo htmlspecialchars($car['fuelEfficiency']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="spec-in-table">Transmission</td>
+                                                            <td><?php echo htmlspecialchars($car['transmission']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="spec-in-table">DrivenWheels</td>
+                                                            <td><?php echo htmlspecialchars($car['drivenWheels']); ?></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="con-like">
+                                                    <input class="like" type="checkbox" title="like">
+                                                    <div class="checkmark">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="outline" viewBox="0 0 24 24">
+                                                            <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z"></path>
+                                                        </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="filled" viewBox="0 0 24 24">
+                                                            <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"></path>
+                                                        </svg>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="celebrate">
+                                                            <polygon class="poly" points="10,10 20,20"></polygon>
+                                                            <polygon class="poly" points="10,50 20,50"></polygon>
+                                                            <polygon class="poly" points="20,80 30,70"></polygon>
+                                                            <polygon class="poly" points="90,10 80,20"></polygon>
+                                                            <polygon class="poly" points="90,50 80,50"></polygon>
+                                                            <polygon class="poly" points="80,80 70,70"></polygon>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
 
-
-
-
-
         <hr class="divider">
+
+        <!-- ============================END OF PAGE  ========================-->
 
 
 
@@ -202,6 +324,56 @@ user_auth("Persona Overview");
             </button>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div> <!--biggest Filter Container -->
+    </div>
+
+
 </body>
 
 </html>
+
+<?php
+
+// Clear the stored persona and cars data
+unset($_SESSION['topPersona']);
+unset($_SESSION['cars']);
+unset($_SESSION['answers']); // If you stored answers separately
+
+
+?>

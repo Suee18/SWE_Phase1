@@ -68,4 +68,24 @@ class SessionManager
         $result = mysqli_query($conn, $sql);
         return $result;
     }
+
+    public static function updatePersonaID($topPersonaID)
+    {
+        $user = self::getUser(); 
+    
+        if ($user == null) {
+            return false;
+        }
+    
+        // Update personaID in the session
+        $_SESSION['personaID'] = $topPersonaID;
+    
+        global $conn;
+        $sql = "UPDATE user SET personaID = " . (int)$topPersonaID . " WHERE ID = " . (int)$user->id;
+        $result = mysqli_query($conn, $sql);
+    
+        return $result;
+    }
+
+
 }
