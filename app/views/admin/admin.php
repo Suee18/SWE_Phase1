@@ -3,10 +3,14 @@
 include_once "../../config/db_config.php";
 include '../../../models/UsersClass.php';
 include '../../../models/ReviewsClass.php';
+include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
+include_once __DIR__ . '\..\..\..\middleware\user_auth.php';
+
+user_auth("Admin Dashboard");
 
 
 $users = [];
-$sql = "select id, username,birthdate, gender, password, email,type FROM users";
+$sql = "select id, username,birthdate, gender, password, email,userTypeID FROM user";
 $result = mysqli_query($conn, $sql);
 
 if ($result) {

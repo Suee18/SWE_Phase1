@@ -1,3 +1,7 @@
+<?php
+include_once __DIR__ . '/../../controllers/SessionManager.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,9 +65,9 @@
                 <img src="../../../public_html/media/persona-icon.png" alt="persona-icon" />
                 <a href="../../../app/views/user/persona.php">Your Persona</a>
             </li>
-            <li class="logout-link" onclick="location.href='../../../public_html/index.php';">
+            <li class="logout-link">
                 <span class="material-symbols-outlined">logout</span>
-                <a href="../../../public_html/index.php">Logout</a>
+                <a href="../../../helpers/logout.php">Logout</a>
             </li>
             <li class="deletion-link">
                 <span class="material-symbols-outlined hover-red" style="color: var(--white);">delete</span>

@@ -4,11 +4,20 @@ require_once __DIR__ . '/../app/config/db_config.php';
 
 class SessionManager
 {
+    static $isSessionActive = false;
+
+    public function __construct()
+    {
+        session_start();
+    }
+
     public static function startSession()
     {
+        
         // Start the session only if it hasn't already started
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
+        if (!self::$isSessionActive) {
+            self::$isSessionActive = true;
+            new SessionManager();
         }
 
         // Initialize default userType as Guest if no session exists
@@ -21,35 +30,41 @@ class SessionManager
     {
         // Store user details in the session
         $_SESSION['user'] = $user;
-        $_SESSION['userTypeID'] = $user['userTypeID']; // Set userTypeID from user object
+        $_SESSION['userTypeID'] = $user->userTypeID; // Set userTypeID from user object
     }
 
     public static function destroySession()
     {
         session_unset();
         session_destroy();
+        self::$isSessionActive = false;
     }
 
     public static function isSessionActive()
     {
-        return isset($_SESSION['user']);
+        return self::$isSessionActive;
     }
 
     public static function getUser()
     {
-        if (!isset($_SESSION['user'])) {
-            throw new Exception("User session not found.");
-        }
-        return $_SESSION['user'];
+        return $_SESSION['user'] ?? null;
     }
 
 
     public static function updateLoginCounter()
     {
-        $_SESSION['user']['loginCounter'] += 1;
 
+        $user = self::getUser();     
+        
+        if ($user == null) {
+            return false;
+        }
+
+        $user->loginCounter += 1;
+        
         global $conn;
-        $sql = "UPDATE user SET loginCounter = loginCounter + 1 WHERE ID = " . $_SESSION['user']['ID'];
+        $sql = "UPDATE user SET loginCounter = ". $user->loginCounter ." WHERE ID = " . $user->id; 
+        echo $sql;
         $result = mysqli_query($conn, $sql);
         return $result;
     }

@@ -32,7 +32,7 @@ SessionManager::startSession();
                     <?php if (isset($_SESSION['user'])): ?>
                         <a href="../app/views/user/profile.php" class="listElement_login_navBar"
                             id="listElement_login_navBar">
-                            <?php echo htmlspecialchars($_SESSION['user']['userName']); ?>
+                            <?php echo htmlspecialchars($_SESSION['user']->username); ?>
                         </a>
                     <?php else: ?>
                         <a href="../app/views/auth/login.php" class="listElement_login_navBar"

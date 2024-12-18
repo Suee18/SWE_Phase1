@@ -23,10 +23,10 @@ class Users
         $this->gender = $gender;
         $this->password = $password;
         $this->email = $email;
-        $this->userTypeID = $userTypeID;
+        $this->userTypeID = (int) $userTypeID;
         $this->loginMethod = $loginMethod;
-        $this->personaID = $personaID;
-        $this->loginCounter = $loginCounter;
+        $this->personaID = (int) $personaID;
+        $this->loginCounter = (int) $loginCounter;
         $this->timeStamp = $timeStamp;
     }
 
@@ -116,6 +116,17 @@ class Users
             VALUES ('$username', '$birthdate', '$gender', '$password', '$email', '$userTypeID', '$loginMethod', '$timeStamp')";
 
         if (mysqli_query($conn, $sql)) {
+            // Get the last inserted user ID
+            $userId = mysqli_insert_id($conn);
+            $user = new Users($username, $birthdate, $gender, $password, $email, $userTypeID, $loginMethod, null, 0, $timeStamp);
+
+            $user->setId($userId);
+
+            // Initialize session
+            SessionManager::startSession();
+            SessionManager::setSessionUser($user);
+            SessionManager::updateLoginCounter();
+
             return true;
         }
 
@@ -123,7 +134,7 @@ class Users
     }
 
     // Update user (prevent updating userTypeID)
-    public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email, $loginMethod)
+    public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email)
     {
         global $conn;
 
@@ -134,11 +145,10 @@ class Users
         $password = mysqli_real_escape_string($conn, htmlspecialchars($password));
         $email = mysqli_real_escape_string($conn, htmlspecialchars($email));
         $gender = mysqli_real_escape_string($conn, htmlspecialchars($gender));
-        $loginMethod = mysqli_real_escape_string($conn, htmlspecialchars($loginMethod));
 
         // Update user data in the database (without modifying userTypeID)
         $sql = "UPDATE User 
-                SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email', loginMethod='$loginMethod' 
+                SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email' 
                 WHERE ID='$user_id'";
         return mysqli_query($conn, $sql);
     }
@@ -210,7 +220,16 @@ class Users
         }
 
         // If no errors, proceed to create the user
-        return self::addUser($username, $birthdate, $gender, $password, $email, $userType, $timeStamp, $loginMethod);
+        return self::addUser(
+            $username,
+            $birthdate,
+            $gender,
+            $password,
+            $email,
+            $userType,
+            $timeStamp,
+            $loginMethod
+        );
     }
 
 
@@ -223,10 +242,25 @@ class Users
         $resultEmail = mysqli_query($conn, $sqlEmail);
 
         if (mysqli_num_rows($resultEmail) > 0) {
-            $user = mysqli_fetch_assoc($resultEmail);
+            $response = mysqli_fetch_assoc($resultEmail);
+
+            $user = new Users(
+                $response['userName'],
+                $response['birthdate'] ?? null,
+                $response['gender'] ?? null,
+                $response['password'] ?? null,
+                $response['email'],
+                (int) $response['userTypeID'],
+                $response['loginMethod'],
+                $response['personID'] ?? null,
+                (int) $response['loginCounter'],
+                $response['Timestamp'],
+            );
+
+            $user->id = $response['ID'];
 
             // Check if the user has logged in with Google before
-            if ($user['loginMethod'] == 'google') {
+            if ($response['loginMethod'] == 'google') {
                 // Allow the user to log in normally
                 return [
                     'status' => true,
@@ -258,10 +292,25 @@ class Users
             $result = mysqli_query($conn, $sqlFindUser);
             $user = mysqli_fetch_assoc($result);
 
+            $newUser = new Users(
+                $user['userName'],
+                $user['birthdate'] ?? null,
+                $user['gender'] ?? null,
+                $user['password'] ?? null,
+                $user['email'],
+                (int) $user['userTypeID'],
+                $user['loginMethod'],
+                $user['personID'] ?? null,
+                (int) $user['loginCounter'],
+                $user['Timestamp'],
+            );
+
+            $newUser->id = $user['ID'];
+
             return [
                 'status' => true,
                 'message' => "User created and logged in successfully.",
-                'user' => $user // Return user object
+                'user' => $newUser // Return user object
             ];
         } else {
             return [
@@ -282,12 +331,15 @@ class Users
 
         if (mysqli_num_rows($sqlResult) === 0) {
             // User doesn't exist, so create a new user using the Google login method
+
             return self::addUserIntoDBGoogle($name, $email, $gender, date("Y-m-d H:i:s"));
         } else {
-            $user = mysqli_fetch_assoc($sqlResult);
+            $result = mysqli_fetch_assoc($sqlResult);
 
+            $user = new Users($result["userName"], $result["birthdate"], $result["gender"], $result["password"], $result["email"], $result["userTypeID"], $result["loginMethod"], $result["personaID"], $result["loginCounter"], $result["Timestamp"]);
+            $user->id = $result["ID"];
             // Check if the user logged in using Google
-            if ($user['loginMethod'] === 'google') {
+            if ($user->loginMethod === 'google') {
                 // Return user object if the login method is Google
                 return [
                     'status' => true,
