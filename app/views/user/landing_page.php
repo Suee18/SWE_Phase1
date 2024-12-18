@@ -36,6 +36,8 @@ if (isset($_POST['Submit'])) {
     <link rel="stylesheet" href="css/global_styles.css">
     <link rel="stylesheet" href="css/footer.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
@@ -296,6 +298,20 @@ if (isset($_POST['Submit'])) {
                 </div>
             </div>
         </footer>
+
+        <div id="searchModal" class="search-modal-overlay">
+            <div class="search-modal-content">
+                <!-- Close Button -->
+                <button class="search-modal-close-btn" id="closeSearchModalBtn">&times;</button>
+
+                <!-- Search Content -->
+                <h2>Search</h2>
+                <input type="text" id="searchInput" class="search-modal-input" placeholder="Type here to search..." />
+                <div id="searchResults" class="search-results-list"></div>
+                <button id="searchSubmitBtn" class="search-modal-submit-btn">Search</button>
+            </div>
+        </div>
+
 
         <script src="../public_html/js/landing_page.js"></script>
 </body>
