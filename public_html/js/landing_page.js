@@ -49,8 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     searchTerm: query, // Send the search term
                 },
                 success: function (response) {
-                    try {   
-                        console.log('Raw response: ', response);
+                    try {
+                        console.log("Raw response: ", response);
                         const cars = JSON.parse(response); // Parse the JSON response
                         displayResults(cars); // Display the results
                     } catch (e) {
@@ -115,8 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
     searchSubmitBtn.addEventListener("click", function () {
         const query = searchInput.value.trim();
         if (query.length > 0) {
-                window.location.href = `../app/views/user/search_results.php?query=${query}`;
-            
+            window.location.href = `../app/views/user/search_results.php?query=${query}`;
         }
     });
 });
@@ -275,59 +274,46 @@ reviewButtons.addEventListener("click", (e) => {
             textarea.classList.add("active");
             submitBtn.classList.add("active");
         }, 0);
+
+        starRatingContainer.style.display = "flex";
+        addStarRating();
     }
-
-    textarea.style.display = "block";
-    submitBtn.style.display = "block";
-
-    starRatingContainer.style.display = "flex";
-    addStarRating();
-
-    const allButtons = document.querySelectorAll(".button");
-    allButtons.forEach((btn) => btn.classList.remove("selected"));
-    button.classList.add("selected");
-
-    setTimeout(() => {
-      textarea.classList.add("active");
-      submitBtn.classList.add("active");
-    }, 0);
-  
 });
 
 function addStarRating() {
-  starRatingContainer.innerHTML = "";
-  selectedRating = 0;
+    starRatingContainer.innerHTML = "";
+    selectedRating = 0;
 
-  for (let i = 1; i <= 5; i++) {
-    const star = document.createElement("span");
-    star.classList.add("star");
-    star.setAttribute("data-value", i);
-    star.textContent = "★";
+    for (let i = 1; i <= 5; i++) {
+        const star = document.createElement("span");
+        star.classList.add("star");
+        star.setAttribute("data-value", i);
+        star.textContent = "★";
 
-    star.addEventListener("click", () => {
-      selectedRating = i;
-      fillStars(i);
-      document.getElementById("starRating").value = selectedRating;
-    });
+        star.addEventListener("click", () => {
+            selectedRating = i;
+            fillStars(i);
+            document.getElementById("starRating").value = selectedRating;
+        });
 
-    starRatingContainer.appendChild(star);
-  }
+        starRatingContainer.appendChild(star);
+    }
 }
 
 function fillStars(rating) {
-  const stars = document.querySelectorAll(".star");
-  stars.forEach((star, index) => {
-    if (index < rating) {
-      star.classList.add("highlighted");
-    } else {
-      star.classList.remove("highlighted");
-    }
-  });
+    const stars = document.querySelectorAll(".star");
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add("highlighted");
+        } else {
+            star.classList.remove("highlighted");
+        }
+    });
 }
 
 document.querySelectorAll(".review-buttons .button").forEach((button) => {
-  button.addEventListener("click", function () {
-    document.getElementById("reviewCategory").value =
-      this.getAttribute("data-choice");
-  });
+    button.addEventListener("click", function () {
+        document.getElementById("reviewCategory").value =
+            this.getAttribute("data-choice");
+    });
 });
