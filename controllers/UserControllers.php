@@ -47,4 +47,19 @@ class UserController
     {
         return Users::getFavoriteStatistics();
     }
+
+    public static function getPostsCountByMonth()
+    {
+        return Users::getPostsCountByMonth();
+    }
+
+    public static function getRecommendationCounts()
+    {
+        return Users::getRecommendationStatistics();
+    }
+
+    public static function getReviewsStatistics()
+    {
+        return Users::getReviewsStatistics();
+    }
 }

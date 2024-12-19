@@ -153,48 +153,32 @@ var personasChart = new Chart(ctx, {
 
 
 //Logins Statistics
-var ctx = document.getElementById('plansChart').getContext('2d');
-var loginsLineChart = new Chart(ctx, {
-    type: 'line',
+var ctx = document.getElementById('loginsChart').getContext('2d');
+var loginChart = new Chart(ctx, {
+    type: 'line',  // You can use 'line', 'bar', etc.
     data: {
-        labels: months,
+        labels: months,  // x-axis labels (months)
         datasets: [{
-            label: 'Monthly Logins',
-            data: logins,
-            borderColor: 'rgb(183, 131, 59)',
-            backgroundColor: 'rgba(134, 85, 25, 0.2)',
-            tension: 0.4,
-            fill: true
+            label: 'Logins Per Month',
+            data: loginCounts,  // y-axis values (login counts)
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Line fill color
+            borderColor: 'rgba(75, 192, 192, 1)',  // Line border color
+            borderWidth: 1
         }]
     },
     options: {
         responsive: true,
         scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Month'
-                },
-                ticks: {
-                    callback: function (value, index, values) {
-                        return months[index];
-                    }
-                }
-            },
             y: {
-                title: {
-                    display: true,
-                    text: 'Total Logins'
-                }
+                beginAtZero: true  // y-axis starts at 0
             }
         }
     }
 });
 
 
-
 //Favourites Statistics
-var ctx = document.getElementById('viewsChart').getContext('2d');
+var ctx = document.getElementById('FavouritesChart').getContext('2d');
 var favoritesChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -230,7 +214,107 @@ var favoritesChart = new Chart(ctx, {
     }
 });
 
+//Statistics For Posts
+var ctx = document.getElementById('postsChart').getContext('2d');
+var postChart = new Chart(ctx, {
+    type: 'bar',  // Type of chart (bar chart)
+    data: {
+        labels: months,  // x-axis labels (months)
+        datasets: [{
+            label: 'Number of Posts',
+            data: postCounts,  // y-axis values (post counts)
+            backgroundColor: 'rgba(158, 50, 59, 0.2)',  // Bar color
+            borderColor: 'rgb(175, 62, 62)',  // Bar border color
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
 
+
+
+
+var ctx = document.getElementById('RecommendationChart').getContext('2d');
+var recommendationChart = new Chart(ctx, {
+    type: 'line', // Bar chart type
+    data: {
+        labels: categories, // Categories as labels
+        datasets: [{
+            label: 'Total Recommendations',
+            data: recommendations, // Recommendation data
+            borderColor: 'rgb(54, 162, 235)',
+            backgroundColor: 'rgba(54, 162, 235, 0.3)',
+            fill: true,
+            tension: 0.1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true, // Start y-axis at zero
+                title: {
+                    display: true,
+                    text: 'Total Recommendations'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Market Categories'
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        return tooltipItem.raw + ' recommendations';
+                    }
+                }
+            }
+        }
+    }
+});
+
+//Reviews statistics
+var ctx = document.getElementById('reviewsChart').getContext('2d');
+var reviewsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: months,
+        datasets: [{
+            label: 'Monthly Review Counts',
+            data: reviewCounts,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+            }
+        }
+    }
+});
 // CRUD user
 
 function populateForm() {

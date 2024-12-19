@@ -1,30 +1,58 @@
 <?php
 
 include_once "../../config/db_config.php";
+
 include '../../../models/UsersClass.php';
-include '../../../models/ReviewsClass.php';
 include '../../../controllers/UserControllers.php';
+
+// include '../../../models/CarsClass.php';
+// include '../../../controllers/carController.php';
+
+include '../../../models/ReviewsClass.php';
+include '../../../controllers/ReviewController.php';
 
 
 //Statistics Generation part
 //Generating Personas Statistics
-$personasData =UserController::getPersonas();
+$personasData = UserController::getPersonas();
 
 $personaNames = $personasData['personaNames'];
 $personaCounters = $personasData['personaCounters'];
 
 //Generating Login Statistics
-$LoginData = UserController::getLoginStatistics();
+// $LoginData = UserController::getLoginStatistics();
+// $months = $LoginData['months'];
+// $logins = $LoginData['logins'];
 
-$months = $LoginData['months'];
-$logins = $LoginData['logins'];
+$data = UserController::getLoginStatistics();
 
+$months = $data['months'];
+$loginCounts = $data['logins'];
 
 //Generating Favourited Cars Statistics
 $FavoriteData = UserController::getFavouritesStat();
 
 $categories = $FavoriteData['categories'];
 $favorites = $FavoriteData['favorites'];
+
+//Generating Posts Statstics 
+$postData = UserController::getPostsCountByMonth();
+$months = $postData['months'];
+$postCounts = $postData['postCounts'];
+
+//Generating Recommendation Statstics 
+$RecommendationData = UserController::getRecommendationCounts();
+
+$categories = $RecommendationData['categories'];
+$recommendations = $RecommendationData['recommendations'];
+
+//Generating Reviews Statistics
+$reviewData = UserController::getReviewsStatistics();
+
+$months = $reviewData['months'];
+$reviewCounts = $reviewData['reviewCounts'];
+
+
 
 //User Cruds 
 $users = UserController::viewAllUsers();
@@ -60,17 +88,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+//Cars Cruds
+// $cars = carController::viewAllCars();
+
+
 //Reviews Cruds
-$reviews = Reviews::getAllReviews();
+$reviews = ReviewController::getReviews();
+
 
 if (isset($_POST['deleteReview'])) {
-    $reviewID = $_POST['reviewID'];
 
-    if (Reviews::deleteReviewFromDB($reviewID)) {
-        header("Location: admin.php");
+    $reviewID = $_POST['reviewID'];
+    $strategy = new ReviewDatabaseStrategy();
+    $controller = new ReviewController($strategy);
+    $result = $controller->deleteReview($reviewID);
+
+    // if (Reviews::deleteReviewFromDB($reviewID)) {
+    //     header("Location: admin.php");
+    // } else {
+    //     echo "<alert>Error deleting review</alert>";
+    // }
+    if ($result) {
+        echo "<p style='color: green;'>Review deleted successfully!</p>";
     } else {
-        echo "<alert>Error deleting review</alert>";
+        echo "<p style='color: red;'>Failed to delete the review.</p>";
     }
+
+    // Refresh the page to reflect changes
+    header("Location: " . $_SERVER['PHP_SELF']);
 }
 
 ?>
@@ -215,64 +260,78 @@ if (isset($_POST['deleteReview'])) {
 
         <!--======================= statistics =================================-->
 
-        
+
         <div id="div1" class="content-div" style="display: none;">
             <div class="small-container">
                 <div id="div1" class="stats-div">
-                    <p class="stat-title"> Turbo Conversations</p>
-                    <canvas id="conversationsChart" width="400" height="200"></canvas>
+                    <p class="stat-title"> Reviews per Month</p>
+                    <canvas id="reviewsChart" width="400" height="200"></canvas>
                 </div>
+                <script>
+                    var months = <?php echo json_encode($months); ?>;
+                    var reviewCounts = <?php echo json_encode($reviewCounts); ?>;
+                </script>
+
                 <div id="div1" class="stats-div">
-                    <p class="stat-title">Logins Per Month  </p>
-                    <canvas id="plansChart" width="400" height="200"></canvas>
+                    <p class="stat-title">Logins Per Month </p>
+                    <canvas id="loginsChart" width="400" height="200"></canvas>
                 </div>
-     <script> 
-          
-          var months = <?php echo json_encode($months); ?>;
-          var logins = <?php echo json_encode($logins); ?>;
-     </script>
+                <script>
+                    var months = <?php echo json_encode($months); ?>;
+                    var loginCounts = <?php echo json_encode($loginCounts); ?>;
+                </script>
 
                 <div id="div1" class="stats-div">
                     <p class="stat-title">Favourited Cars</p class="stat-title">
-                    <canvas id="viewsChart" width="400" height="200"></canvas>
+                    <canvas id="FavouritesChart" width="400" height="200"></canvas>
 
                 </div>
-                <script> 
-          
-          var categories = <?php echo json_encode($categories); ?>;
-          var favorites = <?php echo json_encode($favorites); ?>;
-     </script>
+                <script>
+                    var categories = <?php echo json_encode($categories); ?>;
+                    var favorites = <?php echo json_encode($favorites); ?>;
+                </script>
                 <div id="div1" class="stats-div">
-                    <p class="stat-title"> Average Session Duration (Minutes)</p>
-                    <canvas id="sessionDurationChart" width="400" height="200"></canvas>
+                    <p class="stat-title"> Posts Per Month</p>
+                    <canvas id="postsChart" width="400" height="200"></canvas>
+                </div>
+                <script>
+                    var months = <?php echo json_encode($months); ?>;
+                    var postCounts = <?php echo json_encode($postCounts); ?>;
+
+
+                    
+                </script>
+
+
+                <div id="div2" class="stats-div">
+                    <p class="stat-title">Recommendation Statistics</p>
+                    <canvas id="RecommendationChart" width="400" height="200"></canvas>
                 </div>
 
-                <div id="div1" class="stats-div">
-                    <p>
-                    <p class="stat-title"> Registered Users per Month
-                    <p>
-                        <canvas id="usersChart" width="400" height="200"></canvas>
-                    </p>
-                </div>
+                <script>
+                    var categories = <?php echo json_encode($categories); ?>;
+                    var recommendations = <?php echo json_encode($recommendations); ?>;
+                </script>
+
 
                 <div id="div1" class="stats-div">
                     <p>
                     <p class="stat-title"> Generated Personas</p>
                     <canvas id="personasChart" width="400" height="200"></canvas></p>
                 </div>
-                
-                <script>
-                     var personaNames = <?php echo json_encode($personaNames); ?>;
-                     var personaCounters = <?php echo json_encode($personaCounters); ?>;
 
+                <script>
+                    var personaNames = <?php echo json_encode($personaNames); ?>;
+                    var personaCounters = <?php echo json_encode($personaCounters); ?>;
                 </script>
-                
+
                 <div id="div1" class="stats-div">
                     <p>Most recommended car this month</p>
                     <!--waiting on dynamic car car -->
                 </div>
             </div>
-        </div> <!--======================= statistics end =================================-->
+        </div>
+        <!--======================= statistics end =================================-->
 
 
         <!--======================= post =======================-->
@@ -291,6 +350,9 @@ if (isset($_POST['deleteReview'])) {
         <div id="div3" class="content-div" style="display: none;">
 
             <div class="small-container">
+
+
+
                 <div class="formContainer">
                     <form id="userForm" method="POST" action="admin.php" onsubmit="return validate(this)">
 
@@ -424,6 +486,7 @@ if (isset($_POST['deleteReview'])) {
         </div> <!--=================== USER FORM END ===========================-->
 
 
+        <!-- =====================LOG OUT=========================== -->
         <div id="div4" class="content-div" style="display: none;">
             <a class="logout-gif" href="https://yourlink.com" target="_blank">
                 <iframe src="https://lottie.host/embed/a8e35add-6bd4-4e1a-83fe-8b0054b0e1e9/crKXr3yJMI.lottie"></iframe>
@@ -436,11 +499,56 @@ if (isset($_POST['deleteReview'])) {
             </span>
         </div>
 
+        <!-- =========================  CAR TABLE ========================== -->
         <div id="div5" class="content-div" style="display: none;">
-            cars control form goes here
+            <div class="small-container">
+
+                <div class="table-container-adminReview">
+                    <table class="table-adminReview">
+
+                        <thead>
+                            <tr>
+                                <th>Car ID</th>
+                                <th>Model</th>
+                                <th>Make </th>
+                                <th>Add</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <?php foreach ($cars as $car): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($car->id); ?></td>
+                                    <td><?php echo htmlspecialchars($car->make); ?></td>
+                                    <td><?php echo htmlspecialchars($review->model); ?></td>
+
+                                    <td class="delete-icon-adminReview">
+                                        <!-- <form method="POST" action="admin.php" style="display:inline;">
+                                            <input type="hidden" name="reviewID"
+                                                value="<?php echo htmlspecialchars($review->id); ?>">
+                                            <input type="submit" value="" name="deleteReview" id="deleteReview-btn">
+                                            <i class="fa-solid fa-trash-can" style="color: #edeff2;"></i>
+                            
+                                        </form> -->
+                                        <!-- <form method="POST" action="admin.php" style="display:inline;">
+                                            <input type="hidden" name="reviewID" value="<?php echo htmlspecialchars($review->id); ?>">
+                                            <button type="submit" name="deleteReview" id="deleteReview-btn">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </form> -->
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
-
+        <!-- =======================REVIEWS PART========================= -->
         <div id="div6" class="content-div" style="display: none;">
             <div class="small-container">
 
@@ -459,9 +567,9 @@ if (isset($_POST['deleteReview'])) {
                         <tbody>
                             <?php foreach ($reviews as $review): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($review->id); ?></td>
-                                    <td><?php echo htmlspecialchars($review->reviewUserName); ?></td>
+                                    <td><?php echo htmlspecialchars($review->reviewID); ?></td>
                                     <td><?php echo htmlspecialchars($review->reviewText); ?></td>
+                                    <td><?php echo htmlspecialchars($review->reviewCategory); ?></td>
                                     <td><?php echo htmlspecialchars($review->reviewDate); ?></td>
                                     <td class="delete-icon-adminReview">
                                         <!-- <form method="POST" action="admin.php" style="display:inline;">
@@ -472,7 +580,7 @@ if (isset($_POST['deleteReview'])) {
                             
                                         </form> -->
                                         <form method="POST" action="admin.php" style="display:inline;">
-                                            <input type="hidden" name="reviewID" value="<?php echo htmlspecialchars($review->id); ?>">
+                                            <input type="hidden" name="reviewID" value="<?php echo htmlspecialchars($review->reviewID); ?>">
                                             <button type="submit" name="deleteReview" id="deleteReview-btn">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </button>

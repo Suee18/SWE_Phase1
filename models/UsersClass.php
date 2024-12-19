@@ -376,6 +376,8 @@ class Users
             }
         }
     }
+
+    //Persona Statistics
     public static function getPersonas()
     {
         global $conn;
@@ -397,45 +399,78 @@ class Users
     }
 
 
-
-
+    //Login Statistics
     public static function getLoginStatistics()
     {
         global $conn;
 
-
+        // Query to calculate login statistics grouped by month and year
         $sql = "
-                SELECT 
-                    DATE_FORMAT(Timestamp, '%b') AS month,  
-                    SUM(loginCounter) AS totalLogins       
-                FROM 
-                    user          
-                GROUP BY 
-                    month                                    
-                ORDER BY 
-                    MONTH(Timestamp) ASC";
+        SELECT 
+            DATE_FORMAT(Timestamp, '%b %Y') AS month,  -- Use abbreviated month name (e.g., Jan 2024)
+            SUM(loginCounter) AS loginCount           -- Sum of loginCounter for each month
+        FROM 
+            user                                       -- Replace with your actual table name
+        GROUP BY 
+        month(Timestamp)         -- Group by year and month
+        ORDER BY 
+            MONTH(Timestamp) ASC;  -- Sort by year and month
+      ";
 
+
+        // Execute the query
         $result = $conn->query($sql);
 
-
+        // Initialize arrays to store months and login counts
         $months = [];
         $logins = [];
 
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $months[] = $row['month'];
-                $logins[] = $row['totalLogins'];
+        if ($result) { // Check if query execution was successful
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $months[] = $row['month'];        // Add month to months array
+                    $logins[] = $row['loginCount'];  // Add loginCount to logins array
+                }
+            } else {
+                // No data found, return empty arrays
+                return ['months' => [], 'logins' => []];
             }
         } else {
-
+            // If the query fails, log or handle the error (optional)
+            error_log("SQL Error: " . $conn->error);
             return ['months' => [], 'logins' => []];
         }
 
+        // Return the arrays with months and login counts
         return ['months' => $months, 'logins' => $logins];
     }
 
 
+    // public static function getLoginStatistics() {
+    //     global $conn;  // Assuming a global database connection
+
+    //     $sql = "SELECT userName, loginCounter FROM user";  // Adjust table/column names as needed
+    //     $result = $conn->query($sql);
+
+    //     // Initialize arrays to store the data
+    //     $userNames = [];
+    //     $loginCounters = [];
+
+    //     if ($result->num_rows > 0) {
+    //         while ($row = $result->fetch_assoc()) {
+    //             $userNames[] = $row['userName'];  // Fetch the user name
+    //             $loginCounters[] = $row['loginCounter'];  // Fetch the login counter value
+    //         }
+    //     } else {
+    //         echo "No login statistics found";
+    //     }
+
+    //     // Return the data as an associative array
+    //     return ['userNames' => $userNames, 'loginCounters' => $loginCounters];
+    // }
+
+
+    //Favourites Statistics
     public static function getFavoriteStatistics()
     {
         global $conn;
@@ -469,32 +504,116 @@ class Users
     }
 
 
+    //Posts Statstics
+    public static   function getPostsCountByMonth()
+    {
+    
+        global $conn;
+    
+        $sql = "
+                    SELECT 
+                        DATE_FORMAT(Timestamp, '%b %Y') AS month, 
+                        COUNT(*) AS postCount 
+                    FROM 
+                        post  
+                    GROUP BY 
+                        month  
+                    ORDER BY 
+                        MIN(Timestamp) ASC";
+    
+    
+        $result = $conn->query($sql);
+    
+    
+        $months = [];
+        $postCounts = [];
+    
+        if ($result && $result->num_rows > 0) {
+    
+            while ($row = $result->fetch_assoc()) {
+                $months[] = $row['month'];
+                $postCounts[] = $row['postCount'];
+            }
+        } else {
+    
+            echo "No data found.";
+        }
+    
+    
+        return [
+            'months' => $months,
+            'postCounts' => $postCounts,
+        ];
+    }
+
+    //Recommendation Statistics
+    public static function getRecommendationStatistics()
+    {
+        global $conn;
+
+        $sql = "
+        SELECT 
+            marketCategory, 
+            SUM(RecommendationCount) AS totalRecommendations
+        FROM 
+            cars 
+        GROUP BY 
+            marketCategory
+        ORDER BY 
+            marketCategory ";
 
 
-
-    // public static function getLoginStatistics() {
-    //     global $conn;  // Assuming a global database connection
-
-    //     $sql = "SELECT userName, loginCounter FROM user";  // Adjust table/column names as needed
-    //     $result = $conn->query($sql);
-
-    //     // Initialize arrays to store the data
-    //     $userNames = [];
-    //     $loginCounters = [];
-
-    //     if ($result->num_rows > 0) {
-    //         while ($row = $result->fetch_assoc()) {
-    //             $userNames[] = $row['userName'];  // Fetch the user name
-    //             $loginCounters[] = $row['loginCounter'];  // Fetch the login counter value
-    //         }
-    //     } else {
-    //         echo "No login statistics found";
-    //     }
-
-    //     // Return the data as an associative array
-    //     return ['userNames' => $userNames, 'loginCounters' => $loginCounters];
-    // }
+        $result = $conn->query($sql);
 
 
+        $categories = [];
+        $recommendations = [];
 
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $categories[] = $row['marketCategory'];
+                $recommendations[] = $row['totalRecommendations'];
+            }
+        } else {
+
+            return ['categories' => [], 'recommendations' => []];
+        }
+
+        return ['categories' => $categories, 'recommendations' => $recommendations];
+    }
+
+//Reviews Statistics
+    public static function getReviewsStatistics(){
+     
+            global $conn;
+        
+            $sql = "
+                SELECT 
+                    DATE_FORMAT(reviewDate, '%b %Y') AS month, 
+                    COUNT(*) AS reviewCount 
+                FROM 
+                    reviews 
+                GROUP BY 
+                    month 
+                ORDER BY 
+                    MIN(reviewDate) ASC
+            ";
+        
+            $result = $conn->query($sql);
+        
+            $months = [];
+            $reviewCounts = [];
+        
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $months[] = $row['month'];
+                    $reviewCounts[] = $row['reviewCount'];
+                }
+            }
+        
+            return ['months' => $months, 'reviewCounts' => $reviewCounts];
+        
+        
+    }
 }
