@@ -83,6 +83,8 @@ class SessionManager
         return $result;
     }
 
+
+    
     public static function updatePersonaID($topPersonaID)
     {
         $user = self::getUser();
@@ -108,4 +110,5 @@ class SessionManager
         file_put_contents($filePath, print_r($_SESSION, true));  // Check if session data is available
 
     }
+
 }

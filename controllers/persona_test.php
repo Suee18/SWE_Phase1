@@ -3,6 +3,8 @@ require_once __DIR__ . '/../app/config/db_config.php';
 require_once __DIR__ . '/../models/PersonasModel.php';
 require_once __DIR__ . '/../models/CarsModel.php';
 require_once __DIR__ . '../SessionManager.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../models/UsersClass.php';
 
 
 class PersonasController
@@ -433,7 +435,9 @@ class PersonasController
             if (!SessionManager::updatePersonaID($personaId)) {
                 error_log("Failed to update personaID in the session for user.");
             }
-
+            // SessionManager::updatePersonaIDInDatabase();
+        
+            
             // Store the results in a session
             session_start();
             $_SESSION['topPersona'] = $topPersona;
@@ -442,6 +446,10 @@ class PersonasController
             // Redirect to the results view
             header('Location: ../app/views/user/persona.php');
             exit;
+
+
+
+
         }
     }
 }

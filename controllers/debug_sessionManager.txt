@@ -1,21 +1,19 @@
 Array
 (
-    [userTypeID] => 2
-    [user] => __PHP_Incomplete_Class Object
+    [userTypeID] => 1
+    [user] => Users Object
         (
-            [__PHP_Incomplete_Class_Name] => Users
-            [id] => 10
-            [username] => salma
-            [birthdate] => 2004-12-12
+            [id] => 8
+            [username] => alaa
+            [birthdate] => 2003-10-25
             [gender] => female
             [password] => 1234567
-            [email] => salma123@gmail.com
-            [userTypeID] => 2
-            [loginMethod] => manual
+            [email] => alaa@gmail.com
+            [userTypeID] => 1
+            [loginMethod] => google
             [personaID] => 
-            [loginCounter] => 7
-            [timeStamp] => 2024-12-18 23:02:01
+            [loginCounter] => 11
+            [timeStamp] => 2024-10-25 21:00:07
         )
 
-    [personaID] => 8
 )
