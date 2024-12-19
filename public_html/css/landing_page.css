@@ -290,6 +290,16 @@ body {
     font-weight: 100;
 }
 
+.rating {
+  font-size: 35px;
+  color: #ccc;
+  margin-top: 50px;
+}
+
+.rating.filled {
+  color: gold;
+}
+
 .swiper-slide-active {
     transform: scale(1.2);
     transition: transform 0.5s ease-in-out;
@@ -300,17 +310,18 @@ body {
 }
 
 .review-paragraph {
-    font-size: 1.3rem;
-    font-family: var(--paragraphs_font);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    margin-top: 50px;
-    margin-left: 60px;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    max-width: 300px;
+  font-size: 1.3rem;
+  font-family: var(--paragraphs_font);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  margin-top: 50px;
+  margin-left: 60px;
+  margin-bottom: 50px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 300px;
 }
 
 .overlay {
@@ -489,6 +500,30 @@ body {
     display: block;
     opacity: 1;
     transform: scale(1);
+}
+
+#starRatingContainer {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+  gap: 5px;
+}
+
+.star {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.star.highlighted {
+  color: gold;
+}
+
+textarea.active,
+.submitBtn.active {
+  transition: opacity 0.3s ease;
+  opacity: 1;
 }
 
 .closeBtn {

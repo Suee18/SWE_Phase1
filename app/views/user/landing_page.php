@@ -1,23 +1,31 @@
 <?php
 include_once __DIR__ . '\..\..\config\db_config.php';
-include __DIR__ . '\..\..\..\models\ReviewsClass.php';
+// include __DIR__ . '\..\..\..\models\ReviewsClass.php';
+include_once __DIR__ . '\..\..\..\controllers\ReviewController.php';
 include __DIR__ . '\..\..\..\models\UsersClass.php';
 include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
+SessionManager::startSession();
+
 $reviewsSliderArray = Reviews::getLastNumberOfReviews(7);
 
-if (isset($_POST['Submit'])) {
-    $reviewText = mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewText']));
-    $reviewCategory = mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewCategory']));
-    $reviewDate = date('Y-m-d H:i:s');
+$reviewController = new ReviewController(new ReviewDatabaseStrategy());
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
+    $reviewData = [
+        'reviewText' => mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewText'])),
+        'reviewCategory' => mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewCategory'])),
+        'reviewDate' => date('Y-m-d H:i:s'),
+        'reviewRating' => $_POST['starRating'] ?? NULL,
+        'userID' => SessionManager::getUser() ? SessionManager::getUser()->id : 0
+    ];
 
-    $user = SessionManager::getUser();
-    $userID = $user ? $user['ID'] : null;
+    // Add the review to the database
+    $reviewController->addReview($reviewData);
 
-    $reviewUserName = "Anonymous";
-
-    $review = new Reviews($reviewText, $reviewCategory, $reviewDate, 5, $userID);
-    $result = $review->addReviewIntoDB($review);
+    // Redirect to the same page to prevent resubmission
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -163,18 +171,34 @@ if (isset($_POST['Submit'])) {
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
                             <?php
+                            include_once __DIR__ . '/../../../controllers/ReviewController.php';
+
+                            $reviewsSliderArray = ReviewController::getHighRatedReviews(3);
+
                             foreach ($reviewsSliderArray as $review) {
-                                echo '<div class="swiper-slide">
-                                <div class="review-card">
-                                    <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
-                                    <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
-                                </div>
-                              </div>';
+                                $rating = $review->reviewRating;
+
+                                $stars = '';
+                                for ($i = 1; $i <= 5; $i++) {
+                                    $stars .= $i <= $rating
+                                        ? '<span class="rating filled">★</span>'
+                                        : '<span class="rating">★</span>';
+                                }
+
+                                echo 
+                                '<div class="swiper-slide">
+                                        <div class="review-card">
+                                            <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
+                                            <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
+                                            <div class="review-rating">' . $stars . '</div>
+                                        </div>
+                                </div>';
                             }
                             ?>
                         </div>
                     </div>
                 </div>
+
 
                 <button class="btn" id="openOverlay">
                     <svg xmlns="http://www.w3.org/2000/svg" class="arr-2" viewBox="0 0 24 24">
@@ -199,7 +223,7 @@ if (isset($_POST['Submit'])) {
                                 <div class="button-wrapper">
                                     <div class="text">Apex</div>
                                     <span class="icon">
-                                        <img src=" ../public_html/media/website.png" alt="Website Icon">
+                                        <img src="../public_html/media/website.png" alt="Website Icon">
                                     </span>
                                 </div>
                             </div>
@@ -207,7 +231,7 @@ if (isset($_POST['Submit'])) {
                                 <div class="button-wrapper">
                                     <div class="text">Comparison</div>
                                     <span class="icon">
-                                        <img src=" ../public_html/media/compare.png" alt="Website Icon">
+                                        <img src="../public_html/media/compare.png" alt="Website Icon">
                                     </span>
                                 </div>
                             </div>
@@ -215,7 +239,7 @@ if (isset($_POST['Submit'])) {
                                 <div class="button-wrapper">
                                     <div class="text">Search</div>
                                     <span class="icon">
-                                        <img src=" ../public_html/media/website.png" alt="Website Icon">
+                                        <img src="../public_html/media/website.png" alt="Website Icon">
                                     </span>
                                 </div>
                             </div>
@@ -223,7 +247,7 @@ if (isset($_POST['Submit'])) {
                                 <div class="button-wrapper">
                                     <div class="text">Persona Test</div>
                                     <span class="icon">
-                                        <img src=" ../public_html/media/test.png" alt="Website Icon">
+                                        <img src="../public_html/media/test.png" alt="Website Icon">
                                     </span>
                                 </div>
                             </div>
@@ -244,9 +268,10 @@ if (isset($_POST['Submit'])) {
                                 </div>
                             </div>
                         </div>
-                        <textarea id="reviewText" placeholder=" Write your review here..." name="reviewText"
-                            required></textarea>
-                        <input type="hidden" id="reviewCategory" name="reviewCategory" value="">
+                        <input type="hidden" id="reviewCategory" name="reviewCategory">
+                        <textarea id="reviewText" placeholder="Write your review here..." name="reviewText" required></textarea>
+                        <div id="starRatingContainer" style="display: none;"></div>
+                        <input type="hidden" id="starRating" name="starRating">
                         <input class="submitBtn" type="submit" id="submitReview" name="Submit">
                     </form>
                 </div>

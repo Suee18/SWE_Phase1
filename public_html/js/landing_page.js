@@ -200,7 +200,6 @@ const swiper = new Swiper(".swiper-container", {
     },
     loop: true,
 });
-
 const openOverlayBtn = document.getElementById("openOverlay");
 const overlay = document.getElementById("reviewOverlay");
 const closeOverlayBtn = document.getElementById("closeOverlay");
@@ -228,8 +227,12 @@ window.addEventListener("click", (e) => {
 const reviewButtons = document.getElementById("reviewButtons");
 const textarea = document.getElementById("reviewText");
 const submitBtn = document.getElementById("submitReview");
+const starRatingContainer = document.getElementById("starRatingContainer");
+
 textarea.style.display = "none";
 submitBtn.style.display = "none";
+
+let selectedRating = 0;
 
 reviewButtons.addEventListener("click", (e) => {
     const button = e.target.closest(".button");
@@ -273,4 +276,58 @@ reviewButtons.addEventListener("click", (e) => {
             submitBtn.classList.add("active");
         }, 0);
     }
+
+    textarea.style.display = "block";
+    submitBtn.style.display = "block";
+
+    starRatingContainer.style.display = "flex";
+    addStarRating();
+
+    const allButtons = document.querySelectorAll(".button");
+    allButtons.forEach((btn) => btn.classList.remove("selected"));
+    button.classList.add("selected");
+
+    setTimeout(() => {
+      textarea.classList.add("active");
+      submitBtn.classList.add("active");
+    }, 0);
+  }
+});
+
+function addStarRating() {
+  starRatingContainer.innerHTML = "";
+  selectedRating = 0;
+
+  for (let i = 1; i <= 5; i++) {
+    const star = document.createElement("span");
+    star.classList.add("star");
+    star.setAttribute("data-value", i);
+    star.textContent = "★";
+
+    star.addEventListener("click", () => {
+      selectedRating = i;
+      fillStars(i);
+      document.getElementById("starRating").value = selectedRating;
+    });
+
+    starRatingContainer.appendChild(star);
+  }
+}
+
+function fillStars(rating) {
+  const stars = document.querySelectorAll(".star");
+  stars.forEach((star, index) => {
+    if (index < rating) {
+      star.classList.add("highlighted");
+    } else {
+      star.classList.remove("highlighted");
+    }
+  });
+}
+
+document.querySelectorAll(".review-buttons .button").forEach((button) => {
+  button.addEventListener("click", function () {
+    document.getElementById("reviewCategory").value =
+      this.getAttribute("data-choice");
+  });
 });
