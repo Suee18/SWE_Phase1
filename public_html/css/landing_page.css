@@ -2,292 +2,292 @@
 
 html,
 body {
-  margin: 0;
-  padding: 0;
-  overflow-y: scroll;
-  scrollbar-width: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #020925;
-  color: #dad3d3;
+    font-family: Arial, sans-serif;
+    background-color: #020925;
+    color: #dad3d3;
 }
 
 /*===============================PART 1====================================*/
 
 .slideShowContainer_lp {
-  position: relative;
-  width: 100%;
-  height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .slide {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .slide-bg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .text-overlay {
-  position: relative;
-  width: 100%;
-  height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  padding: 0;
-  color: white;
-  background: linear-gradient(
-    250deg,
-    #031d35,
-    #01031f8f,
-    #615a5a48,
-    #070707a4,
-    #000103e1
-  );
-  backdrop-filter: blur(2.5px);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 0;
+    color: white;
+    background: linear-gradient(
+        250deg,
+        #031d35,
+        #01031f8f,
+        #615a5a48,
+        #070707a4,
+        #000103e1
+    );
+    backdrop-filter: blur(2.5px);
 
-  /* background: linear-gradient(210deg, #1a334abd,#000000c2 );  */
-  /* background: linear-gradient(210deg, #1a334abd,#000000c2 );  */
+    /* background: linear-gradient(210deg, #1a334abd,#000000c2 );  */
+    /* background: linear-gradient(210deg, #1a334abd,#000000c2 );  */
 }
 
 /*slide1*/
 
 .slide1Title_lp {
-  font-family: var(--racing_font);
-  color: white;
-  font-size: 4rem;
-  font-weight: 100;
-  margin-bottom: 0.5rem;
-  margin-top: 22rem;
+    font-family: var(--racing_font);
+    color: white;
+    font-size: 4rem;
+    font-weight: 100;
+    margin-bottom: 0.5rem;
+    margin-top: 22rem;
 }
 
 .slide1paragraph_lp {
-  font-family: var(--paragraph_font);
-  font-size: 2rem;
-  font-weight: 100;
-  cursor: pointer;
-  color: #b4c3cc;
+    font-family: var(--paragraph_font);
+    font-size: 2rem;
+    font-weight: 100;
+    cursor: pointer;
+    color: #b4c3cc;
 }
 
 .videoBG_lp {
-  position: absolute;
-  width: 100%;
-  height: 115%;
-  object-fit: cover;
-  z-index: -1;
+    position: absolute;
+    width: 100%;
+    height: 115%;
+    object-fit: cover;
+    z-index: -1;
 }
 
 /*slide 2*/
 
 .slide2Title_lp {
-  font-family: var(--technoRace_font);
-  color: white;
-  text-shadow: 2px 2px 4px #58717d;
-  font-size: 4rem;
-  font-weight: 100;
-  margin-top: 22rem;
-  margin-left: 3rem;
+    font-family: var(--technoRace_font);
+    color: white;
+    text-shadow: 2px 2px 4px #58717d;
+    font-size: 4rem;
+    font-weight: 100;
+    margin-top: 22rem;
+    margin-left: 3rem;
 }
 
 .slide2paragraph_lp {
-  font-family: var(--paragraph_font);
-  font-size: 2rem;
-  font-weight: 100;
-  margin-top: -0.5rem;
-  cursor: pointer;
-  margin-left: 3rem;
-  color: #b4c3cc;
+    font-family: var(--paragraph_font);
+    font-size: 2rem;
+    font-weight: 100;
+    margin-top: -0.5rem;
+    cursor: pointer;
+    margin-left: 3rem;
+    color: #b4c3cc;
 }
 
 /*slide 3*/
 .slide3Title_lp {
-  font-family: var(--technoRace_font);
-  color: white;
-  text-shadow: 2px 2px 4px #58717d;
-  font-size: 4rem;
-  font-weight: 100;
-  margin-top: 22rem;
+    font-family: var(--technoRace_font);
+    color: white;
+    text-shadow: 2px 2px 4px #58717d;
+    font-size: 4rem;
+    font-weight: 100;
+    margin-top: 22rem;
 }
 
 .slide3paragraph_lp {
-  font-family: var(--paragraph_font);
-  font-size: 2rem;
-  font-weight: 100;
-  cursor: pointer;
-  color: #b4c3cc;
+    font-family: var(--paragraph_font);
+    font-size: 2rem;
+    font-weight: 100;
+    cursor: pointer;
+    color: #b4c3cc;
 }
 
 /*slide 4*/
 .slide4Title_lp {
-  font-family: var(--technoRace_font);
-  color: white;
-  text-shadow: 2px 2px 4px #58717d;
-  font-size: 3rem;
-  font-weight: 100;
-  margin-top: 22rem;
+    font-family: var(--technoRace_font);
+    color: white;
+    text-shadow: 2px 2px 4px #58717d;
+    font-size: 3rem;
+    font-weight: 100;
+    margin-top: 22rem;
 }
 .slide4Paragraph_lp {
-  font-family: var(--paragraph_font);
-  color: #b4c3cc;
-  font-size: 2rem;
-  font-weight: 100;
-  cursor: pointer;
+    font-family: var(--paragraph_font);
+    color: #b4c3cc;
+    font-size: 2rem;
+    font-weight: 100;
+    cursor: pointer;
 }
 /*=================== slides Navigation ================*/
 .dots {
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-  text-align: center;
-  margin-bottom: 0.5rem;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5rem;
 }
 
 .dot {
-  height: 5px;
-  width: 40px;
-  margin: 0 5px;
-  background-color: #1e3a46;
-  border-radius: 15%;
-  display: inline-block;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    height: 5px;
+    width: 40px;
+    margin: 0 5px;
+    background-color: #1e3a46;
+    border-radius: 15%;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .dot:hover,
 .active {
-  background-color: #a5cea7;
-  box-shadow: 0 0 10px #020b0f;
-  transform: translateY(-2px);
+    background-color: #a5cea7;
+    box-shadow: 0 0 10px #020b0f;
+    transform: translateY(-2px);
 }
 
 /*===============================parts 2,3 headers ====================================*/
 
 /*titles headers */
 .partsTitles_lp {
-  height: 5rem;
-  padding-left: 20px;
+    height: 5rem;
+    padding-left: 20px;
 
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 
-  /* background: var(--grad1); */
-  backdrop-filter: blur(10px);
+    /* background: var(--grad1); */
+    backdrop-filter: blur(10px);
 
-  font-family: var(--technoRace_font);
-  font-weight: 100;
-  color: white;
-  font-size: 3rem;
+    font-family: var(--technoRace_font);
+    font-weight: 100;
+    color: white;
+    font-size: 3rem;
 }
 
 /*===============================PART 2: most recommended====================================*/
 /* Landing Page Part 2 */
 .landingPage_part2 {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  box-sizing: border-box;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-attachment: fixed;
-  background-position: center;
-  /* background-image: url('../media/lp_mostRecommended4.jpg'); */
-  /* background-image: url('../media//mostr_lp11.jpg');  */
-  /* background-image: url('../media/mostr_lp8.jpg'); */
-  /* background-image: url('../media/animationGIF1.gif'); */
-  /* background-image: url("../media/mostr_lp6LOW.jpg"); */
-  /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/88f25b57105717.59c93c1719ded.jpg"); */
-  /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3fe0e011987935.581b955b28aaf.jpg"); */
-  /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/cc00bc88444999.5dd6555768d4b.jpg"); */
-  /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/8bc3f988444999.5dd6555764a62.jpg"); */
-  /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/547d9688444999.5dd65557622db.jpg"); */
-  /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/547d9688444999.5dd65557622db.jpg"); */
-  /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/9b0c0888444999.5dd65557643a5.jpg"); */
-  /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/aeafac88444999.5dd655576a341.jpg"); */
-  background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5d752014891767.5628a4f272ac4.jpg");
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    /* background-image: url('../media/lp_mostRecommended4.jpg'); */
+    /* background-image: url('../media//mostr_lp11.jpg');  */
+    /* background-image: url('../media/mostr_lp8.jpg'); */
+    /* background-image: url('../media/animationGIF1.gif'); */
+    /* background-image: url("../media/mostr_lp6LOW.jpg"); */
+    /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/88f25b57105717.59c93c1719ded.jpg"); */
+    /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3fe0e011987935.581b955b28aaf.jpg"); */
+    /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/cc00bc88444999.5dd6555768d4b.jpg"); */
+    /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/8bc3f988444999.5dd6555764a62.jpg"); */
+    /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/547d9688444999.5dd65557622db.jpg"); */
+    /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/547d9688444999.5dd65557622db.jpg"); */
+    /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/9b0c0888444999.5dd65557643a5.jpg"); */
+    /* background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400/aeafac88444999.5dd655576a341.jpg"); */
+    background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5d752014891767.5628a4f272ac4.jpg");
 }
 
 .mostRecommendedCarsTitle_lp {
-  white-space: nowrap;
+    white-space: nowrap;
 }
 
 .filter {
-  background-color: #000000a1;
+    background-color: #000000a1;
 }
 
 /*===============================PART 3: reviews====================================*/
 
 .landingPage_part3 {
-  height: 50rem;
-  background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/57a55888295025.5dd27c28990ae.png");
-  background-size: 130%;
-  background-position: center;
-  background-repeat: no-repeat;
-  overflow-x: hidden;
-  overflow-y: hidden;
+    height: 50rem;
+    background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/57a55888295025.5dd27c28990ae.png");
+    background-size: 130%;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .filter_reviews {
-  height: 50rem;
-  background-color: #00000069;
+    height: 50rem;
+    background-color: #00000069;
 }
 
 .reviews-section {
-  text-align: center;
+    text-align: center;
 }
 
 .header {
-  font-family: var(--racing_font);
-  font-size: 3rem;
-  margin-bottom: 70px;
-  margin-top: 50px;
+    font-family: var(--racing_font);
+    font-size: 3rem;
+    margin-bottom: 70px;
+    margin-top: 50px;
 }
 
 .swiper-container {
-  width: 30%;
-  height: 400px;
-  margin: 0 auto;
+    width: 30%;
+    height: 400px;
+    margin: 0 auto;
 }
 
 .swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 4cm;
-  font-size: 1.2rem;
-  background: rgba(81, 81, 81, 0.216);
-  backdrop-filter: blur(40px);
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.5s ease;
-  overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4cm;
+    font-size: 1.2rem;
+    background: rgba(81, 81, 81, 0.216);
+    backdrop-filter: blur(40px);
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease;
+    overflow: hidden;
 }
 
 .review-card {
-  text-align: center;
-  padding: 20px;
+    text-align: center;
+    padding: 20px;
 }
 
 .review-card h4 {
-  /* font-size: 1.2rem; */
-  font-size: 1.8rem;
-  color: var(--white);
-  margin-bottom: 10px;
-  margin-top: 50px;
-  font-family: var(--header_font);
-  font-weight: 100;
+    /* font-size: 1.2rem; */
+    font-size: 1.8rem;
+    color: var(--white);
+    margin-bottom: 10px;
+    margin-top: 50px;
+    font-family: var(--header_font);
+    font-weight: 100;
 }
 
 .rating {
@@ -301,12 +301,12 @@ body {
 }
 
 .swiper-slide-active {
-  transform: scale(1.2);
-  transition: transform 0.5s ease-in-out;
+    transform: scale(1.2);
+    transition: transform 0.5s ease-in-out;
 }
 
 .btn {
-  margin-left: 42%;
+    margin-left: 42%;
 }
 
 .review-paragraph {
@@ -325,181 +325,181 @@ body {
 }
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.39);
-  backdrop-filter: blur(10px);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.39);
+    backdrop-filter: blur(10px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .overlay-content {
-  background: rgba(192, 190, 190, 0.229);
-  backdrop-filter: blur(40px);
-  border-right: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 60px;
-  border-radius: 15px;
-  text-align: center;
-  width: 450px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(192, 190, 190, 0.229);
+    backdrop-filter: blur(40px);
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 60px;
+    border-radius: 15px;
+    text-align: center;
+    width: 450px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .overlay h2 {
-  font-family: var(--technoRace_font);
-  letter-spacing: 3px;
-  font-size: 2.4rem;
+    font-family: var(--technoRace_font);
+    letter-spacing: 3px;
+    font-size: 2.4rem;
 }
 
 .review-buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  justify-content: center;
-  max-width: 400px;
-  margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    justify-content: center;
+    max-width: 400px;
+    margin: 30px auto;
 }
 
 .button {
-  width: 150px;
-  height: 45px;
-  background-color: rgba(255, 255, 255, 0.2);
-  font-family: var(--paragraphs_font);
-  cursor: pointer;
-  position: relative;
-  text-align: center;
-  border-radius: 30px;
-  margin-bottom: 10px;
-  transition: background 0.3s;
+    width: 150px;
+    height: 45px;
+    background-color: rgba(255, 255, 255, 0.2);
+    font-family: var(--paragraphs_font);
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    transition: background 0.3s;
 }
 
 .button:hover {
-  background-color: var(--powder_blue);
+    background-color: var(--powder_blue);
 }
 .button.selected {
-  background-color: var(--powder_blue);
-  border-color: var(--white);
-  color: #ffffff;
+    background-color: var(--powder_blue);
+    border-color: var(--white);
+    color: #ffffff;
 }
 .text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button-wrapper,
 .text,
 .icon {
-  overflow: hidden;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  color: #fff;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    color: #fff;
 }
 
 .text {
-  top: 0;
+    top: 0;
 }
 
 .text,
 .icon {
-  transition: top 0.5s;
+    transition: top 0.5s;
 }
 
 .icon {
-  color: #fff;
-  top: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    color: #fff;
+    top: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .icon img {
-  width: 30px;
-  height: 30px;
-  filter: invert(100%) brightness(200%);
+    width: 30px;
+    height: 30px;
+    filter: invert(100%) brightness(200%);
 }
 
 .button:hover .text {
-  top: -100%;
+    top: -100%;
 }
 
 .button:hover .icon {
-  top: 0;
+    top: 0;
 }
 
 .button:hover:before,
 .button:hover:after {
-  opacity: 1;
-  visibility: visible;
+    opacity: 1;
+    visibility: visible;
 }
 
 .button.selected {
-  background-color: var(--powder_blue);
-  color: white;
+    background-color: var(--powder_blue);
+    color: white;
 }
 
 .button.selected .text {
-  top: -100%;
+    top: -100%;
 }
 
 .button.selected .icon {
-  top: 0;
+    top: 0;
 }
 
 .overlay-content h2 {
-  color: #fff;
-  margin-bottom: 40px;
+    color: #fff;
+    margin-bottom: 40px;
 }
 
 .overlay-content textarea {
-  width: 90%;
-  height: 150px;
-  padding: 20px;
-  border-radius: 15px;
-  margin-bottom: 20px;
-  margin-right: 30px;
-  font-size: 1rem;
-  color: var(--white);
-  background-color: transparent;
-  resize: none;
-  outline: none;
+    width: 90%;
+    height: 150px;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    margin-right: 30px;
+    font-size: 1rem;
+    color: var(--white);
+    background-color: transparent;
+    resize: none;
+    outline: none;
 }
 
 .submitBtn {
-  background-color: transparent;
-  color: #fff;
-  padding: 10px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  margin-left: 39%;
+    background-color: transparent;
+    color: #fff;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin-left: 39%;
 }
 
 .submitBtn:hover {
-  background-color: var(--powder_blue);
+    background-color: var(--powder_blue);
 }
 
 #reviewText,
 #submitReview {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  display: none; /* Initially hidden */
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none; /* Initially hidden */
 }
 
 #reviewText.active,
 #submitReview.active {
-  display: block;
-  opacity: 1;
-  transform: scale(1);
+    display: block;
+    opacity: 1;
+    transform: scale(1);
 }
 
 #starRatingContainer {
@@ -527,20 +527,144 @@ textarea.active,
 }
 
 .closeBtn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 24px;
-  color: #fff;
-  cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s color ease;
 }
 
 .closeBtn:hover {
-  color: var(--red);
+    color: var(--red);
 }
 
 .errorMessage {
-  color: var(--red);
-  margin-top: 10px;
-  font-size: 0.9rem;
+    color: var(--red);
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Modal Overlay - Add fade-in transition */
+.search-modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Dark background */
+    z-index: 9999; /* Ensure it’s above all other elements */
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Fade-in transition */
+}
+
+/* Modal Content - Add transition for the content */
+.search-modal-content {
+    background: rgba(192, 190, 190, 0.229);
+    backdrop-filter: blur(40px);
+    width: 50%;
+    max-width: 500px;
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Fade-in transition */
+    padding-bottom: 4rem; /* Adjust bottom padding to create space for the fixed button */
+}
+
+/* Close Button */
+.search-modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s color ease;
+}
+
+.search-modal-close-btn:hover {
+    color: red;
+}
+
+/* Search Input */
+.search-modal-input {
+    width: 80%;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Submit Button */
+.search-modal-submit-btn {
+    position: absolute;
+    bottom: 1rem; /* Fixed to the bottom of the modal content */
+    left: 50%;
+    transform: translateX(-50%); /* Center the button horizontally */
+    padding: 0.75rem 1.5rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.search-modal-submit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Search Results List */
+.search-results-list {
+    margin-top: 1rem;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Fade-in transition */
+}
+
+/* Individual Search Result */
+.search-results-list .result-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.search-results-list .result-item:hover {
+    background-color: #f1f1f1;
+}
+
+/* Open Search Button Style */
+.search-modal-trigger {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.search-modal-overlay.show {
+    display: block;
+    opacity: 1; /* Fully visible */
+}
+
+.search-modal-content.show {
+    opacity: 1; /* Fully visible */
+}
+
+.search-results-list.show {
+    opacity: 1; /* Fully visible */
 }

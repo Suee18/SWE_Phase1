@@ -23,10 +23,10 @@ class Users
         $this->gender = $gender;
         $this->password = $password;
         $this->email = $email;
-        $this->userTypeID = $userTypeID;
+        $this->userTypeID = (int) $userTypeID;
         $this->loginMethod = $loginMethod;
-        $this->personaID = $personaID;
-        $this->loginCounter = $loginCounter;
+        $this->personaID = (int) $personaID;
+        $this->loginCounter = (int) $loginCounter;
         $this->timeStamp = $timeStamp;
     }
 
@@ -126,7 +126,7 @@ class Users
             SessionManager::startSession();
             SessionManager::setSessionUser($user);
             SessionManager::updateLoginCounter();
-            
+
             return true;
         }
 
@@ -220,7 +220,16 @@ class Users
         }
 
         // If no errors, proceed to create the user
-        return self::addUser($username, $birthdate, $gender, $password, $email, $userType, $timeStamp, $loginMethod);
+        return self::addUser(
+            $username,
+            $birthdate,
+            $gender,
+            $password,
+            $email,
+            $userType,
+            $timeStamp,
+            $loginMethod
+        );
     }
 
 
@@ -233,10 +242,25 @@ class Users
         $resultEmail = mysqli_query($conn, $sqlEmail);
 
         if (mysqli_num_rows($resultEmail) > 0) {
-            $user = mysqli_fetch_assoc($resultEmail);
+            $response = mysqli_fetch_assoc($resultEmail);
+
+            $user = new Users(
+                $response['userName'],
+                $response['birthdate'] ?? null,
+                $response['gender'] ?? null,
+                $response['password'] ?? null,
+                $response['email'],
+                (int) $response['userTypeID'],
+                $response['loginMethod'],
+                $response['personID'] ?? null,
+                (int) $response['loginCounter'],
+                $response['Timestamp'],
+            );
+
+            $user->id = $response['ID'];
 
             // Check if the user has logged in with Google before
-            if ($user['loginMethod'] == 'google') {
+            if ($response['loginMethod'] == 'google') {
                 // Allow the user to log in normally
                 return [
                     'status' => true,
@@ -268,10 +292,25 @@ class Users
             $result = mysqli_query($conn, $sqlFindUser);
             $user = mysqli_fetch_assoc($result);
 
+            $newUser = new Users(
+                $user['userName'],
+                $user['birthdate'] ?? null,
+                $user['gender'] ?? null,
+                $user['password'] ?? null,
+                $user['email'],
+                (int) $user['userTypeID'],
+                $user['loginMethod'],
+                $user['personID'] ?? null,
+                (int) $user['loginCounter'],
+                $user['Timestamp'],
+            );
+
+            $newUser->id = $user['ID'];
+
             return [
                 'status' => true,
                 'message' => "User created and logged in successfully.",
-                'user' => $user // Return user object
+                'user' => $newUser // Return user object
             ];
         } else {
             return [
@@ -292,12 +331,15 @@ class Users
 
         if (mysqli_num_rows($sqlResult) === 0) {
             // User doesn't exist, so create a new user using the Google login method
+
             return self::addUserIntoDBGoogle($name, $email, $gender, date("Y-m-d H:i:s"));
         } else {
-            $user = mysqli_fetch_assoc($sqlResult);
+            $result = mysqli_fetch_assoc($sqlResult);
 
+            $user = new Users($result["userName"], $result["birthdate"], $result["gender"], $result["password"], $result["email"], $result["userTypeID"], $result["loginMethod"], $result["personaID"], $result["loginCounter"], $result["Timestamp"]);
+            $user->id = $result["ID"];
             // Check if the user logged in using Google
-            if ($user['loginMethod'] === 'google') {
+            if ($user->loginMethod === 'google') {
                 // Return user object if the login method is Google
                 return [
                     'status' => true,

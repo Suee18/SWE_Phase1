@@ -1,0 +1,80 @@
+@import url("./global_styles.css");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: var(--navy);
+}
+
+.error-container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.error-image {
+    max-width: 70%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.error-right {
+    flex: 1;
+    background-color: #F5E5D8;
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.error-right h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.error-right p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.go-home-button {
+    background-color: #FF6F61;
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.go-home-button:hover {
+    background-color: #D44F43;
+}
+
+.error-right p:last-child {
+    font-size: 14px;
+    color: #999;
+    margin-top: 20px;
+}
