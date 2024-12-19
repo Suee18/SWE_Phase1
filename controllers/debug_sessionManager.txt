@@ -1,8 +1,9 @@
 Array
 (
     [userTypeID] => 1
-    [user] => Users Object
+    [user] => __PHP_Incomplete_Class Object
         (
+            [__PHP_Incomplete_Class_Name] => Users
             [id] => 8
             [username] => alaa
             [birthdate] => 2003-10-25
@@ -16,4 +17,5 @@ Array
             [timeStamp] => 2024-10-25 21:00:07
         )
 
+    [personaID] => 4
 )

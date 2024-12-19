@@ -32,15 +32,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //********Edit button js*******
 
-function editInfo(icon) {
-  const infoContent = icon.previousElementSibling;
+// function editInfo(icon) {
+//   const infoContent = icon.previousElementSibling;
 
-  if (infoContent.isContentEditable) {
-    infoContent.contentEditable = false;
-    icon.textContent = "edit";
-  } else {
-    infoContent.contentEditable = true;
-    infoContent.focus();
+//   if (infoContent.isContentEditable) {
+//     infoContent.contentEditable = false;
+//     icon.textContent = "edit";
+//   } else {
+//     infoContent.contentEditable = true;
+//     infoContent.focus();
+//     icon.textContent = "check";
+//   }
+// }
+
+function editInfo(icon) {
+  const inputField = icon.previousElementSibling; // Get the input field before the span element
+
+  if (inputField.disabled) {
+    inputField.disabled = false;
+    inputField.focus();
     icon.textContent = "check";
+
+  } else {
+
+    inputField.disabled = true;
+    inputField.focus();
+    icon.textContent = "edit";
+  // Trigger form submission when "check" is clicked
+  inputField.form.submit();  // Submit the form
   }
+
 }
