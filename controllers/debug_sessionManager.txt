@@ -1,0 +1,21 @@
+Array
+(
+    [userTypeID] => 2
+    [user] => __PHP_Incomplete_Class Object
+        (
+            [__PHP_Incomplete_Class_Name] => Users
+            [id] => 10
+            [username] => salma
+            [birthdate] => 2004-12-12
+            [gender] => female
+            [password] => 1234567
+            [email] => salma123@gmail.com
+            [userTypeID] => 2
+            [loginMethod] => manual
+            [personaID] => 
+            [loginCounter] => 7
+            [timeStamp] => 2024-12-18 23:02:01
+        )
+
+    [personaID] => 8
+)

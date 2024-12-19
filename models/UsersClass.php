@@ -23,9 +23,9 @@ class Users
         $this->gender = $gender;
         $this->password = $password;
         $this->email = $email;
-        $this->userTypeID = (int) $userTypeID;
+        $this->userTypeID = $userTypeID;
         $this->loginMethod = $loginMethod;
-        $this->personaID = (int) $personaID;
+        $this->personaID = $personaID;
         $this->loginCounter = (int) $loginCounter;
         $this->timeStamp = $timeStamp;
     }
@@ -60,7 +60,7 @@ class Users
     }
 
     // Fetch all users from the database
-    static function getAllUsers()
+    public static function getAllUsers()
     {
         global $conn;
         $sql = "SELECT * FROM User";
@@ -68,7 +68,18 @@ class Users
         $users = [];
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                $user = new Users($row["userName"], $row["birthdate"], $row["gender"], $row["password"], $row["email"], $row["userTypeID"], $row["loginMethod"], $row["personaID"], $row["loginCounter"], $row["Timestamp"]);
+                $user = new Users(
+                    $row["userName"],
+                    $row["birthdate"],
+                    $row["gender"],
+                    $row["password"],
+                    $row["email"],
+                    $row["userTypeID"],
+                    $row["loginMethod"],
+                    $row["personaID"],
+                    $row["loginCounter"],
+                    $row["Timestamp"]
+                );
                 $user->id = $row["ID"];
                 array_push($users, $user);
             }
@@ -89,6 +100,28 @@ class Users
             $user->id = $row["ID"];
         }
         return $user;
+    }
+
+    public static function viewAllUsers()
+    {
+        global $conn;  // Ensure the global $conn variable is accessible
+
+        // SQL query to fetch all users
+        $sql = "SELECT * FROM user";
+        $result = mysqli_query($conn, $sql);  // Execute the query
+
+        if (!$result) {
+            // Return an error message if the query fails
+            die("Error fetching users: " . mysqli_error($conn));
+        }
+
+        // Store the results in an array
+        $users = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $users[] = $row;  // Add each user to the $users array
+        }
+
+        return $users;  // Return the array of users
     }
 
     // Add a new user with userTypeID validation and associate valid pages
@@ -133,8 +166,31 @@ class Users
         return false;
     }
 
-    // Update user (prevent updating userTypeID)
-    public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email)
+
+    //Method for admin to add users
+    public static function addUserByAdmin($username, $password, $birthdate, $userType, $email, $gender)
+    {
+        global $conn;
+
+        $username = mysqli_real_escape_string($conn, $username);
+        $password = mysqli_real_escape_string($conn, $password);
+        $birthdate = mysqli_real_escape_string($conn, $birthdate);
+        $email = mysqli_real_escape_string($conn, $email);
+        $gender = mysqli_real_escape_string($conn, $gender);
+
+        $userTypeID = ($userType === 'admin') ? 2 : 1;  //  'admin' = 2 and 'user' = 1
+
+        $sql = "INSERT INTO `user` (`userName`, `birthdate`, `gender`, `password`, `email`, `userTypeID`)
+                VALUES ('$username', '$birthdate', '$gender', '$password', '$email', $userTypeID)";
+
+        $result = mysqli_query($conn, $sql);
+
+        return $result;
+    }
+
+
+    // Update user
+    public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email, $userType)
     {
         global $conn;
 
@@ -145,10 +201,13 @@ class Users
         $password = mysqli_real_escape_string($conn, htmlspecialchars($password));
         $email = mysqli_real_escape_string($conn, htmlspecialchars($email));
         $gender = mysqli_real_escape_string($conn, htmlspecialchars($gender));
+        $userType = mysqli_real_escape_string($conn, htmlspecialchars($userType));
 
-        // Update user data in the database (without modifying userTypeID)
+
+        $userTypeID = ($userType === 'admin') ? 2 : 1;
+        // Update user data in the database 
         $sql = "UPDATE User 
-                SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email' 
+                SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email' , userTypeID='$userTypeID' 
                 WHERE ID='$user_id'";
         return mysqli_query($conn, $sql);
     }
@@ -163,6 +222,8 @@ class Users
         $sql = "DELETE FROM User WHERE ID='$user_id'";
         return mysqli_query($conn, $sql);
     }
+
+
 
     // Login user
     static function loginUser($username, $password)
@@ -191,6 +252,8 @@ class Users
         } else {
             return "User does not exist.";
         }
+
+        
     }
 
     static function signUpUser($username, $birthdate, $gender, $password, $email, $userType, $timeStamp, $loginMethod)
@@ -220,16 +283,7 @@ class Users
         }
 
         // If no errors, proceed to create the user
-        return self::addUser(
-            $username,
-            $birthdate,
-            $gender,
-            $password,
-            $email,
-            $userType,
-            $timeStamp,
-            $loginMethod
-        );
+        return self::addUser($username, $birthdate, $gender, $password, $email, $userType, $timeStamp, $loginMethod);
     }
 
 
@@ -242,25 +296,10 @@ class Users
         $resultEmail = mysqli_query($conn, $sqlEmail);
 
         if (mysqli_num_rows($resultEmail) > 0) {
-            $response = mysqli_fetch_assoc($resultEmail);
-
-            $user = new Users(
-                $response['userName'],
-                $response['birthdate'] ?? null,
-                $response['gender'] ?? null,
-                $response['password'] ?? null,
-                $response['email'],
-                (int) $response['userTypeID'],
-                $response['loginMethod'],
-                $response['personID'] ?? null,
-                (int) $response['loginCounter'],
-                $response['Timestamp'],
-            );
-
-            $user->id = $response['ID'];
+            $user = mysqli_fetch_assoc($resultEmail);
 
             // Check if the user has logged in with Google before
-            if ($response['loginMethod'] == 'google') {
+            if ($user['loginMethod'] == 'google') {
                 // Allow the user to log in normally
                 return [
                     'status' => true,
@@ -292,25 +331,10 @@ class Users
             $result = mysqli_query($conn, $sqlFindUser);
             $user = mysqli_fetch_assoc($result);
 
-            $newUser = new Users(
-                $user['userName'],
-                $user['birthdate'] ?? null,
-                $user['gender'] ?? null,
-                $user['password'] ?? null,
-                $user['email'],
-                (int) $user['userTypeID'],
-                $user['loginMethod'],
-                $user['personID'] ?? null,
-                (int) $user['loginCounter'],
-                $user['Timestamp'],
-            );
-
-            $newUser->id = $user['ID'];
-
             return [
                 'status' => true,
                 'message' => "User created and logged in successfully.",
-                'user' => $newUser // Return user object
+                'user' => $user // Return user object
             ];
         } else {
             return [
@@ -331,7 +355,6 @@ class Users
 
         if (mysqli_num_rows($sqlResult) === 0) {
             // User doesn't exist, so create a new user using the Google login method
-
             return self::addUserIntoDBGoogle($name, $email, $gender, date("Y-m-d H:i:s"));
         } else {
             $result = mysqli_fetch_assoc($sqlResult);
@@ -356,4 +379,233 @@ class Users
         }
     }
 
+    //Persona Statistics
+    public static function getPersonas()
+    {
+        global $conn;
+        $sql = "SELECT personaName, personaCounter FROM persona";
+        $result = $conn->query($sql);
+        $personaNames = [];
+        $personaCounters = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $personaNames[] = $row['personaName'];
+                $personaCounters[] = $row['personaCounter'];
+            }
+        } else {
+            echo "No data found";
+        }
+
+        return ['personaNames' => $personaNames, 'personaCounters' => $personaCounters];
+    }
+
+
+    //Login Statistics
+    public static function getLoginStatistics()
+    {
+        global $conn;
+
+        // Query to calculate login statistics grouped by month and year
+        $sql = "
+        SELECT 
+            DATE_FORMAT(Timestamp, '%b %Y') AS month,  -- Use abbreviated month name (e.g., Jan 2024)
+            SUM(loginCounter) AS loginCount           -- Sum of loginCounter for each month
+        FROM 
+            user                                       -- Replace with your actual table name
+        GROUP BY 
+        MONTH(Timestamp)         -- Group by year and month
+        ORDER BY 
+            MONTH(Timestamp) ASC;  -- Sort by year and month
+      ";
+
+
+        // Execute the query
+        $result = $conn->query($sql);
+
+        // Initialize arrays to store months and login counts
+        $months = [];
+        $logins = [];
+
+        if ($result) { // Check if query execution was successful
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $months[] = $row['month'];        // Add month to months array
+                    $logins[] = $row['loginCount'];  // Add loginCount to logins array
+                }
+            } else {
+                // No data found, return empty arrays
+                return ['months' => [], 'logins' => []];
+            }
+        } else {
+            // If the query fails, log or handle the error (optional)
+            error_log("SQL Error: " . $conn->error);
+            return ['months' => [], 'logins' => []];
+        }
+
+        // Return the arrays with months and login counts
+        return ['months' => $months, 'logins' => $logins];
+    }
+
+
+    // public static function getLoginStatistics() {
+    //     global $conn;  // Assuming a global database connection
+
+    //     $sql = "SELECT userName, loginCounter FROM user";  // Adjust table/column names as needed
+    //     $result = $conn->query($sql);
+
+    //     // Initialize arrays to store the data
+    //     $userNames = [];
+    //     $loginCounters = [];
+
+    //     if ($result->num_rows > 0) {
+    //         while ($row = $result->fetch_assoc()) {
+    //             $userNames[] = $row['userName'];  // Fetch the user name
+    //             $loginCounters[] = $row['loginCounter'];  // Fetch the login counter value
+    //         }
+    //     } else {
+    //         echo "No login statistics found";
+    //     }
+
+    //     // Return the data as an associative array
+    //     return ['userNames' => $userNames, 'loginCounters' => $loginCounters];
+    // }
+
+
+    //Favourites Statistics
+    public static function getFavoriteStatistics()
+    {
+        global $conn;
+
+        $sql = "
+                    SELECT 
+                        marketCategory,                    
+                        SUM(FavoritedCount) AS totalFavorites
+                    FROM 
+                        cars                              
+                    GROUP BY 
+                        marketCategory                          
+                    ORDER BY 
+                        marketCategory ASC";
+
+        $result = $conn->query($sql);
+        $categories = [];
+        $favorites = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $categories[] = $row['marketCategory'];
+                $favorites[] = $row['totalFavorites'];
+            }
+        } else {
+
+            return ['categories' => [], 'favorites' => []];
+        }
+
+        return ['categories' => $categories, 'favorites' => $favorites];
+    }
+
+
+    //Posts Statstics
+    public static   function getPostsCountByMonth()
+    {
+
+        global $conn;
+
+        $sql = "
+                    SELECT 
+                        DATE_FORMAT(Timestamp, '%b %Y') AS month, 
+                        COUNT(*) AS postCount 
+                    FROM 
+                        post  
+                    GROUP BY 
+                        month  
+                    ORDER BY 
+                        MIN(Timestamp) ASC";
+
+
+        $result = $conn->query($sql);
+
+
+        $months = [];
+        $postCounts = [];
+
+        if ($result && $result->num_rows > 0) {
+
+            while ($row = $result->fetch_assoc()) {
+                $months[] = $row['month'];
+                $postCounts[] = $row['postCount'];
+            }
+        } else {
+
+            echo "No data found.";
+        }
+
+
+        return [
+            'months' => $months,
+            'postCounts' => $postCounts,
+        ];
+    }
+
+    //Recommendation Statistics
+    public static function getRecommendationStatistics()
+    {
+        global $conn;
+
+        $sql = "
+        SELECT 
+            marketCategory, 
+            SUM(RecommendationCount) AS totalRecommendations
+        FROM 
+            cars 
+        GROUP BY 
+            marketCategory
+        ORDER BY 
+            marketCategory ";
+
+
+        $result = $conn->query($sql);
+
+
+        $categories = [];
+        $recommendations = [];
+
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $categories[] = $row['marketCategory'];
+                $recommendations[] = $row['totalRecommendations'];
+            }
+        } else {
+
+            return ['categories' => [], 'recommendations' => []];
+        }
+
+        return ['categories' => $categories, 'recommendations' => $recommendations];
+    }
+
+
+    public static function getReviewsStatistics() {}
+
+
+
+
+    //user Persona ID after 
+    public function postGeneratedPersonaId($personaID)
+    {
+        global $conn;
+
+        // Update the personaID for this user in the database
+        $sql = "UPDATE user SET personaID = ? WHERE ID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $personaID, $this->id);
+
+        if ($stmt->execute()) {
+            $this->personaID = $personaID;  // Update the personaID in the current user object
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -13,7 +13,6 @@ class SessionManager
 
     public static function startSession()
     {
-        
         // Start the session only if it hasn't already started
         if (!self::$isSessionActive) {
             self::$isSessionActive = true;
@@ -24,7 +23,16 @@ class SessionManager
         if (!isset($_SESSION['userTypeID'])) {
             $_SESSION['userTypeID'] = 3; // Default to Guest user type
         }
+
+        // Specify the path to the debug file
+        $filePath = __DIR__ . '/debug_sessionManager.txt';
+
+        // Write the data to the file (APPEND mode to keep adding to the file)
+
+        file_put_contents($filePath, print_r($_SESSION, true));  // Check if session data is available
+
     }
+
 
     public static function setSessionUser($user)
     {
@@ -38,6 +46,12 @@ class SessionManager
         session_unset();
         session_destroy();
         self::$isSessionActive = false;
+        $filePath = __DIR__ . '/debug_sessionManager.txt';
+
+        // Write the data to the file (APPEND mode to keep adding to the file)
+
+        file_put_contents($filePath, print_r($_SESSION, true));  // Check if session data is available
+
     }
 
     public static function isSessionActive()
@@ -54,16 +68,16 @@ class SessionManager
     public static function updateLoginCounter()
     {
 
-        $user = self::getUser();     
-        
+        $user = self::getUser();
+
         if ($user == null) {
             return false;
         }
 
         $user->loginCounter += 1;
-        
+
         global $conn;
-        $sql = "UPDATE user SET loginCounter = ". $user->loginCounter ." WHERE ID = " . $user->id; 
+        $sql = "UPDATE user SET loginCounter = " . $user->loginCounter . " WHERE ID = " . $user->id;
         echo $sql;
         $result = mysqli_query($conn, $sql);
         return $result;
@@ -71,21 +85,27 @@ class SessionManager
 
     public static function updatePersonaID($topPersonaID)
     {
-        $user = self::getUser(); 
-    
+        $user = self::getUser();
+
         if ($user == null) {
             return false;
         }
-    
+
         // Update personaID in the session
         $_SESSION['personaID'] = $topPersonaID;
-    
+
         global $conn;
         $sql = "UPDATE user SET personaID = " . (int)$topPersonaID . " WHERE ID = " . (int)$user->id;
         $result = mysqli_query($conn, $sql);
-    
+
         return $result;
+
+        // Specify the path to the debug file
+        $filePath = __DIR__ . '/debug_sessionManager.txt';
+
+        // Write the data to the file (APPEND mode to keep adding to the file)
+
+        file_put_contents($filePath, print_r($_SESSION, true));  // Check if session data is available
+
     }
-
-
 }

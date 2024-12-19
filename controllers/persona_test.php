@@ -2,7 +2,8 @@
 require_once __DIR__ . '/../app/config/db_config.php';
 require_once __DIR__ . '/../models/PersonasModel.php';
 require_once __DIR__ . '/../models/CarsModel.php';
-require_once __DIR__ . '/../controllers/SessionManager.php';
+require_once __DIR__ . '../SessionManager.php';
+
 
 class PersonasController
 {
@@ -361,95 +362,99 @@ class PersonasController
 
         ];
     }
-   // Calculate persona weights based on responses
-   public function calculatePersonas($responses)
-   {
-       foreach ($responses as $questionId => $answer) {
-           if (!isset($this->questions[$questionId])) {
-               throw new Exception("Invalid question ID: $questionId.");
-           }
+    // Calculate persona weights based on responses
+    public function calculatePersonas($responses)
+    {
+        foreach ($responses as $questionId => $answer) {
+            if (!isset($this->questions[$questionId])) {
+                throw new Exception("Invalid question ID: $questionId.");
+            }
 
-           if (!isset($this->questions[$questionId]['answers'][$answer])) {
-               throw new Exception("Invalid answer for question ID: $questionId.");
-           }
+            if (!isset($this->questions[$questionId]['answers'][$answer])) {
+                throw new Exception("Invalid answer for question ID: $questionId.");
+            }
 
-           foreach ($this->questions[$questionId]['answers'][$answer]['scores'] as $personaName => $weight) {
-               if (!isset($this->personas[$personaName])) {
-                   $this->personas[$personaName] = [
-                       'name' => $personaName,
-                       'id' => null,
-                       'icon' => 'default-icon.png',
-                       'description' => 'Description not available.',
-                       'weight' => 0
-                   ];
-               }
-               $this->personas[$personaName]['weight'] += $weight;
-           }
-       }
+            foreach ($this->questions[$questionId]['answers'][$answer]['scores'] as $personaName => $weight) {
+                if (!isset($this->personas[$personaName])) {
+                    $this->personas[$personaName] = [
+                        'name' => $personaName,
+                        'id' => null,
+                        'icon' => 'default-icon.png',
+                        'description' => 'Description not available.',
+                        'weight' => 0
+                    ];
+                }
+                $this->personas[$personaName]['weight'] += $weight;
+            }
+        }
 
-       return $this->personas;
-   }
+        return $this->personas;
+    }
 
-   public function handleFormSubmission()
-   {
-       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-           $responses = $_POST['answers'] ?? [];
+    public function handleFormSubmission()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $responses = $_POST['answers'] ?? [];
 
-           if (empty($responses)) {
-               throw new Exception("No responses provided. Please answer the questions.");
-           }
+            if (empty($responses)) {
+                throw new Exception("No responses provided. Please answer the questions.");
+            }
 
-           $personasWeight = $this->calculatePersonas($responses);
+            $personasWeight = $this->calculatePersonas($responses);
 
-           // Sort personas by weight
-           usort($personasWeight, function ($a, $b) {
-               return $b['weight'] <=> $a['weight'];
-           });
+            // Sort personas by weight
+            usort($personasWeight, function ($a, $b) {
+                return $b['weight'] <=> $a['weight'];
+            });
 
-           // Get the top persona
-           $topPersona = reset($personasWeight);
-           if ($topPersona === false) {
-               throw new Exception("Top Persona could not be determined.");
-           }
+            // Get the top persona
+            $topPersona = reset($personasWeight);
+            if ($topPersona === false) {
+                throw new Exception("Top Persona could not be determined.");
+            }
 
-           // Increment the counter for the top persona using PersonasModel
-           if (!$this->personasModel->incrementPersonaCounter($topPersona['name'])) {
-               error_log("Failed to increment persona counter for: " . $topPersona['name']);
-           }
+            // Increment the counter for the top persona using PersonasModel
+            if (!$this->personasModel->incrementPersonaCounter($topPersona['name'])) {
+                error_log("Failed to increment persona counter for: " . $topPersona['name']);
+            }
 
-           // Fetch cars associated with the top persona using CarsModel
-           $personaId = $topPersona['id'];
-           $cars = $this->carsModel->getCarsByPersona($personaId);
+            // Fetch cars associated with the top persona using CarsModel
+            $personaId = $topPersona['id'];
+            $cars = $this->carsModel->getCarsByPersona($personaId);
 
-           // Increment RecommendationCount for each car
-           foreach ($cars as $car) {
-               $this->carsModel->incrementRecommendationCount($car['ID']);
-           }
+            // Increment RecommendationCount for each car
+            foreach ($cars as $car) {
+                $this->carsModel->incrementRecommendationCount($car['ID']);
+            }
 
-           SessionManager::updatePersonaID($topPersona['id']);
+            //    SessionManager::updatePersonaID($topPersona['id']);
+            // Start session and update personaID in the session
+            SessionManager::startSession();
+            if (!SessionManager::updatePersonaID($personaId)) {
+                error_log("Failed to update personaID in the session for user.");
+            }
 
-           // Store the results in a session
-           session_start();
-           $_SESSION['topPersona'] = $topPersona;
-           $_SESSION['cars'] = $cars;
+            // Store the results in a session
+            session_start();
+            $_SESSION['topPersona'] = $topPersona;
+            $_SESSION['cars'] = $cars;
 
-           // Redirect to the results view
-           header('Location: ../app/views/user/persona.php');
-           exit;
-       }
-   }
+            // Redirect to the results view
+            header('Location: ../app/views/user/persona.php');
+            exit;
+        }
+    }
 }
 
 // Instantiate the controller and handle form submission
 try {
-   $controller = new PersonasController($conn);
-   $controller->handleFormSubmission();
+    $controller = new PersonasController($conn);
+    $controller->handleFormSubmission();
 } catch (Exception $e) {
-   header('Content-Type: application/json');
-   echo json_encode([
-       'error' => true,
-       'message' => $e->getMessage()
-   ]);
-   exit;
+    header('Content-Type: application/json');
+    echo json_encode([
+        'error' => true,
+        'message' => $e->getMessage()
+    ]);
+    exit;
 }
-?>

@@ -369,11 +369,8 @@ file_put_contents('debug_cars.txt', print_r($cars, true));
 </html>
 
 <?php
-
 // Clear the stored persona and cars data
 unset($_SESSION['topPersona']);
 unset($_SESSION['cars']);
-unset($_SESSION['answers']); // If you stored answers separately
-
-
+unset($_SESSION['answers']); 
 ?>
