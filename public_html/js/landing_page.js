@@ -291,7 +291,7 @@ reviewButtons.addEventListener("click", (e) => {
       textarea.classList.add("active");
       submitBtn.classList.add("active");
     }, 0);
-  }
+  
 });
 
 function addStarRating() {
