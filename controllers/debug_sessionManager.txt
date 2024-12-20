@@ -11,9 +11,52 @@ Array
             [email] => s123@gmail.com
             [userTypeID] => 1
             [loginMethod] => manual
-            [personaID] => 3
-            [loginCounter] => 6
+            [personaID] => 8
+            [loginCounter] => 8
             [timeStamp] => 2024-12-20 10:01:11
+        )
+
+    [personaID] => 3
+    [topPersona] => Array
+        (
+            [name] => Performance Enthusiast
+            [id] => 3
+            [icon] => ../../../public_html/media/Persona_Page_images/icons/enthusiast.png
+
+            [description] => Thrives on speed and precision, passionate about vehicles that offer exceptional performance.
+            [weight] => 400
+        )
+
+    [cars] => Array
+        (
+            [0] => Array
+                (
+                    [ID] => 1
+                    [image] => dummy-image1.jpg
+                    [make] => Toyota
+                    [model] => Corolla
+                    [year] => 2020
+                    [price] => 20000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => 1.8L
+                    [horsePower] => 139
+                    [Doors] => 4
+                    [Torque] => 126.00
+                    [topSpeed] => 120.00
+                    [acceleration] => 10.20
+                    [fuelEfficiency] => 30.50
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => CVT
+                    [drivenWheels] => FWD
+                    [marketCategory] => Economy
+                    [description] => A reliable and fuel-efficient sedan ideal for families and daily commutes.
+                    [RecommendationCount] => 20
+                    [FavoritedCount] => 0
+                    [personaDescription] => 
+                )
+
         )
 
 )

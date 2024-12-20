@@ -112,18 +112,49 @@ class PersonasModel {
     }
 
 
-    public function getPersonaById($personaID)
-{
-    $sql = "SELECT * FROM persona WHERE personaID = ?";
+//     public function getPersonaById($personaID)
+// {
+//     $sql = "SELECT * FROM persona WHERE personaID = ?";
+//     $stmt = $this->conn->prepare($sql);
+//     $stmt->bind_param('i', $personaID);
+//     $stmt->execute();
+//     $result = $stmt->get_result();
+
+//     if ($result->num_rows > 0) {
+//         return $result->fetch_assoc(); // Return the persona details
+//     } else {
+//         return null; // No persona found
+//     }
+// }
+
+
+public function fetchPersonaById($personaID) {
+    // Check if personaID is valid (integer and positive)
+    if (!is_int($personaID) || $personaID <= 0) {
+        return null; // Invalid personaID
+    }
+
+    // SQL query to fetch the persona based on the ID
+    $sql = "SELECT * FROM " . $this->table . " WHERE " . $this->personaID . " = ?";
     $stmt = $this->conn->prepare($sql);
+
+    if ($stmt === false) {
+        error_log("Error preparing statement: " . $this->conn->error);
+        return null; // Query preparation failed
+    }
+
+    // Bind the parameter and execute the query
     $stmt->bind_param('i', $personaID);
     $stmt->execute();
+
+    // Get the result
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        return $result->fetch_assoc(); // Return the persona details
+        // Return the persona as an associative array
+        return $result->fetch_assoc();
     } else {
-        return null; // No persona found
+        return null; // No persona found with the given ID
     }
 }
 

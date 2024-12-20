@@ -448,7 +448,9 @@ class PersonasController
             exit;
 
 
-
+            $filePath = __DIR__ . '/debug_sessionManager.txt';    
+            file_put_contents($filePath, print_r($_SESSION, true));  // Check if session data is available
+    
 
         }
     }
