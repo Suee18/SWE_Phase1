@@ -10,7 +10,9 @@ class Post
     public $postLikes;
     public $timestamp;
 
-    public function __construct($postID, $userID, $postText, $postImage, $postLikes, $timestamp = null)
+    public $username;
+
+    public function __construct($postID, $userID, $postText, $postImage, $postLikes, $timestamp = null, $username = null)
     {
         $this->postID = $postID;
         $this->userID = $userID;
@@ -18,6 +20,7 @@ class Post
         $this->postImage = $postImage;
         $this->postLikes = $postLikes;
         $this->timestamp = $timestamp;
+        $this->username = $username;
     }
 }
 
@@ -32,7 +35,12 @@ class PlatformModel
 
     public function getAllPosts()
     {
-        $query = "SELECT * FROM post";
+        $query = "
+            SELECT p.postID, p.userID, p.postText, p.postImage, p.postLikes, p.timestamp, u.username
+            FROM post p
+            LEFT JOIN user u ON p.userID = u.ID
+            ORDER BY p.timestamp DESC
+        ";
         $result = $this->db->query($query);
         $posts = [];
 
@@ -43,7 +51,8 @@ class PlatformModel
                 $row['postText'],
                 $row['postImage'],
                 $row['postLikes'],
-                $row['Timestamp']
+                $row['timestamp'],
+                $row['username']
             );
         }
         return $posts;

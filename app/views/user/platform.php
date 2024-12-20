@@ -3,12 +3,10 @@ include_once __DIR__ . '\..\..\config\db_config.php';
 include_once __DIR__ . '\..\..\..\controllers\PlatformController.php';
 include __DIR__ . '\..\..\..\models\UsersClass.php';
 include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
-SessionManager::startSession();
+require_once __DIR__ . '/../../../middleware/user_auth.php';
+user_auth("Platform");
 
-if (!SessionManager::getUser()) {
-    echo ('User is not logged in.');
-    exit();
-}
+SessionManager::startSession();
 
 $platformController = new PlatformController($conn);
 
@@ -83,13 +81,13 @@ switch ($action) {
                 // Fetch comments for the post
                 $comments = $platformController->fetchComments($post->postID);
 
-                     echo "
+                echo "
             <div class='post' id='post-{$post->postID}'>
                         <div class='post-card'>
                 <div class='post-header'>
                     <div style='display: flex; align-items: center;'>
                         <div class='post-userphoto'></div>
-                        <span class='post-username'>Username</span>
+                        <span class='post-username'>{$post->username}</span>
                     </div>
                     <div class='dots' onclick='toggleDropdown(event)'>
                         &#x22EE;
@@ -142,22 +140,14 @@ switch ($action) {
                 <span class="close" id="closeModal">&times;</span>
                 <form id="postForm" action="platform.php" method="POST" enctype="multipart/form-data">
                     <h2>Create/Edit a Post</h2>
-                    <div id="errorMessage" style="color: red; display: none;">Please fix the errors before submitting.</div>
+                    <div id="errorMessage" style="color: red; display: none;">Please fix the errors before submitting.
+                    </div>
                     <div id="charWarning" style="color: red; display: none;">
                         Please don't exceed 300 characters.
                     </div>
-                    <textarea
-                        id="postContent"
-                        name="text"
-                        placeholder="What's on your mind?"
-                        maxlength="300"
+                    <textarea id="postContent" name="text" placeholder="What's on your mind?" maxlength="300"
                         required></textarea>
-                    <input
-                        type="file"
-                        id="postFile"
-                        name="image"
-                        accept="image/,video/"
-                        style="display: none;" />
+                    <input type="file" id="postFile" name="image" accept="image/,video/" style="display: none;" />
                     <label for="postFile" id="fileLabel" class="custom-file-label">Choose File</label>
                     <input type="hidden" name="action" value="addPost" id="formAction">
                     <input type="hidden" name="postID" id="postID">
