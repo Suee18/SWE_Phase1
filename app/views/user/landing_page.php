@@ -6,7 +6,7 @@ include __DIR__ . '\..\..\..\models\UsersClass.php';
 include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
 SessionManager::startSession();
 
-$reviewsSliderArray = Reviews::getLastNumberOfReviews(7);
+$reviewsSliderArray = ReviewController::getNumberOfReviews(7);
 
 $reviewController = new ReviewController(new ReviewDatabaseStrategy());
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
@@ -18,10 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
         'userID' => SessionManager::getUser() ? SessionManager::getUser()->id : 0
     ];
 
-    // Add the review to the database
     $reviewController->addReview($reviewData);
 
-    // Redirect to the same page to prevent resubmission
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit();
 }
@@ -34,11 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../public_html/css/landing_page.css">
-    <link rel="stylesheet" href="../public_html/css/global_styles.css">
-    <link rel="stylesheet" href="../public_html/css/nav_bar.css">
-    <link rel="stylesheet" href="../public_html/css/car_card.css">
-    <link rel="stylesheet" href="../public_html/css/footer.css"> -->
 
     <link rel="stylesheet" href="css/landing_page.css">
     <link rel="stylesheet" href="css/global_styles.css">
@@ -185,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
                                         : '<span class="rating">★</span>';
                                 }
 
-                                echo 
+                                echo
                                 '<div class="swiper-slide">
                                         <div class="review-card">
                                             <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
