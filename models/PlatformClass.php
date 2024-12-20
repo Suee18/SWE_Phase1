@@ -24,6 +24,24 @@ class Post
     }
 }
 
+class Comments
+{
+    public $commentID;
+    public $postID;
+    public $userID;
+    public $commentText;
+    public $username;
+
+    public function __construct($commentID, $postID, $userID, $commentText, $username = null)
+    {
+        $this->commentID = $commentID;
+        $this->postID = $postID;
+        $this->userID = $userID;
+        $this->commentText = $commentText;
+        $this->username = $username;
+    }
+}
+
 class PlatformModel
 {
     private $db;
@@ -85,19 +103,35 @@ class PlatformModel
 
     public function getCommentsForPost($postID)
     {
-        $query = "SELECT * FROM comments WHERE postID = ?";
+        $query = "
+        SELECT c.commentText, c.userID, u.username
+        FROM comments c
+        JOIN user u ON c.userID = u.ID
+        WHERE c.postID = ?
+    ";
+
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i', $postID);
+        $stmt->bind_param("i", $postID);
         $stmt->execute();
+        $result = $stmt->get_result();
 
         $comments = [];
-        $result = $stmt->get_result();
         while ($row = $result->fetch_assoc()) {
             $comments[] = $row;
         }
 
         return $comments;
+
     }
+
+    public function insertComment($postID, $userID, $commentText)
+    {
+        $query = "INSERT INTO comments (postID, userID, commentText) VALUES (?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("iis", $postID, $userID, $commentText);
+        $stmt->execute();
+    }
+
 
 }
 
