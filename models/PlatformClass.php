@@ -79,9 +79,22 @@ class PlatformModel
     {
         $query = "DELETE FROM post WHERE postID = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i', $postID);
-        $stmt->execute();
+
+        if ($stmt) {
+            $stmt->bind_param('i', $postID);
+            if ($stmt->execute()) {
+                echo "Post deleted successfully";
+                exit();
+            } else {
+                echo "Error deleting post: " . $stmt->error;
+                exit();
+            }
+        } else {
+            echo "Error preparing statement: " . $this->db->error;
+            exit();
+        }
     }
+
 
     public function getCommentsForPost($postID)
     {
@@ -98,7 +111,34 @@ class PlatformModel
 
         return $comments;
     }
+    public function getPostByID($postID)
+    {
+        $query = "
+            SELECT p.postID, p.userID, p.postText, p.postImage, p.postLikes, p.timestamp, u.username
+            FROM post p
+            LEFT JOIN user u ON p.userID = u.ID
+            WHERE p.postID = ?
+        ";
 
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $postID);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        if ($row) {
+            return new Post(
+                $row['postID'],
+                $row['userID'],
+                $row['postText'],
+                $row['postImage'],
+                $row['postLikes'],
+                $row['timestamp'], 
+                $row['username']     
+            );
+        } else {
+            return null; 
+        }
+    }
 }
-
-?>

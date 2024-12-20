@@ -38,6 +38,8 @@ class PlatformController
         return $this->model->getCommentsForPost($postID);
     }
 
-    
-
+    public function fetchPostByID($postID)
+    {
+        return $this->model->getPostByID($postID);
+    }
 }

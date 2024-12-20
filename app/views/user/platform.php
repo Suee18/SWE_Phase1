@@ -15,7 +15,7 @@ $action = $_POST['action'] ?? $_GET['action'] ?? null;
 switch ($action) {
     case 'addPost':
         if (!empty($_POST['text'])) {
-            $userID = SessionManager::getUser() ? SessionManager::getUser()->id : 0;
+            $userID = (SessionManager::getUser()) ? SessionManager::getUser()->id : 0;  // Safely get user ID
             $postText = $_POST['text'];
             $postImage = null;
 
@@ -27,34 +27,51 @@ switch ($action) {
             $platformController->createPost($userID, $postText, $postImage);
         }
         break;
-
     case 'deletePost':
         if (!empty($_POST['postID'])) {
-            $platformController->removePost($_POST['postID']);
-            echo 'Post deleted successfully';
+            $postID = $_POST['postID'];
+            $post = $platformController->fetchPostByID($postID);
+
+            if (SessionManager::getUser() && SessionManager::getUser()->id == $post->userID) {
+                $platformController->removePost($postID);
+                echo 'Post deleted successfully';
+                exit();
+            } else {
+                echo 'You cannot delete a post you do not own.';
+                exit();
+            }
         } else {
             echo 'Post ID is missing.';
+            exit();
         }
         break;
+
 
     case 'editPost':
         if (!empty($_POST['postID']) && !empty($_POST['text'])) {
             $postID = $_POST['postID'];
             $postText = $_POST['text'];
             $postImage = null;
+            $post = $platformController->fetchPostByID($postID);
 
-            if (!empty($_FILES['image']['name'])) {
-                $postImage = $_FILES['image']['name'];
-                move_uploaded_file($_FILES['image']['tmp_name'], "../../../public_html/media/uploads/$postImage");
+            if (SessionManager::getUser() && SessionManager::getUser()->id == $post->userID) {
+                if (!empty($_FILES['image']['name'])) {
+                    $postImage = $_FILES['image']['name'];
+                    move_uploaded_file($_FILES['image']['tmp_name'], "../../../public_html/media/uploads/$postImage");
+                }
+
+                $platformController->updatePost($postID, $postText, $postImage);
+            } else {
+                echo 'You cannot edit a post that is not yours.';
             }
-
-            $platformController->updatePost($postID, $postText, $postImage);
         }
         break;
+
     default:
         break;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,43 +95,51 @@ switch ($action) {
             <?php
             $posts = $platformController->fetchPosts();
             foreach ($posts as $post) {
-                // Fetch comments for the post
                 $comments = $platformController->fetchComments($post->postID);
 
                 echo "
-            <div class='post' id='post-{$post->postID}'>
-                        <div class='post-card'>
+        <div class='post' id='post-{$post->postID}'>
+            <div class='post-card'>
                 <div class='post-header'>
                     <div style='display: flex; align-items: center;'>
                         <div class='post-userphoto'></div>
                         <span class='post-username'>{$post->username}</span>
-                    </div>
-                    <div class='dots' onclick='toggleDropdown(event)'>
-                        &#x22EE;
-                    </div>
-                    <ul class='dropdown' style='display: none;'>
-                        <li class='dropdown-item editBtn' data-id='{$post->postID}' data-text='{$post->postText}' data-image='{$post->postImage}'>Edit Post</li>
-                        <li class='dropdown-item' data-id='{$post->postID}'>Delete Post</li>
-                    </ul>
-                </div>
+                    </div>";
 
+                $currentUser = SessionManager::getUser();
+                if ($post->userID == $currentUser->id) {
+                    echo "
+                <div class='dots' onclick='toggleDropdown(event)'>
+                    &#x22EE;
+                </div>
+                <ul class='dropdown' style='display: none;'>
+                    <li class='dropdown-item editBtn' data-id='{$post->postID}' data-text='{$post->postText}' data-image='{$post->postImage}'>Edit Post</li>
+                    <li class='dropdown-item deletePostBtn' data-id='{$post->postID}'>Delete Post</li>
+                </ul>";
+                }
+
+                echo "
+                </div>
                 <div class='post-content'>
                     <div class='post-text'>
                         <p>{$post->postText}</p>
-                    </div>
-                    " . (!empty($post->postImage) ? "
-                    <div class='post-image'>
-                        <img src='../../../public_html/media/uploads/{$post->postImage}' alt='Post Image' />
-                    </div>
-                    " : '') . "
+                    </div>";
+
+                if (!empty($post->postImage)) {
+                    echo "
+                <div class='post-image'>
+                    <img src='../../../public_html/media/uploads/{$post->postImage}' alt='Post Image' />
+                </div>";
+                }
+
+                echo "
                     <div class='post-footer'>
                         <span class='heart' onclick='toggleLike(this, {$post->postID})'>&#9829;</span>
                         <span class='likes-count'>{$post->postLikes} Likes</span>
                     </div>
                     <div class='comments'>
                         <textarea class='commentInput' placeholder='Add a comment...'></textarea>
-                         <button type='button' onclick='addComment(<?php echo $post->postID; ?>)'>&uarr;</button>
-
+                        <button type='button' onclick='addComment({$post->postID})'>&uarr;</button>
                     </div>
                     <h3>Comments section:</h3>";
 
@@ -128,7 +153,8 @@ switch ($action) {
                     echo "</div>";
                 }
 
-                echo "</div>
+                echo "
+                </div>
             </div>
         </div>";
             }
