@@ -29,7 +29,7 @@
 .car-card {
   flex: 1 1 calc(25% - 20px); /* Four cards per row on large screens */
   max-width: calc(25% - 20px);
-  height: 580px; /* The card height is fixed */
+  height: 490px; /* The card height is fixed */
   perspective: 1000px; /* Enables 3D space for the flip effect */
   margin-bottom: 20px;
   position: relative; /* Required for flip effect positioning */
