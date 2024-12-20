@@ -11,10 +11,1312 @@ Array
             [email] => s123@gmail.com
             [userTypeID] => 1
             [loginMethod] => manual
-            [personaID] => 8
-            [loginCounter] => 12
+            [personaID] => 3
+            [loginCounter] => 14
             [timeStamp] => 2024-12-20 10:01:11
         )
 
-    [personaID] => 8
+    [personaID] => 3
+    [topPersona] => Array
+        (
+            [name] => Performance Enthusiast
+            [id] => 3
+            [icon] => ../../../public_html/media/Persona_Page_images/icons/enthusiast.png
+
+            [description] => Thrives on speed and precision, passionate about vehicles that offer exceptional performance.
+            [weight] => 130
+        )
+
+    [cars] => Array
+        (
+            [0] => Array
+                (
+                    [ID] => 3
+                    [image] => https://tse1.mm.bing.net/th?id=OIP.VL3meRIyZh70HVQAvCvglwHaEK&pid=Api
+                    [make] => Audi
+                    [model] => RS5 Coupe
+                    [year] => 2024
+                    [price] => 85000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 2.9L V6 Turbo
+                    [horsePower] => 444
+                    [Doors] => 2
+                    [Torque] => 442.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 3.70
+                    [fuelEfficiency] => 18.25
+                    [fuelType] => Gasoline
+                    [cylinders] => 6
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => High-Performance Coupe
+                    [description] => High-performance coupe offering thrilling speed, precision handling, and bold styling for driving enthusiasts.
+                    [RecommendationCount] => 10
+                    [FavoritedCount] => 7
+                    [personaDescription] => Ready to feel the rush, Performance Enthusiast? My turbocharged engine and precision handling are all about giving you the thrill of the drive. I’m not just a car—I’m your partner in conquering the road, delivering power and excitement every time you hit the gas.
+                )
+
+            [1] => Array
+                (
+                    [ID] => 13
+                    [image] => https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/cf8e5d1a51e467.659189bc9c5eb.jpg
+                    [make] => Mercedes-Benz
+                    [model] => AMG C63
+                    [year] => 2024
+                    [price] => 84000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => 4.0L V8 Turbo
+                    [horsePower] => 503
+                    [Doors] => 4
+                    [Torque] => 516.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 3.80
+                    [fuelEfficiency] => 0.68
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Sedan
+                    [description] => High-performance sedan built for adrenaline-pumping driving.
+                    [RecommendationCount] => 12
+                    [FavoritedCount] => 9
+                    [personaDescription] => Adrenaline-fueled driving enthusiast.
+                )
+
+            [2] => Array
+                (
+                    [ID] => 19
+                    [image] => https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/9d3b7d697b69d91.659189bc8775a.jpg
+                    [make] => Mercedes-Benz
+                    [model] => CLA
+                    [year] => 2024
+                    [price] => 43000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 302
+                    [Doors] => 4
+                    [Torque] => 295.00
+                    [topSpeed] => 130.00
+                    [acceleration] => 4.80
+                    [fuelEfficiency] => 0.73
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Sport Coupe
+                    [description] => Sporty and stylish four-door coupe with dynamic performance.
+                    [RecommendationCount] => 6
+                    [FavoritedCount] => 2
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [3] => Array
+                (
+                    [ID] => 23
+                    [image] => placeholder.jpg
+                    [make] => BMW
+                    [model] => M3
+                    [year] => 2024
+                    [price] => 75000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => 3.0L I6 Turbo
+                    [horsePower] => 473
+                    [Doors] => 4
+                    [Torque] => 406.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 4.10
+                    [fuelEfficiency] => 0.70
+                    [fuelType] => Gasoline
+                    [cylinders] => 6
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance Sedan
+                    [description] => High-performance sedan designed for thrilling, track-worthy driving experiences.
+                    [RecommendationCount] => 12
+                    [FavoritedCount] => 8
+                    [personaDescription] => Adrenaline-fueled driving enthusiast.
+                )
+
+            [4] => Array
+                (
+                    [ID] => 28
+                    [image] => placeholder.jpg
+                    [make] => BMW
+                    [model] => M4
+                    [year] => 2024
+                    [price] => 75000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 3.0L I6 Turbo
+                    [horsePower] => 503
+                    [Doors] => 2
+                    [Torque] => 479.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 3.80
+                    [fuelEfficiency] => 0.73
+                    [fuelType] => Gasoline
+                    [cylinders] => 6
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance Coupe
+                    [description] => Track-ready coupe with extraordinary performance and precise handling for driving enthusiasts.
+                    [RecommendationCount] => 13
+                    [FavoritedCount] => 9
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [5] => Array
+                (
+                    [ID] => 29
+                    [image] => placeholder.jpg
+                    [make] => BMW
+                    [model] => Z4
+                    [year] => 2024
+                    [price] => 54000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 255
+                    [Doors] => 2
+                    [Torque] => 295.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 5.00
+                    [fuelEfficiency] => 0.75
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Sporty Roadster
+                    [description] => Iconic roadster offering open-air driving with agile handling and impressive performance.
+                    [RecommendationCount] => 8
+                    [FavoritedCount] => 5
+                    [personaDescription] => Loves adventure and exploring paths unknown.
+                )
+
+            [6] => Array
+                (
+                    [ID] => 31
+                    [image] => placeholder.jpg
+                    [make] => Alfa Romeo
+                    [model] => Giulia
+                    [year] => 2024
+                    [price] => 51000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => 2.9L V6 Turbo
+                    [horsePower] => 505
+                    [Doors] => 4
+                    [Torque] => 443.00
+                    [topSpeed] => 191.00
+                    [acceleration] => 3.80
+                    [fuelEfficiency] => 24.00
+                    [fuelType] => Gasoline
+                    [cylinders] => 6
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Sedan
+                    [description] => Luxury sport sedan built for speed and driving pleasure.
+                    [RecommendationCount] => 10
+                    [FavoritedCount] => 6
+                    [personaDescription] => Adrenaline-fueled driving enthusiast.
+                )
+
+            [7] => Array
+                (
+                    [ID] => 34
+                    [image] => placeholder.jpg
+                    [make] => Alfa Romeo
+                    [model] => 4C Spider
+                    [year] => 2024
+                    [price] => 72000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 1.7L I4 Turbo
+                    [horsePower] => 237
+                    [Doors] => 2
+                    [Torque] => 258.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 4.10
+                    [fuelEfficiency] => 0.71
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Sport Coupe
+                    [description] => Lightweight and agile sports car built for driving enthusiasts.
+                    [RecommendationCount] => 11
+                    [FavoritedCount] => 7
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [8] => Array
+                (
+                    [ID] => 41
+                    [image] => placeholder.jpg
+                    [make] => Ferrari
+                    [model] => 488 GTB
+                    [year] => 2024
+                    [price] => 280000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 3.9L V8 Twin Turbo
+                    [horsePower] => 661
+                    [Doors] => 2
+                    [Torque] => 561.00
+                    [topSpeed] => 211.00
+                    [acceleration] => 3.00
+                    [fuelEfficiency] => 0.68
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Coupe
+                    [description] => High-performance sports car with race-bred engineering.
+                    [RecommendationCount] => 12
+                    [FavoritedCount] => 9
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [9] => Array
+                (
+                    [ID] => 45
+                    [image] => placeholder.jpg
+                    [make] => Ferrari
+                    [model] => 812 Superfast
+                    [year] => 2024
+                    [price] => 400000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 6.5L V12
+                    [horsePower] => 789
+                    [Doors] => 2
+                    [Torque] => 530.00
+                    [topSpeed] => 211.00
+                    [acceleration] => 2.90
+                    [fuelEfficiency] => 0.67
+                    [fuelType] => Gasoline
+                    [cylinders] => 12
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance GT
+                    [description] => Front-engine supercar delivering raw power and performance.
+                    [RecommendationCount] => 13
+                    [FavoritedCount] => 11
+                    [personaDescription] => Adrenaline-fueled driving enthusiast.
+                )
+
+            [10] => Array
+                (
+                    [ID] => 47
+                    [image] => placeholder.jpg
+                    [make] => McLaren
+                    [model] => 720S
+                    [year] => 2024
+                    [price] => 310000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 4.0L V8 Twin Turbo
+                    [horsePower] => 710
+                    [Doors] => 2
+                    [Torque] => 568.00
+                    [topSpeed] => 212.00
+                    [acceleration] => 2.80
+                    [fuelEfficiency] => 0.68
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Coupe
+                    [description] => World-class supercar delivering astonishing speed and agility.
+                    [RecommendationCount] => 15
+                    [FavoritedCount] => 10
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [11] => Array
+                (
+                    [ID] => 49
+                    [image] => placeholder.jpg
+                    [make] => McLaren
+                    [model] => 765LT
+                    [year] => 2024
+                    [price] => 390000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 4.0L V8 Twin Turbo
+                    [horsePower] => 755
+                    [Doors] => 2
+                    [Torque] => 590.00
+                    [topSpeed] => 205.00
+                    [acceleration] => 2.70
+                    [fuelEfficiency] => 0.70
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Coupe
+                    [description] => Lightweight and track-focused supercar with extreme power.
+                    [RecommendationCount] => 14
+                    [FavoritedCount] => 11
+                    [personaDescription] => Adrenaline-fueled driving enthusiast.
+                )
+
+            [12] => Array
+                (
+                    [ID] => 51
+                    [image] => placeholder.jpg
+                    [make] => Lamborghini
+                    [model] => Huracán EVO
+                    [year] => 2024
+                    [price] => 260000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 5.2L V10
+                    [horsePower] => 631
+                    [Doors] => 2
+                    [Torque] => 443.00
+                    [topSpeed] => 202.00
+                    [acceleration] => 2.90
+                    [fuelEfficiency] => 0.70
+                    [fuelType] => Gasoline
+                    [cylinders] => 10
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance Coupe
+                    [description] => Thrilling supercar offering exceptional handling and power.
+                    [RecommendationCount] => 13
+                    [FavoritedCount] => 10
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [13] => Array
+                (
+                    [ID] => 60
+                    [image] => placeholder.jpg
+                    [make] => Kia
+                    [model] => Stinger
+                    [year] => 2024
+                    [price] => 53000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => 3.3L V6 Twin Turbo
+                    [horsePower] => 368
+                    [Doors] => 4
+                    [Torque] => 376.00
+                    [topSpeed] => 167.00
+                    [acceleration] => 4.70
+                    [fuelEfficiency] => 18.00
+                    [fuelType] => Gasoline
+                    [cylinders] => 6
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance Sedan
+                    [description] => Stylish sport sedan with impressive power and driving dynamics.
+                    [RecommendationCount] => 11
+                    [FavoritedCount] => 8
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [14] => Array
+                (
+                    [ID] => 69
+                    [image] => placeholder.jpg
+                    [make] => Hyundai
+                    [model] => Veloster N
+                    [year] => 2024
+                    [price] => 35000.00
+                    [type] => Hatchback
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 275
+                    [Doors] => 3
+                    [Torque] => 260.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 5.10
+                    [fuelEfficiency] => 0.79
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => FWD
+                    [marketCategory] => Performance Hatchback
+                    [description] => Hot hatch designed for enthusiasts who crave sporty driving.
+                    [RecommendationCount] => 12
+                    [FavoritedCount] => 10
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [15] => Array
+                (
+                    [ID] => 80
+                    [image] => placeholder.jpg
+                    [make] => Honda
+                    [model] => Civic Type R
+                    [year] => 2024
+                    [price] => 44000.00
+                    [type] => Hatchback
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 315
+                    [Doors] => 4
+                    [Torque] => 310.00
+                    [topSpeed] => 170.00
+                    [acceleration] => 4.90
+                    [fuelEfficiency] => 0.79
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => FWD
+                    [marketCategory] => Performance Hatchback
+                    [description] => High-performance hatchback built for driving enthusiasts.
+                    [RecommendationCount] => 17
+                    [FavoritedCount] => 13
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [16] => Array
+                (
+                    [ID] => 94
+                    [image] => placeholder.jpg
+                    [make] => Mazda
+                    [model] => MX-5 Miata
+                    [year] => 2024
+                    [price] => 35000.00
+                    [type] => Convertible
+                    [persona] => 3
+                    [Engine] => 2.0L I4
+                    [horsePower] => 181
+                    [Doors] => 2
+                    [Torque] => 151.00
+                    [topSpeed] => 135.00
+                    [acceleration] => 5.70
+                    [fuelEfficiency] => 0.76
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => RWD
+                    [marketCategory] => Sports Car
+                    [description] => Iconic lightweight sports car built for driving enthusiasts who crave a pure driving experience.
+                    [RecommendationCount] => 17
+                    [FavoritedCount] => 13
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [17] => Array
+                (
+                    [ID] => 100
+                    [image] => placeholder.jpg
+                    [make] => Mazda
+                    [model] => Mazda3 Hatchback
+                    [year] => 2024
+                    [price] => 28000.00
+                    [type] => Hatchback
+                    [persona] => 3
+                    [Engine] => 2.5L I4
+                    [horsePower] => 186
+                    [Doors] => 4
+                    [Torque] => 186.00
+                    [topSpeed] => 120.00
+                    [acceleration] => 7.50
+                    [fuelEfficiency] => 0.74
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Automatic
+                    [drivenWheels] => FWD
+                    [marketCategory] => Hatchback
+                    [description] => Sporty and efficient hatchback with advanced features and agile handling.
+                    [RecommendationCount] => 13
+                    [FavoritedCount] => 10
+                    [personaDescription] => Appreciates sporty handling and style.
+                )
+
+            [18] => Array
+                (
+                    [ID] => 101
+                    [image] => placeholder.jpg
+                    [make] => Mazda
+                    [model] => MX-5 Miata RF
+                    [year] => 2024
+                    [price] => 38000.00
+                    [type] => Convertible
+                    [persona] => 3
+                    [Engine] => 2.0L I4
+                    [horsePower] => 181
+                    [Doors] => 2
+                    [Torque] => 151.00
+                    [topSpeed] => 140.00
+                    [acceleration] => 5.60
+                    [fuelEfficiency] => 0.76
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => RWD
+                    [marketCategory] => Sports Car
+                    [description] => Hardtop version of the iconic Miata, offering more comfort and a higher level of refinement.
+                    [RecommendationCount] => 16
+                    [FavoritedCount] => 12
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [19] => Array
+                (
+                    [ID] => 111
+                    [image] => placeholder.jpg
+                    [make] => Toyota
+                    [model] => Supra
+                    [year] => 2024
+                    [price] => 53000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 3.0L I6 Turbo
+                    [horsePower] => 382
+                    [Doors] => 2
+                    [Torque] => 368.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 4.10
+                    [fuelEfficiency] => 0.77
+                    [fuelType] => Gasoline
+                    [cylinders] => 6
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Coupe
+                    [description] => Iconic sports coupe with high performance and precision engineering.
+                    [RecommendationCount] => 18
+                    [FavoritedCount] => 15
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [20] => Array
+                (
+                    [ID] => 112
+                    [image] => placeholder.jpg
+                    [make] => Mini
+                    [model] => Cooper
+                    [year] => 2024
+                    [price] => 27000.00
+                    [type] => Hatchback
+                    [persona] => 3
+                    [Engine] => 1.5L I3 Turbo
+                    [horsePower] => 134
+                    [Doors] => 2
+                    [Torque] => 162.00
+                    [topSpeed] => 125.00
+                    [acceleration] => 6.90
+                    [fuelEfficiency] => 0.80
+                    [fuelType] => Gasoline
+                    [cylinders] => 3
+                    [transmission] => Automatic
+                    [drivenWheels] => FWD
+                    [marketCategory] => Compact Hatchback
+                    [description] => Iconic small car known for its fun handling and stylish design.
+                    [RecommendationCount] => 10
+                    [FavoritedCount] => 7
+                    [personaDescription] => Enjoys quirky style and agility.
+                )
+
+            [21] => Array
+                (
+                    [ID] => 113
+                    [image] => placeholder.jpg
+                    [make] => Mini
+                    [model] => Cooper S
+                    [year] => 2024
+                    [price] => 32000.00
+                    [type] => Hatchback
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 189
+                    [Doors] => 2
+                    [Torque] => 207.00
+                    [topSpeed] => 140.00
+                    [acceleration] => 6.30
+                    [fuelEfficiency] => 0.79
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Automatic
+                    [drivenWheels] => FWD
+                    [marketCategory] => Sporty Hatchback
+                    [description] => Sportier version of the Cooper with more power and sportier handling.
+                    [RecommendationCount] => 11
+                    [FavoritedCount] => 8
+                    [personaDescription] => Enjoys quirky style and agility.
+                )
+
+            [22] => Array
+                (
+                    [ID] => 126
+                    [image] => placeholder.jpg
+                    [make] => Mitsubishi
+                    [model] => Eclipse Cross
+                    [year] => 2024
+                    [price] => 28000.00
+                    [type] => SUV
+                    [persona] => 3
+                    [Engine] => 1.5L I4 Turbo
+                    [horsePower] => 152
+                    [Doors] => 4
+                    [Torque] => 184.00
+                    [topSpeed] => 120.00
+                    [acceleration] => 8.00
+                    [fuelEfficiency] => 0.84
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Compact SUV
+                    [description] => Sporty compact SUV with a stylish design and excellent technology features.
+                    [RecommendationCount] => 13
+                    [FavoritedCount] => 8
+                    [personaDescription] => Appreciates sporty designs and adventure.
+                )
+
+            [23] => Array
+                (
+                    [ID] => 129
+                    [image] => placeholder.jpg
+                    [make] => Mitsubishi
+                    [model] => ASX
+                    [year] => 2024
+                    [price] => 28000.00
+                    [type] => SUV
+                    [persona] => 3
+                    [Engine] => 2.0L I4
+                    [horsePower] => 148
+                    [Doors] => 4
+                    [Torque] => 145.00
+                    [topSpeed] => 115.00
+                    [acceleration] => 8.00
+                    [fuelEfficiency] => 0.77
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Compact SUV
+                    [description] => Compact SUV with impressive technology features and practical design for daily use.
+                    [RecommendationCount] => 11
+                    [FavoritedCount] => 7
+                    [personaDescription] => Appreciates practicality and fun.
+                )
+
+            [24] => Array
+                (
+                    [ID] => 131
+                    [image] => placeholder.jpg
+                    [make] => Mitsubishi
+                    [model] => Lancer Evolution
+                    [year] => 2024
+                    [price] => 47000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 303
+                    [Doors] => 4
+                    [Torque] => 305.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 4.50
+                    [fuelEfficiency] => 0.77
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance Sedan
+                    [description] => High-performance sedan designed for driving enthusiasts with sport-tuned handling.
+                    [RecommendationCount] => 18
+                    [FavoritedCount] => 14
+                    [personaDescription] => Thrives on speed and sportiness.
+                )
+
+            [25] => Array
+                (
+                    [ID] => 135
+                    [image] => placeholder.jpg
+                    [make] => Porsche
+                    [model] => 911 Carrera
+                    [year] => 2024
+                    [price] => 105000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 3.0L I6 Turbo
+                    [horsePower] => 379
+                    [Doors] => 2
+                    [Torque] => 331.00
+                    [topSpeed] => 190.00
+                    [acceleration] => 3.50
+                    [fuelEfficiency] => 0.74
+                    [fuelType] => Gasoline
+                    [cylinders] => 6
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Coupe
+                    [description] => Iconic sports car with precision handling, luxury, and a rich heritage of performance.
+                    [RecommendationCount] => 20
+                    [FavoritedCount] => 15
+                    [personaDescription] => Adrenaline-fueled driving enthusiast.
+                )
+
+            [26] => Array
+                (
+                    [ID] => 136
+                    [image] => placeholder.jpg
+                    [make] => Porsche
+                    [model] => 911 Turbo
+                    [year] => 2024
+                    [price] => 145000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 3.8L I6 Turbo
+                    [horsePower] => 572
+                    [Doors] => 2
+                    [Torque] => 553.00
+                    [topSpeed] => 205.00
+                    [acceleration] => 2.70
+                    [fuelEfficiency] => 0.75
+                    [fuelType] => Gasoline
+                    [cylinders] => 6
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance Coupe
+                    [description] => High-performance version of the Porsche 911 with exceptional speed and handling.
+                    [RecommendationCount] => 22
+                    [FavoritedCount] => 18
+                    [personaDescription] => Adrenaline-fueled driving enthusiast.
+                )
+
+            [27] => Array
+                (
+                    [ID] => 145
+                    [image] => placeholder.jpg
+                    [make] => Ford
+                    [model] => Mustang
+                    [year] => 2024
+                    [price] => 55000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 5.0L V8
+                    [horsePower] => 450
+                    [Doors] => 2
+                    [Torque] => 410.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 4.00
+                    [fuelEfficiency] => 0.60
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Manual
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Coupe
+                    [description] => Iconic American muscle car with strong performance and aggressive styling.
+                    [RecommendationCount] => 20
+                    [FavoritedCount] => 15
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [28] => Array
+                (
+                    [ID] => 146
+                    [image] => placeholder.jpg
+                    [make] => Ford
+                    [model] => Mustang GT
+                    [year] => 2024
+                    [price] => 62000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 5.0L V8
+                    [horsePower] => 450
+                    [Doors] => 2
+                    [Torque] => 410.00
+                    [topSpeed] => 160.00
+                    [acceleration] => 3.80
+                    [fuelEfficiency] => 0.64
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Manual
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Coupe
+                    [description] => High-performance variant of the Mustang with enhanced driving dynamics and raw power.
+                    [RecommendationCount] => 22
+                    [FavoritedCount] => 18
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [29] => Array
+                (
+                    [ID] => 155
+                    [image] => placeholder.jpg
+                    [make] => Dodge
+                    [model] => Charger
+                    [year] => 2024
+                    [price] => 45000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => 5.7L V8
+                    [horsePower] => 370
+                    [Doors] => 4
+                    [Torque] => 395.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 5.10
+                    [fuelEfficiency] => 0.64
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Sedan
+                    [description] => Muscle car sedan with raw power and thrilling performance.
+                    [RecommendationCount] => 18
+                    [FavoritedCount] => 14
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [30] => Array
+                (
+                    [ID] => 156
+                    [image] => placeholder.jpg
+                    [make] => Dodge
+                    [model] => Charger SRT Hellcat
+                    [year] => 2024
+                    [price] => 75000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => 6.2L V8 Supercharged
+                    [horsePower] => 707
+                    [Doors] => 4
+                    [Torque] => 650.00
+                    [topSpeed] => 180.00
+                    [acceleration] => 3.60
+                    [fuelEfficiency] => 0.59
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Sedan
+                    [description] => Unmatched power and performance in a full-size muscle car sedan.
+                    [RecommendationCount] => 22
+                    [FavoritedCount] => 17
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [31] => Array
+                (
+                    [ID] => 162
+                    [image] => placeholder.jpg
+                    [make] => Dodge
+                    [model] => Challenger
+                    [year] => 2024
+                    [price] => 55000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 6.4L V8
+                    [horsePower] => 485
+                    [Doors] => 2
+                    [Torque] => 475.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 4.20
+                    [fuelEfficiency] => 0.64
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Coupe
+                    [description] => Muscle coupe with classic American styling and legendary V8 power.
+                    [RecommendationCount] => 19
+                    [FavoritedCount] => 15
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [32] => Array
+                (
+                    [ID] => 170
+                    [image] => placeholder.jpg
+                    [make] => Volkswagen
+                    [model] => Golf GTI
+                    [year] => 2024
+                    [price] => 37000.00
+                    [type] => Hatchback
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 240
+                    [Doors] => 4
+                    [Torque] => 273.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 5.90
+                    [fuelEfficiency] => 0.74
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => FWD
+                    [marketCategory] => Performance Hatchback
+                    [description] => Sporty compact hatchback with sharp handling and iconic GTI styling.
+                    [RecommendationCount] => 18
+                    [FavoritedCount] => 14
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [33] => Array
+                (
+                    [ID] => 171
+                    [image] => placeholder.jpg
+                    [make] => Volkswagen
+                    [model] => Golf R
+                    [year] => 2024
+                    [price] => 45000.00
+                    [type] => Hatchback
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 315
+                    [Doors] => 4
+                    [Torque] => 295.00
+                    [topSpeed] => 165.00
+                    [acceleration] => 4.70
+                    [fuelEfficiency] => 0.74
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance Hatchback
+                    [description] => High-performance version of the Golf with excellent handling and power.
+                    [RecommendationCount] => 20
+                    [FavoritedCount] => 15
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [34] => Array
+                (
+                    [ID] => 175
+                    [image] => placeholder.jpg
+                    [make] => Volkswagen
+                    [model] => Arteon
+                    [year] => 2024
+                    [price] => 45000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 268
+                    [Doors] => 4
+                    [Torque] => 258.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 6.50
+                    [fuelEfficiency] => 0.71
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Luxury Sedan
+                    [description] => Sleek luxury sedan offering a comfortable and smooth ride with excellent tech.
+                    [RecommendationCount] => 18
+                    [FavoritedCount] => 14
+                    [personaDescription] => Luxury Seeker.
+                )
+
+            [35] => Array
+                (
+                    [ID] => 178
+                    [image] => placeholder.jpg
+                    [make] => Volkswagen
+                    [model] => Tiguan R
+                    [year] => 2024
+                    [price] => 47000.00
+                    [type] => SUV
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 315
+                    [Doors] => 4
+                    [Torque] => 295.00
+                    [topSpeed] => 160.00
+                    [acceleration] => 4.90
+                    [fuelEfficiency] => 0.73
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance SUV
+                    [description] => Sporty SUV combining luxury with high-performance power and handling.
+                    [RecommendationCount] => 18
+                    [FavoritedCount] => 14
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [36] => Array
+                (
+                    [ID] => 186
+                    [image] => placeholder.jpg
+                    [make] => Renault
+                    [model] => Alpine A110
+                    [year] => 2024
+                    [price] => 60000.00
+                    [type] => Sports Car
+                    [persona] => 3
+                    [Engine] => 1.8L I4 Turbo
+                    [horsePower] => 252
+                    [Doors] => 2
+                    [Torque] => 320.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 4.50
+                    [fuelEfficiency] => 0.73
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => RWD
+                    [marketCategory] => Sports Car
+                    [description] => Lightweight and agile sports car delivering exhilarating performance and handling.
+                    [RecommendationCount] => 18
+                    [FavoritedCount] => 14
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [37] => Array
+                (
+                    [ID] => 187
+                    [image] => placeholder.jpg
+                    [make] => Renault
+                    [model] => Mégane RS
+                    [year] => 2024
+                    [price] => 40000.00
+                    [type] => Hatchback
+                    [persona] => 3
+                    [Engine] => 2.0L I4 Turbo
+                    [horsePower] => 280
+                    [Doors] => 4
+                    [Torque] => 390.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 5.80
+                    [fuelEfficiency] => 0.69
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance Hatchback
+                    [description] => Performance-focused hatchback with sharp handling and thrilling speed.
+                    [RecommendationCount] => 19
+                    [FavoritedCount] => 15
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [38] => Array
+                (
+                    [ID] => 214
+                    [image] => placeholder.jpg
+                    [make] => Jaguar
+                    [model] => F-Type
+                    [year] => 2024
+                    [price] => 73000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 5.0L V8 Supercharged
+                    [horsePower] => 444
+                    [Doors] => 2
+                    [Torque] => 428.00
+                    [topSpeed] => 177.00
+                    [acceleration] => 4.60
+                    [fuelEfficiency] => 0.67
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Automatic
+                    [drivenWheels] => RWD
+                    [marketCategory] => Performance Coupe
+                    [description] => High-performance coupe with iconic design.
+                    [RecommendationCount] => 20
+                    [FavoritedCount] => 18
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [39] => Array
+                (
+                    [ID] => 217
+                    [image] => placeholder.jpg
+                    [make] => Jaguar
+                    [model] => F-Pace SVR
+                    [year] => 2024
+                    [price] => 90000.00
+                    [type] => SUV
+                    [persona] => 3
+                    [Engine] => 5.0L V8 Supercharged
+                    [horsePower] => 550
+                    [Doors] => 4
+                    [Torque] => 502.00
+                    [topSpeed] => 176.00
+                    [acceleration] => 3.80
+                    [fuelEfficiency] => 0.68
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance SUV
+                    [description] => High-performance luxury SUV with dynamic handling.
+                    [RecommendationCount] => 20
+                    [FavoritedCount] => 18
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [40] => Array
+                (
+                    [ID] => 224
+                    [image] => placeholder.jpg
+                    [make] => Land Rover
+                    [model] => Range Rover Sport
+                    [year] => 2024
+                    [price] => 89000.00
+                    [type] => SUV
+                    [persona] => 3
+                    [Engine] => 4.4L V8 Turbo
+                    [horsePower] => 523
+                    [Doors] => 4
+                    [Torque] => 553.00
+                    [topSpeed] => 155.00
+                    [acceleration] => 4.30
+                    [fuelEfficiency] => 0.73
+                    [fuelType] => Gasoline
+                    [cylinders] => 8
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance SUV
+                    [description] => High-performance luxury SUV with advanced handling.
+                    [RecommendationCount] => 22
+                    [FavoritedCount] => 20
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [41] => Array
+                (
+                    [ID] => 225
+                    [image] => placeholder.jpg
+                    [make] => Tesla
+                    [model] => Model S Plaid
+                    [year] => 2024
+                    [price] => 130000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => Electric Motor
+                    [horsePower] => 1020
+                    [Doors] => 4
+                    [Torque] => 1050.00
+                    [topSpeed] => 200.00
+                    [acceleration] => 1.90
+                    [fuelEfficiency] => 120.00
+                    [fuelType] => Electric
+                    [cylinders] => 
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance Sedan
+                    [description] => All-electric high-performance sedan with record-breaking speed.
+                    [RecommendationCount] => 25
+                    [FavoritedCount] => 22
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [42] => Array
+                (
+                    [ID] => 230
+                    [image] => placeholder.jpg
+                    [make] => Tesla
+                    [model] => Roadster
+                    [year] => 2024
+                    [price] => 200000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => Electric Motor
+                    [horsePower] => 1200
+                    [Doors] => 2
+                    [Torque] => 1050.00
+                    [topSpeed] => 250.00
+                    [acceleration] => 1.80
+                    [fuelEfficiency] => 135.00
+                    [fuelType] => Electric
+                    [cylinders] => 
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Electric Sports Car
+                    [description] => High-performance electric sports car with extreme speed.
+                    [RecommendationCount] => 26
+                    [FavoritedCount] => 23
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [43] => Array
+                (
+                    [ID] => 239
+                    [image] => placeholder.jpg
+                    [make] => Nissan
+                    [model] => GT-R
+                    [year] => 2024
+                    [price] => 115000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 3.8L V6 Twin-Turbo
+                    [horsePower] => 565
+                    [Doors] => 2
+                    [Torque] => 467.00
+                    [topSpeed] => 196.00
+                    [acceleration] => 2.90
+                    [fuelEfficiency] => 0.73
+                    [fuelType] => Gasoline
+                    [cylinders] => 6
+                    [transmission] => Automatic
+                    [drivenWheels] => AWD
+                    [marketCategory] => Sports Car
+                    [description] => Iconic sports car with breathtaking performance.
+                    [RecommendationCount] => 20
+                    [FavoritedCount] => 18
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [44] => Array
+                (
+                    [ID] => 253
+                    [image] => placeholder.jpg
+                    [make] => Subaru
+                    [model] => WRX
+                    [year] => 2024
+                    [price] => 44000.00
+                    [type] => Sedan
+                    [persona] => 3
+                    [Engine] => 2.4L H4 Turbo
+                    [horsePower] => 271
+                    [Doors] => 4
+                    [Torque] => 258.00
+                    [topSpeed] => 145.00
+                    [acceleration] => 5.50
+                    [fuelEfficiency] => 0.73
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => AWD
+                    [marketCategory] => Performance Sedan
+                    [description] => Sporty sedan with high-performance capabilities.
+                    [RecommendationCount] => 22
+                    [FavoritedCount] => 19
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+            [45] => Array
+                (
+                    [ID] => 257
+                    [image] => placeholder.jpg
+                    [make] => Subaru
+                    [model] => BRZ
+                    [year] => 2024
+                    [price] => 32000.00
+                    [type] => Coupe
+                    [persona] => 3
+                    [Engine] => 2.4L H4
+                    [horsePower] => 228
+                    [Doors] => 2
+                    [Torque] => 184.00
+                    [topSpeed] => 140.00
+                    [acceleration] => 6.00
+                    [fuelEfficiency] => 0.75
+                    [fuelType] => Gasoline
+                    [cylinders] => 4
+                    [transmission] => Manual
+                    [drivenWheels] => RWD
+                    [marketCategory] => Sports Coupe
+                    [description] => Lightweight sports coupe designed for driving enthusiasts.
+                    [RecommendationCount] => 20
+                    [FavoritedCount] => 18
+                    [personaDescription] => Performance Enthusiast.
+                )
+
+        )
+
 )

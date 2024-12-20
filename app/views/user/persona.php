@@ -1,5 +1,14 @@
 <?php
-session_start();
+
+// Include the CarsModel to fetch car details
+require_once __DIR__ . '/../../../models/CarsModel.php';
+require_once __DIR__ . '/../../../app/config/db_config.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../../models/UsersClass.php';
+require_once __DIR__ . '/../../../controllers/SessionManager.php';
+
+// session_start();
+SessionManager::startSession();
 
 if (!isset($_SESSION['topPersona'])) {
     echo "No persona data found. Please retake the test.";
@@ -8,10 +17,7 @@ if (!isset($_SESSION['topPersona'])) {
 
 // Load the top persona details from the session
 $topPersona = $_SESSION['topPersona'];
-
-// Include the CarsModel to fetch car details
-require_once __DIR__ . '/../../../models/CarsModel.php';
-require_once __DIR__ . '/../../../app/config/db_config.php';
+ $_SESSION['user']->personaID=$topPersona['id'];
 
 // Instantiate the CarsModel and fetch cars for the persona
 $carsModel = new CarsModel($conn);

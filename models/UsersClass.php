@@ -608,4 +608,5 @@ class Users
             return false;
         }
     }
+
 }

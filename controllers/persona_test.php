@@ -52,22 +52,22 @@ class PersonasController
                     'A' => [
                         'text' => 'Commuting in the city',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/commuting.png',
-                        'scores' => ['City Slicker' => 4, 'Budget Conscious' => 3]
+                        'scores' => [ 'Family First' => 3, 'Tech Geek'=>3]
                     ],
                     'B' => [
                         'text' => 'Family trips and daily school runs',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/family-icon.png',
-                        'scores' => ['Family First' => 5]
+                        'scores' => ['Family First' => 10]
                     ],
                     'C' => [
                         'text' => 'Long road trips or off-roading adventures',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/long-road.png',
-                        'scores' => ['Performance Enthusiast' => 400, 'Adventurer' => 2]
+                        'scores' => ['Performance Enthusiast' => 10, ]
                     ],
                     'D' => [
                         'text' => 'Enjoying the luxury of driving',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/fun-icon.png',
-                        'scores' => ['Luxury Seeker' => 4, 'Classic Car Lover' => 3]
+                        'scores' => ['Luxury Seeker' => 10,]
                     ],
                     'E' => [
                         'text' => 'I don’t know',
@@ -82,22 +82,24 @@ class PersonasController
                     'A' => [
                         'text' => 'Extremely important - I want an electric/hybrid car',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/electric-car-icon.png',
-                        'scores' => ['Eco-Warrior' => 5]
+                        'scores' => ['Eco-Warrior' => 10]
                     ],
                     'B' => [
                         'text' => 'Fairly Important - I am open to both',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/balance-icon.png',
-                        'scores' => ['Budget Conscious' => 3]
+                        'scores' => ['Budget Conscious' => 10]
                     ],
                     'C' => [
-                        'text' => 'Not a priority - I focus more about performance',
+                        'text' => 'Not a priority - Whatever the engine type needs ',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/performance-icon.png',
-                        'scores' => ['Performance Enthusiast' => 4]
+                        'scores' => ['Classic Car Lover' => 10]
+
                     ],
                     'D' => [
-                        'text' => 'Not a matter - I care more about the driving experience',
+                        'text' => 'Not a matter - I care more about the engine performance',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/driving-icon.png',
-                        'scores' => ['Classic Car Lover' => 4]
+                        'scores' => ['Performance Enthusiast' => 10]
+
                     ],
                     'E' => [
                         'text' => 'I don’t know',
@@ -112,22 +114,22 @@ class PersonasController
                     'A' => [
                         'text' => 'Just me or one other person',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/two-people-icon.png',
-                        'scores' => ['Performance Enthusiast' => 3, 'Tech Geek' => 2]
+                        'scores' => ['Performance Enthusiast' => 10, 'Tech Geek' => 10]
                     ],
                     'B' => [
                         'text' => '3-4 people',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/group-of-people-icon.png',
-                        'scores' => ['Eco-Warrior' => 3, 'Budget Conscious' => 4]
+                        'scores' => [ 'Budget Conscious' => 10]
                     ],
                     'C' => [
                         'text' => '5 or more people',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/family-icon.png',
-                        'scores' => ['Family First' => 5]
+                        'scores' => ['Family First' => 10]
                     ],
                     'D' => [
                         'text' => 'It depends on the occasion',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/flexible-icon.png',
-                        'scores' => ['Luxury Seeker' => 3]
+                        'scores' => ['Luxury Seeker' => 10]
                     ],
                     'E' => [
                         'text' => 'I don’t know',
@@ -142,22 +144,22 @@ class PersonasController
                     'A' => [
                         'text' => 'Under $20,000',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/dollar-sign-icon.png',
-                        'scores' => ['Budget Conscious' => 5]
+                        'scores' => ['Budget Conscious' => 30]
                     ],
                     'B' => [
                         'text' => '$20,000 - $50,000',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/price-tag-icon.png',
-                        'scores' => ['Eco-Warrior' => 4, 'Family First' => 4]
+                        'scores' => ['Eco-Warrior' => 10, 'Family First' => 15]
                     ],
                     'C' => [
                         'text' => 'Over $50,000',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/luxury-icon.png',
-                        'scores' => ['Luxury Seeker' => 5, 'Performance Enthusiast' => 3]
+                        'scores' => ['Classic Car Lover' => 15,'Luxury Seeker' => 10, 'Performance Enthusiast' => 20]
                     ],
                     'D' => [
                         'text' => 'Money’s no issue – I’m after the experience',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/money-bag-icon.png',
-                        'scores' => ['Classic Car Lover' => 5, 'Luxury Seeker' => 4]
+                        'scores' => ['Classic Car Lover' => 10, 'Performance Enthusiast' => 15, 'Luxury Seeker' => 20]
                     ],
                     'E' => [
                         'text' => 'I don’t know',
@@ -172,22 +174,22 @@ class PersonasController
                     'A' => [
                         'text' => 'Very important - I want all the latest gadgets',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/gadgets-icon.png',
-                        'scores' => ['Tech Geek' => 5, 'Luxury Seeker' => 4]
+                        'scores' => ['Tech Geek' => 50, 'Luxury Seeker' => 10]
                     ],
                     'B' => [
                         'text' => 'Its a nice bonus but not essential',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/bonus-icon.png',
-                        'scores' => ['Eco-Warrior' => 3, 'Performance Enthusiast' => 3]
+                        'scores' => ['Eco-Warrior' => 10, 'Performance Enthusiast' => 10]
                     ],
                     'C' => [
                         'text' => 'Not necessary - Im more focused on driving mechanics',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/steering-wheel-icon.png',
-                        'scores' => ['Classic Car Lover' => 4]
+                        'scores' => ['Classic Car Lover' => 10]
                     ],
                     'D' => [
                         'text' => 'I prefer practical tech for safety and convenience',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/safety-icon.png',
-                        'scores' => ['Family First' => 4]
+                        'scores' => ['Family First' => 10]
                     ],
                     'E' => [
                         'text' => 'I dont know',
@@ -204,22 +206,22 @@ class PersonasController
                     'A' => [
                         'text' => 'City streets and highways',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/city-icon.png',
-                        'scores' => ['City Slicker' => 4, 'Tech Geek' => 3, 'Eco-Warrior' => 3]
+                        'scores' => [ 'Tech Geek' => 10, 'Eco-Warrior' => 15]
                     ],
                     'B' => [
                         'text' => 'Suburban or rural roads',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/countryside-icon.png',
-                        'scores' => ['Family First' => 4, 'Budget Conscious' => 4]
+                        'scores' => ['Family First' => 10, ]
                     ],
                     'C' => [
                         'text' => 'Rough terrain, off-road, or long-distance',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/offroad-icon.png',
-                        'scores' => ['Performance Enthusiast' => 5]
+                        'scores' => ['Performance Enthusiast' => 10]
                     ],
                     'D' => [
                         'text' => 'I love scenic and classic drives',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/scenic-icon.png',
-                        'scores' => ['Classic Car Lover' => 5]
+                        'scores' => ['Classic Car Lover' => 10]
                     ],
                     'E' => [
                         'text' => 'I dont know',
@@ -234,22 +236,22 @@ class PersonasController
                     'A' => [
                         'text' => 'It\'s my top priority',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/safety-icon.png',
-                        'scores' => ['Family First' => 5, 'Budget Conscious' => 3]
+                        'scores' => ['Family First' => 20]
                     ],
                     'B' => [
                         'text' => 'Fairly important - but I also consider performance',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/balance-icon.png',
-                        'scores' => ['Performance Enthusiast' => 3, 'Eco-Warrior' => 4]
+                        'scores' => ['Performance Enthusiast' => 10]
                     ],
                     'C' => [
                         'text' => 'Safety matters, but comfort and style come first',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/comfort-icon.png',
-                        'scores' => ['Luxury Seeker' => 4, 'Classic Car Lover' => 3]
+                        'scores' => ['Luxury Seeker' => 20, 'Classic Car Lover' => 20]
                     ],
                     'D' => [
                         'text' => 'Not a primary concern - I prioritize fun driving experience',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/fun-icon.png',
-                        'scores' => ['Classic Car Lover' => 5]
+                        'scores' => ['Classic Car Lover' => 20]
                     ],
                     'E' => [
                         'text' => 'I don’t know',
@@ -265,24 +267,24 @@ class PersonasController
                     'A' => [
                         'text' => 'Yes, Im committed to sustainable choices',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/recycle-icon.png',
-                        'scores' => ['Eco-Warrior' => 5]
+                        'scores' => ['Eco-Warrior' => 50]
                     ],
                     'B' => [
                         'text' => 'Somewhat but not my main concern',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/balance-icon.png',
-                        'scores' => ['Family First' => 3, 'Budget Conscious' => 4]
+                        'scores' => ['Family First' => 10, 'Budget Conscious' => 10]
 
                     ],
                     'C' => [
                         'text' => 'Not really I care more about performance',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/performance-icon.png',
-                        'scores' => ['Performance Enthusiast' => 4]
+                        'scores' => ['Performance Enthusiast' => 20, 'Luxury Seeker' => 10]
 
                     ],
                     'D' => [
                         'text' => 'Im more into classic aesthetics and luxury',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/luxury-icon.png',
-                        'scores' => ['Classic Car Lover' => 4, 'Luxury Seeker' => 3]
+                        'scores' => ['Classic Car Lover' => 20, 'Luxury Seeker' => 15]
 
                     ],
                     'E' => [
@@ -300,22 +302,22 @@ class PersonasController
                     'A' => [
                         'text' => 'Compact cars or sedans',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/compact-car-icon.png',
-                        'scores' => ['Eco-Warrior' => 4, 'Budget Conscious' => 4, 'City Slicker' => 3]
+                        'scores' => ['Eco-Warrior' => 10, 'Budget Conscious' => 50]
                     ],
                     'B' => [
                         'text' => 'SUVs or minivans',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/suv-icon.png',
-                        'scores' => ['Family First' => 5, 'Performance Enthusiast' => 3]
+                        'scores' => ['Family First' => 20,]
                     ],
                     'C' => [
                         'text' => 'Sleek, stylish luxury sedans or coupes',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/luxury-icon.png',
-                        'scores' => ['Luxury Seeker' => 5, 'Classic Car Lover' => 4]
+                        'scores' => ['Luxury Seeker' => 50, 'Classic Car Lover' => 10]
                     ],
                     'D' => [
                         'text' => 'Sports cars or performance vehicles',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/classic-icon.png',
-                        'scores' => ['Performance Enthusiast' => 5]
+                        'scores' => ['Performance Enthusiast' => 20]
                     ],
                     'E' => [
                         'text' => 'I dont know',
@@ -332,30 +334,31 @@ class PersonasController
                     'A' => [
                         'text' => 'Quiet, smooth, and eco-friendly',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/comfort-icon.png',
-                        'scores' => ['Eco-Warrior' => 5]
+                        'scores' => ['Eco-Warrior' => 100]
                     ],
                     'B' => [
                         'text' => 'Safe and comfortable for my family',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/family-icon.png',
-                        'scores' => ['Family First' => 5]
+                        'scores' => ['Family First' => 100]
                     ],
                     'C' => [
                         'text' => 'Luxurious and tech-enhanced',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/luxury-icon.png',
-                        'scores' => ['Luxury Seeker' => 5, 'Tech Geek' => 4]
+                        'scores' => ['Tech Geek' => 100]
                     ],
                     'D' => [
                         'text' => 'Fast and exhilarating',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/sports-car-icon.png',
-                        'scores' => ['Performance Enthusiast' => 5]
+                        'scores' => ['Performance Enthusiast' => 100]
                     ],
+                    
                     'E' => [
                         'text' => 'Nostalgic and stylish',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/classic-icon.png',
-                        'scores' => ['Classic Car Lover' => 5]
+                        'scores' => ['Classic Car Lover' => 100]
                     ],
                     'F' => [
-                        'text' => 'I dont know',
+                        'text' => 'A mix of the above',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/i_dont_know.png',
                         'scores' => ['The Path Finder' => 2]
                     ]

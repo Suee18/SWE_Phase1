@@ -9,11 +9,14 @@ require_once __DIR__ . '/../../../controllers/SessionManager.php';
 SessionManager::startSession();
 
 $personaID = (int) $_SESSION['user']->personaID;
+
 // Fetch persona details from the model
 $personasModel = new PersonasModel($conn);
 $topPersona = $personasModel->fetchPersonaById($personaID);
 $carsModel = new CarsModel($conn);
 $cars = $carsModel->getCarsByPersona($personaID);
+
+
 ?>
 
 
