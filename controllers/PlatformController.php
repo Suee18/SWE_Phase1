@@ -2,34 +2,34 @@
 include_once __DIR__ . '/../models/PlatformClass.php';
 
 
-class PostController
+class PlatformController
 {
-    public static function getAllPosts()
+    private $model;
+
+    public function __construct($db)
     {
-        return Posts::getPosts();
+        $this->model = new PlatformModel($db);
     }
 
-    public static function getPost($postID)
+    public function fetchPosts()
     {
-        return Posts::getPostById($postID);
+        return $this->model->getAllPosts();
     }
 
-    public static function addPost($postText, $postImage, $userID)
+    public function createPost($userID, $postText, $postImage)
     {
-        return Posts::createPost($postText, $postImage, $userID);
+        $post = new Post(null, $userID, $postText, $postImage, 0, null);
+        $this->model->addPost($post);
     }
 
-    public static function editPost($postID, $postText, $postImage)
+    public function updatePost($postID, $postText, $postImage)
     {
-        return Posts::updatePost($postID, $postText, $postImage);
+        $post = new Post($postID, null, $postText, $postImage, null, null);
+        $this->model->editPost($post);
     }
 
-    public static function removePost($postID)
+    public function removePost($postID)
     {
-        return Posts::deletePost($postID);
+        $this->model->deletePost($postID);
     }
 }
-?>
-
-
-?>

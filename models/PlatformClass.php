@@ -1,93 +1,77 @@
 <?php
 include_once __DIR__ . '/../app/config/db_config.php';
 
-class Posts
+class Post
 {
     public $postID;
+    public $userID;
     public $postText;
     public $postImage;
     public $postLikes;
-    public $userID;
+    public $timestamp;
 
-    function __construct($postText, $postImage, $postLikes, $userID)
+    public function __construct($postID, $userID, $postText, $postImage, $postLikes, $timestamp = null)
     {
+        $this->postID = $postID;
+        $this->userID = $userID;
         $this->postText = $postText;
         $this->postImage = $postImage;
         $this->postLikes = $postLikes;
-        $this->userID = $userID;
+        $this->timestamp = $timestamp;
+    }
+}
+
+
+class PlatformModel
+{
+    private $db;
+
+    public function __construct($conn)
+    {
+        $this->db = $conn;
     }
 
-    function setPostID($postID)
+    public function getAllPosts()
     {
-        $this->postID = $postID;
-    }
-
-    static function getPosts()
-    {
-        global $conn;
-        $sql = "SELECT * FROM post";
-        $result = mysqli_query($conn, $sql);
+        $query = "SELECT * FROM post";
+        $result = $this->db->query($query);
         $posts = [];
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $post = new Posts(
-                    $row["postText"],
-                    $row["postImage"],
-                    $row["postLikes"],
-                    $row["userID"]
-                );
-                $post->postID = $row["postID"];
-                array_push($posts, $post);
-            }
+
+        while ($row = $result->fetch_assoc()) {
+            $posts[] = new Post(
+                $row['postID'],
+                $row['userID'],
+                $row['postText'],
+                $row['postImage'],
+                $row['postLikes'],
+                $row['Timestamp']
+            );
         }
         return $posts;
     }
 
-    static function getPostById($postID)
+    public function addPost(Post $post)
     {
-        global $conn;
-        $sql = "SELECT * FROM post WHERE postID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $postID);
+        $query = "INSERT INTO post (userID, postText, postImage, postLikes) VALUES (?, ?, ?, ?)";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('isss', $post->userID, $post->postText, $post->postImage, $post->postLikes);
         $stmt->execute();
-        $result = $stmt->get_result();
-        if ($row = $result->fetch_assoc()) {
-            $post = new Posts(
-                $row["postText"],
-                $row["postImage"],
-                $row["postLikes"],
-                $row["userID"]
-            );
-            $post->postID = $row["postID"];
-            return $post;
-        }
-        return null;
     }
 
-    static function createPost($postText, $postImage, $userID)
+    public function editPost(Post $post)
     {
-        global $conn;
-        $sql = "INSERT INTO post (postText, postImage, postLikes, userID) VALUES (?, ?, 0, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssi", $postText, $postImage, $userID);
-        return $stmt->execute();
+        $query = "UPDATE post SET postText = ?, postImage = ? WHERE postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ssi', $post->postText, $post->postImage, $post->postID);
+        $stmt->execute();
     }
 
-    static function updatePost($postID, $postText, $postImage)
+    public function deletePost($postID)
     {
-        global $conn;
-        $sql = "UPDATE post SET postText = ?, postImage = ? WHERE postID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssi", $postText, $postImage, $postID);
-        return $stmt->execute();
-    }
-
-    static function deletePost($postID)
-    {
-        global $conn;
-        $sql = "DELETE FROM post WHERE postID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $postID);
-        return $stmt->execute();
+        $query = "DELETE FROM post WHERE postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $postID);
+        $stmt->execute();
     }
 }

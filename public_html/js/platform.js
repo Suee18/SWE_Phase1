@@ -184,100 +184,60 @@
 // };
 
 // DOM Elements
-const addPostBtn = document.getElementById("addPostBtn");
-const postModal = document.getElementById("postModal");
-const closeModalBtn = document.getElementById("closeModal");
-const postForm = document.getElementById("postForm");
-const postContent = document.getElementById("postContent");
-const postFile = document.getElementById("postFile");
-const postsContainer = document.getElementById("postsContainer");
-const charCount = document.getElementById("charCount");
-const charWarning = document.getElementById("charWarning");
-const savePostBtn = document.getElementById("savePostBtn");
-const errorMessage = document.getElementById("errorMessage");
 
-// Open Modal
-addPostBtn.onclick = () => {
+document.addEventListener("DOMContentLoaded", function () {
+  const addPostBtn = document.getElementById("addPostBtn");
+  const postModal = document.getElementById("postModal");
+  const closeModal = document.getElementById("closeModal");
+  const postForm = document.getElementById("postForm");
+  const postContent = document.getElementById("postContent");
+  const charCount = document.getElementById("charCount");
+  const savePostBtn = document.getElementById("savePostBtn");
+  const fileLabel = document.getElementById("fileLabel");
+  const postFile = document.getElementById("postFile");
+
+  addPostBtn.addEventListener("click", function () {
     postModal.style.display = "block";
-    resetModal(); // Reset modal inputs
-};
+  });
 
-// Close Modal
-closeModalBtn.onclick = () => {
+  closeModal.addEventListener("click", function () {
     postModal.style.display = "none";
-};
+  });
 
-// Character Count Logic
-postContent.addEventListener("input", () => {
-    const contentLength = postContent.value.length;
-    charCount.textContent = `${contentLength} / 300`;
-
-    if (contentLength > 300) {
-        charCount.style.color = "red";
-        charWarning.style.display = "block";
-        savePostBtn.disabled = true; // Disable button if content exceeds limit
+  postContent.addEventListener("input", function () {
+    const textLength = postContent.value.length;
+    charCount.textContent = `${textLength} / 300`;
+    if (textLength > 300) {
+      charCount.style.color = "red";
+      savePostBtn.disabled = true;
+      document.getElementById("charWarning").style.display = "block";
     } else {
-        charCount.style.color = "inherit";
-        charWarning.style.display = "none";
-        savePostBtn.disabled = contentLength === 0; // Disable if no content
+      charCount.style.color = "black";
+      savePostBtn.disabled = false;
+      document.getElementById("charWarning").style.display = "none";
     }
+  });
+
+  postFile.addEventListener("change", function () {
+    const fileName = postFile.files[0] ? postFile.files[0].name : "";
+    fileLabel.textContent = fileName ? fileName : "Choose File";
+  });
+
+  const editBtns = document.querySelectorAll(".editBtn");
+  editBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const postID = btn.getAttribute("data-id");
+      const postText = btn.getAttribute("data-text");
+      const postImage = btn.getAttribute("data-image");
+
+      document.getElementById("postContent").value = postText;
+      document.getElementById("postID").value = postID;
+      document.getElementById("formAction").value = "editPost";
+      if (postImage) {
+        document.getElementById("fileLabel").textContent = postImage;
+      }
+
+      postModal.style.display = "block";
+    });
+  });
 });
-
-// File Input Label Update
-postFile.addEventListener("change", () => {
-    const fileLabel = document.getElementById("fileLabel");
-    if (postFile.files.length > 0) {
-        fileLabel.textContent = postFile.files[0].name;
-        fileLabel.classList.add("file-selected");
-    } else {
-        fileLabel.textContent = "Choose File";
-        fileLabel.classList.remove("file-selected");
-    }
-});
-
-// Handle Form Submission
-postForm.onsubmit = (event) => {
-    event.preventDefault(); // Prevent actual form submission
-
-    const content = postContent.value.trim();
-    const file = postFile.files[0];
-
-    // Validate input (at least content or file required)
-    if (!content && !file) {
-        errorMessage.textContent =
-            "Please add some content or choose a file before posting.";
-        errorMessage.style.display = "block";
-        return;
-    }
-
-    // Simulate saving the post (add to the UI temporarily)
-    const newPost = document.createElement("div");
-    newPost.className = "post";
-    newPost.innerHTML = `
-    <div class="post-card">
-        <p>${content}</p>
-        ${
-            file
-                ? `<img src="${URL.createObjectURL(file)}" alt="Post Image" />`
-                : ""
-        }
-    </div>`;
-
-    postsContainer.prepend(newPost); // Add new post to top of container
-
-    // Reset Modal and Close
-    resetModal();
-    postModal.style.display = "none";
-};
-
-// Reset Modal Inputs
-function resetModal() {
-    postContent.value = "";
-    postFile.value = "";
-    charCount.textContent = "0 / 300";
-    charWarning.style.display = "none";
-    savePostBtn.disabled = true;
-    errorMessage.style.display = "none";
-    document.getElementById("fileLabel").textContent = "Choose File";
-    document.getElementById("fileLabel").classList.remove("file-selected");
-}

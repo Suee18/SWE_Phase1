@@ -1,13 +1,59 @@
 <?php
-
 include_once __DIR__ . '\..\..\config\db_config.php';
 include_once __DIR__ . '\..\..\..\controllers\PlatformController.php';
 include __DIR__ . '\..\..\..\models\UsersClass.php';
 include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
 SessionManager::startSession();
 
-$postsArray = PostController::getAllPosts();
+if (!SessionManager::getUser()) {
+    echo ('User is not logged in.');
+    exit();
+}
 
+$platformController = new PlatformController($conn);
+
+$action = $_POST['action'] ?? $_GET['action'] ?? null;
+
+switch ($action) {
+    case 'addPost':
+        if (!empty($_POST['text'])) {
+            $userID = SessionManager::getUser() ? SessionManager::getUser()->id : 0;
+            $postText = $_POST['text'];
+            $postImage = null;
+
+            if (!empty($_FILES['image']['name'])) {
+                $postImage = $_FILES['image']['name'];
+                move_uploaded_file($_FILES['image']['tmp_name'], "../../../public_html/media/uploads/$postImage");
+            }
+
+            $platformController->createPost($userID, $postText, $postImage);
+        }
+        break;
+
+    case 'deletePost':
+        if (!empty($_POST['postID'])) {
+            $platformController->removePost($_POST['postID']);
+        }
+        break;
+
+    case 'editPost':
+        if (!empty($_POST['postID']) && !empty($_POST['text'])) {
+            $postID = $_POST['postID'];
+            $postText = $_POST['text'];
+            $postImage = null;
+
+            if (!empty($_FILES['image']['name'])) {
+                $postImage = $_FILES['image']['name'];
+                move_uploaded_file($_FILES['image']['tmp_name'], "../../../public_html/media/uploads/$postImage");
+            }
+
+            $platformController->updatePost($postID, $postText, $postImage);
+        }
+        break;
+
+    default:
+        break;
+}
 ?>
 
 
@@ -30,27 +76,34 @@ $postsArray = PostController::getAllPosts();
         <button id="addPostBtn"><i class="fas fa-plus"></i></button>
 
         <div id="postsContainer">
-            <?php foreach ($postsArray as $post): ?>
-                <div class="post">
-                    <p class="post-text"><?= htmlspecialchars($post->postText) ?></p>
-                    <?php if (!empty($post->postImage)): ?>
-                        <div class="post-image">
-                            <img src="../../../public_html/uploads/<?= htmlspecialchars($post->postImage) ?>" alt="Post Image">
-                        </div>
-                    <?php endif; ?>
-                    <div class="post-meta">
-                        <span class="post-likes">❤ <?= htmlspecialchars($post->postLikes) ?> Likes</span>
-                        <span class="post-user">Posted by User ID: <?= htmlspecialchars($post->userID) ?></span>
-                    </div>
+            <?php
+            $posts = $platformController->fetchPosts();
+            foreach ($posts as $post) {
+                echo "
+                <div class='post' id='post-{$post->postID}'>
+                    <h4>Username</h4>
+                    <p>{$post->postText}</p>
+                    " . (!empty($post->postImage) ? "<img src='../../../public_html/media/uploads/{$post->postImage}' alt='Post Image'>" : '') . "
+                    <p>Likes: {$post->postLikes}</p>
+                    <form action='platform.php' method='POST' class='inline-form'>
+                        <input type='hidden' name='action' value='deletePost'>
+                        <input type='hidden' name='postID' value='{$post->postID}'>
+                        <button type='submit' class='deleteBtn'><i class='fas fa-trash'></i></button>
+                    </form>
+                    <button class='editBtn' data-id='{$post->postID}' data-text='{$post->postText}' data-image='{$post->postImage}'>
+                        <i class='fas fa-edit'></i>
+                    </button>
                 </div>
-            <?php endforeach; ?>
+                ";
+            }
+            ?>
         </div>
 
         <div id="postModal" class="modal">
             <div class="modal-content">
                 <span class="close" id="closeModal">&times;</span>
-                <form id="postForm" action="../../../controllers/PlatformController.php" method="POST" enctype="multipart/form-data">
-                    <h2>Create a Post</h2>
+                <form id="postForm" action="platform.php" method="POST" enctype="multipart/form-data">
+                    <h2>Create/Edit a Post</h2>
                     <div id="errorMessage" style="color: red; display: none;">Please fix the errors before submitting.</div>
                     <div id="charWarning" style="color: red; display: none;">
                         Please don't exceed 300 characters.
@@ -68,14 +121,13 @@ $postsArray = PostController::getAllPosts();
                         accept="image/,video/"
                         style="display: none;" />
                     <label for="postFile" id="fileLabel" class="custom-file-label">Choose File</label>
-                    <input type="hidden" name="action" value="addPost" />
+                    <input type="hidden" name="action" value="addPost" id="formAction">
+                    <input type="hidden" name="postID" id="postID">
                     <button type="submit" id="savePostBtn" disabled>Save Post</button>
                     <div id="charCount">0 / 300</div>
                 </form>
             </div>
         </div>
-
-    </div>
     </div>
 </body>
 
