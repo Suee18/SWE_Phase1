@@ -185,6 +185,8 @@
 
 // DOM Elements
 
+
+
 document.addEventListener("DOMContentLoaded", function () {
   const addPostBtn = document.getElementById("addPostBtn");
   const postModal = document.getElementById("postModal");
@@ -197,47 +199,98 @@ document.addEventListener("DOMContentLoaded", function () {
   const postFile = document.getElementById("postFile");
 
   addPostBtn.addEventListener("click", function () {
-    postModal.style.display = "block";
+      postModal.style.display = "block";
   });
 
   closeModal.addEventListener("click", function () {
-    postModal.style.display = "none";
+      postModal.style.display = "none";
   });
 
   postContent.addEventListener("input", function () {
-    const textLength = postContent.value.length;
-    charCount.textContent = `${textLength} / 300`;
-    if (textLength > 300) {
-      charCount.style.color = "red";
-      savePostBtn.disabled = true;
-      document.getElementById("charWarning").style.display = "block";
-    } else {
-      charCount.style.color = "black";
-      savePostBtn.disabled = false;
-      document.getElementById("charWarning").style.display = "none";
-    }
+      const textLength = postContent.value.length;
+      charCount.textContent = `${textLength} / 300`;
+      if (textLength > 300) {
+          charCount.style.color = "red";
+          savePostBtn.disabled = true;
+          document.getElementById("charWarning").style.display = "block";
+      } else {
+          charCount.style.color = "black";
+          savePostBtn.disabled = false;
+          document.getElementById("charWarning").style.display = "none";
+      }
   });
 
   postFile.addEventListener("change", function () {
-    const fileName = postFile.files[0] ? postFile.files[0].name : "";
-    fileLabel.textContent = fileName ? fileName : "Choose File";
+      const fileName = postFile.files[0] ? postFile.files[0].name : "";
+      fileLabel.textContent = fileName ? fileName : "Choose File";
+  });
+
+
+  const dotsBtns = document.querySelectorAll('.dots');
+  dotsBtns.forEach(function (btn) {
+      btn.addEventListener('click', function (event) {
+          const dropdown = event.target.nextElementSibling;
+          const allDropdowns = document.querySelectorAll('.dropdown');
+
+          allDropdowns.forEach(function (menu) {
+              if (menu !== dropdown) {
+                  menu.style.display = 'none';
+              }
+          });
+
+          dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      });
+  });
+
+  const deletePost = function(postID) {
+      if (confirm("Are you sure you want to delete this post?")) {
+          const formData = new FormData();
+          formData.append('action', 'deletePost');
+          formData.append('postID', postID);
+
+          fetch('platform.php', {
+              method: 'POST',
+              body: formData,
+          })
+          .then(response => response.text())
+          .then(response => {
+              if (response.includes('Post deleted successfully')) {
+                  const postElement = document.getElementById('post-' + postID);
+                  postElement.remove();
+              } else {
+                  alert("There was an issue deleting the post.");
+              }
+          })
+          .catch(error => console.error('Error:', error));
+      }
+  }
+
+
+  const deleteBtns = document.querySelectorAll('.dropdown-item');
+  deleteBtns.forEach(function (btn) {
+      if (btn.textContent.trim() === 'Delete Post') {
+          btn.addEventListener('click', function () {
+              const postID = btn.getAttribute('data-id');
+              deletePost(postID);
+          });
+      }
   });
 
   const editBtns = document.querySelectorAll(".editBtn");
   editBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      const postID = btn.getAttribute("data-id");
-      const postText = btn.getAttribute("data-text");
-      const postImage = btn.getAttribute("data-image");
+      btn.addEventListener("click", function () {
+          const postID = btn.getAttribute("data-id");
+          const postText = btn.getAttribute("data-text");
+          const postImage = btn.getAttribute("data-image");
 
-      document.getElementById("postContent").value = postText;
-      document.getElementById("postID").value = postID;
-      document.getElementById("formAction").value = "editPost";
-      if (postImage) {
-        document.getElementById("fileLabel").textContent = postImage;
-      }
+          document.getElementById("postContent").value = postText;
+          document.getElementById("postID").value = postID;
+          document.getElementById("formAction").value = "editPost";
+          if (postImage) {
+              document.getElementById("fileLabel").textContent = postImage;
+          }
 
-      postModal.style.display = "block";
-    });
+          postModal.style.display = "block";
+      });
   });
 });

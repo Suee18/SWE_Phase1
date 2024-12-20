@@ -32,4 +32,10 @@ class PlatformController
     {
         $this->model->deletePost($postID);
     }
+
+    public function fetchComments($postID)
+    {
+        return $this->model->getCommentsForPost($postID);
+    }
+
 }

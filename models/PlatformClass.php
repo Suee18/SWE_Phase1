@@ -21,7 +21,6 @@ class Post
     }
 }
 
-
 class PlatformModel
 {
     private $db;
@@ -74,4 +73,23 @@ class PlatformModel
         $stmt->bind_param('i', $postID);
         $stmt->execute();
     }
+
+    public function getCommentsForPost($postID)
+    {
+        $query = "SELECT * FROM comments WHERE postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $postID);
+        $stmt->execute();
+
+        $comments = [];
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $comments[] = $row;
+        }
+
+        return $comments;
+    }
+
 }
+
+?>
