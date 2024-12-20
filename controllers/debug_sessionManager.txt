@@ -11,20 +11,9 @@ Array
             [email] => s123@gmail.com
             [userTypeID] => 1
             [loginMethod] => manual
-            [personaID] => 
-            [loginCounter] => 1
+            [personaID] => 3
+            [loginCounter] => 6
             [timeStamp] => 2024-12-20 10:01:11
-        )
-
-    [topPersona] => Array
-        (
-            [name] => The Path Finder
-            [id] => 8
-            [icon] => ../../../public_html/media/Persona_Page_images/icons/thePathFinder.png
-
-
-            [description] => The Path Finder is an individual who thrives on exploration and the thrill of discovery. They might be driven by their curiosity. Their curious nature and open mind lead them to new experiences, always ready to forge new paths and embrace the passion.
-            [weight] => 16
         )
 
 )

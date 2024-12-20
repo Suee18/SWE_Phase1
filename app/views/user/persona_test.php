@@ -11,6 +11,7 @@ try {
 } catch (Exception $e) {
     die("Error loading questions: " . htmlspecialchars($e->getMessage()));
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -99,3 +100,4 @@ try {
 </body>
 
 </html>
+
