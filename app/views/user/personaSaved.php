@@ -9,7 +9,6 @@ require_once __DIR__ . '/../../../controllers/SessionManager.php';
 SessionManager::startSession();
 
 $personaID = (int) $_SESSION['user']->personaID;
-
 // Fetch persona details from the model
 $personasModel = new PersonasModel($conn);
 $topPersona = $personasModel->fetchPersonaById($personaID);
@@ -58,7 +57,6 @@ $cars = $carsModel->getCarsByPersona($personaID);
 
             <div class="left-column">
                 <div class="persona-info">
-                <?php echo $personaID ?>
 
                     <img src="<?= htmlspecialchars($topPersona['personaIcon']); ?>" alt="Persona Icon" class="persona-image">
                     <div>

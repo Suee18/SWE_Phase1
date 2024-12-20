@@ -12,7 +12,7 @@ Array
             [userTypeID] => 1
             [loginMethod] => manual
             [personaID] => 8
-            [loginCounter] => 11
+            [loginCounter] => 12
             [timeStamp] => 2024-12-20 10:01:11
         )
 
