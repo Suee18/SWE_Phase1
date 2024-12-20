@@ -24,11 +24,8 @@ class SessionManager
             $_SESSION['userTypeID'] = 3; // Default to Guest user type
         }
 
-        // Specify the path to the debug file
+//Debug 
         $filePath = __DIR__ . '/debug_sessionManager.txt';
-
-        // Write the data to the file (APPEND mode to keep adding to the file)
-
         file_put_contents($filePath, print_r($_SESSION, true));  // Check if session data is available
 
     }
@@ -39,6 +36,7 @@ class SessionManager
         // Store user details in the session
         $_SESSION['user'] = $user;
         $_SESSION['userTypeID'] = $user->userTypeID; // Set userTypeID from user object
+        $_SESSION['personaID'] = $user->personaID; // Set personaID from user object
     }
 
     public static function destroySession()

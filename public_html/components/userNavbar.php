@@ -63,7 +63,7 @@ include_once __DIR__ . '/../../controllers/SessionManager.php';
             </li>
             <li onclick="location.href='../../../app/views/user/persona.php';">
                 <img src="../../../public_html/media/persona-icon.png" alt="persona-icon" />
-                <a href="../../../app/views/user/persona.php">Your Persona</a>
+                <a href="../../../app/views/user/personaSaved.php">Your Persona</a>
             </li>
             <li class="logout-link">
                 <span class="material-symbols-outlined">logout</span>
