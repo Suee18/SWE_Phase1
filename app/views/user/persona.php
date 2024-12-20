@@ -370,7 +370,7 @@ file_put_contents('debug_cars.txt', print_r($cars, true));
 
 <?php
 // Clear the stored persona and cars data
-unset($_SESSION['topPersona']);
+unset($_SESSION['personaID']);
 unset($_SESSION['cars']);
 unset($_SESSION['answers']); 
 ?>

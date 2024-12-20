@@ -62,7 +62,7 @@ class PersonasController
                     'C' => [
                         'text' => 'Long road trips or off-roading adventures',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/long-road.png',
-                        'scores' => ['Performance Enthusiast' => 4, 'Adventurer' => 2]
+                        'scores' => ['Performance Enthusiast' => 400, 'Adventurer' => 2]
                     ],
                     'D' => [
                         'text' => 'Enjoying the luxury of driving',
@@ -352,7 +352,7 @@ class PersonasController
                     'E' => [
                         'text' => 'Nostalgic and stylish',
                         'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/classic-icon.png',
-                        'scores' => ['Classic Car Lover' => 50]
+                        'scores' => ['Classic Car Lover' => 5]
                     ],
                     'F' => [
                         'text' => 'I dont know',
@@ -392,7 +392,7 @@ class PersonasController
 
         return $this->personas;
     }
-
+//================TAKING THE TEST=================
     public function handleFormSubmission()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -452,6 +452,11 @@ class PersonasController
 
         }
     }
+
+
+
+    
+
 }
 
 // Instantiate the controller and handle form submission

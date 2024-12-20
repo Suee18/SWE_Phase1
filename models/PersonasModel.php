@@ -110,5 +110,23 @@ class PersonasModel {
             return false;
         }
     }
+
+
+    public function getPersonaById($personaID)
+{
+    $sql = "SELECT * FROM persona WHERE personaID = ?";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param('i', $personaID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc(); // Return the persona details
+    } else {
+        return null; // No persona found
+    }
+}
+
+
 }
 ?>

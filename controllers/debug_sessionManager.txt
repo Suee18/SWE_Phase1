@@ -1,21 +1,30 @@
 Array
 (
     [userTypeID] => 1
-    [user] => __PHP_Incomplete_Class Object
+    [user] => Users Object
         (
-            [__PHP_Incomplete_Class_Name] => Users
-            [id] => 8
-            [username] => alaa
-            [birthdate] => 2003-10-25
+            [id] => 11
+            [username] => s
+            [birthdate] => 2004-12-12
             [gender] => female
             [password] => 1234567
-            [email] => alaa@gmail.com
+            [email] => s123@gmail.com
             [userTypeID] => 1
-            [loginMethod] => google
+            [loginMethod] => manual
             [personaID] => 
-            [loginCounter] => 11
-            [timeStamp] => 2024-10-25 21:00:07
+            [loginCounter] => 1
+            [timeStamp] => 2024-12-20 10:01:11
         )
 
-    [personaID] => 4
+    [topPersona] => Array
+        (
+            [name] => The Path Finder
+            [id] => 8
+            [icon] => ../../../public_html/media/Persona_Page_images/icons/thePathFinder.png
+
+
+            [description] => The Path Finder is an individual who thrives on exploration and the thrill of discovery. They might be driven by their curiosity. Their curious nature and open mind lead them to new experiences, always ready to forge new paths and embrace the passion.
+            [weight] => 16
+        )
+
 )
