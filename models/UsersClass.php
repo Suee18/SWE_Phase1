@@ -5,15 +5,15 @@ include_once __DIR__ . '/../controllers/SessionManager.php';
 class Users
 {
     public $id;
-    public $username;
-    public $birthdate;
-    public $gender;
-    public $password;
-    public $email;
-    public $userTypeID;
-    public $loginMethod;
-    public $personaID;
-    public $loginCounter;
+    public $username; //
+    public $birthdate; //
+    public $gender; //
+    public $password; //
+    public $email; //
+    public $userTypeID; 
+    public $loginMethod; //
+    public $personaID; //
+    public $loginCounter; //
     public $timeStamp;
 
     function __construct($username, $birthdate, $gender, $password, $email, $userTypeID, $loginMethod, $personaID, $loginCounter, $timeStamp)
