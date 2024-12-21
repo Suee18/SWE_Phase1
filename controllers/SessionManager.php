@@ -63,4 +63,6 @@ class SessionManager
         $result = mysqli_query($conn, $sql);
         return $result;
     }
+
+
 }

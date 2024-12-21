@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/../app/config/db_config.php';
+    require_once __DIR__ . '/../app/config/db_config.php';
 
 class Reviews
 {

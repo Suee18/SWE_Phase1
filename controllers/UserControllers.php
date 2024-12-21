@@ -31,8 +31,6 @@ class UserController
         return Users::viewAllUsers();
     }
 
-
-
     public static function getPersonas()
     {
         return Users::getPersonas();

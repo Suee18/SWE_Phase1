@@ -1,16 +1,21 @@
 <?php
 
-include_once "../../config/db_config.php";
+include_once __DIR__ . '\..\..\config\db_config.php';
 
-include '../../../models/UsersClass.php';
-include '../../../controllers/UserControllers.php';
+include __DIR__ . '\..\..\..\models\ReviewsClass.php';
+include __DIR__ . '\..\..\..\models\UsersClass.php';
+include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
+include_once __DIR__ . '\..\..\..\controllers\carController.php';
+include_once __DIR__ . '\..\..\..\controllers\UserControllers.php';
+include_once __DIR__ . '\..\..\..\controllers\ReviewController.php';
 
-// include '../../../models/CarsClass.php';
-// include '../../../controllers/carController.php';
+include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
 
-include '../../../models/ReviewsClass.php';
-include '../../../controllers/ReviewController.php';
-
+SessionManager::startSession();
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+} 
 
 //Statistics Generation part
 //Generating Personas Statistics
@@ -20,24 +25,18 @@ $personaNames = $personasData['personaNames'];
 $personaCounters = $personasData['personaCounters'];
 
 //Generating Login Statistics
-// $LoginData = UserController::getLoginStatistics();
-// $months = $LoginData['months'];
-// $logins = $LoginData['logins'];
-
 $data = UserController::getLoginStatistics();
-
-$months = $data['months'];
-$loginCounts = $data['logins'];
+$months = $data['formattedMonths'];
+$loginCounts = $data['totalLoginCounts'];
 
 //Generating Favourited Cars Statistics
 $FavoriteData = UserController::getFavouritesStat();
-
 $categories = $FavoriteData['categories'];
 $favorites = $FavoriteData['favorites'];
 
 //Generating Posts Statstics 
 $postData = UserController::getPostsCountByMonth();
-$months = $postData['months'];
+$postMonths = $postData['months'];
 $postCounts = $postData['postCounts'];
 
 //Generating Recommendation Statstics 
@@ -86,15 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             UserController::deleteUserCtrl($user_id);
             break;
     }
+    header('Location: admin.php');
 }
 
-//Cars Cruds
-// $cars = carController::viewAllCars();
+
 
 
 //Reviews Cruds
 $reviews = ReviewController::getReviews();
-
 
 if (isset($_POST['deleteReview'])) {
 
@@ -118,6 +116,10 @@ if (isset($_POST['deleteReview'])) {
     header("Location: " . $_SERVER['PHP_SELF']);
 }
 
+
+//Cars Cruds
+$cars = carController::viewAllCars();
+$highlyRecommended = carController::getHighlyRecommendedCars();
 ?>
 
 
@@ -128,6 +130,8 @@ if (isset($_POST['deleteReview'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../public_html/css/admin.css">
+    <link rel="stylesheet" href="../../../public_html/css/car_card.css">
+    <script src="js/favorites.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -295,11 +299,8 @@ if (isset($_POST['deleteReview'])) {
                     <canvas id="postsChart" width="400" height="200"></canvas>
                 </div>
                 <script>
-                    var months = <?php echo json_encode($months); ?>;
+                    var months = <?php echo json_encode($postMonths); ?>;
                     var postCounts = <?php echo json_encode($postCounts); ?>;
-
-
-                    
                 </script>
 
 
@@ -325,10 +326,7 @@ if (isset($_POST['deleteReview'])) {
                     var personaCounters = <?php echo json_encode($personaCounters); ?>;
                 </script>
 
-                <div id="div1" class="stats-div">
-                    <p>Most recommended car this month</p>
-                    <!--waiting on dynamic car car -->
-                </div>
+
             </div>
         </div>
         <!--======================= statistics end =================================-->
@@ -351,14 +349,12 @@ if (isset($_POST['deleteReview'])) {
 
             <div class="small-container">
 
-
-
                 <div class="formContainer">
                     <form id="userForm" method="POST" action="admin.php" onsubmit="return validate(this)">
 
                         <div class="formInputfields">
                             <div>
-                                <label class="userformLabels" for="userSelect">Select User:</label>
+                                <label class="formLabels" for="userSelect">Select User:</label>
                                 <select id="userSelect" name="user_id" onchange="populateForm()">
                                     <option value="" disabled selected>Select a user</option>
                                     <?php foreach ($users as $user): ?>
@@ -379,32 +375,32 @@ if (isset($_POST['deleteReview'])) {
                             <!-- hidden input to get the user id from DB -->
                             <input type="hidden" name="user_id" id="user_id" value="">
                             <div>
-                                <label class="userformLabels" for="username">Username :</label>
+                                <label class="formLabels" for="username">Username :</label>
                                 <input type="text" name="username" id="username" readonly disabled>
                                 <span id="usernameERR" class="error"></span>
                             </div>
 
                             <div>
-                                <label class="userformLabels" for="email">e-mail :</label>
+                                <label class="formLabels" for="email">e-mail :</label>
                                 <input type="email" name="email" id="email" readonly disabled>
                                 <span id="emailERR" class="error"></span>
                             </div>
 
                             <div>
-                                <label class="userformLabels" for="password">Password :</label>
+                                <label class="formLabels" for="password">Password :</label>
                                 <input type="password" name="password" id="password" readonly disabled>
                                 <span id="passERR" class="error"></span>
                             </div>
 
 
-                            <label class="userformLabels" for="age">Date of Birth:</label>
+                            <label class="formLabels" for="age">Date of Birth:</label>
                             <input type="date" id="age" name="age" disabled>
                             <span id="birthDateERR" class="error"></span>
                             <div>
 
 
 
-                                <label class="userformLabels" for="gender">Gender :</label>
+                                <label class="formLabels" for="gender">Gender :</label>
                                 <select id="gender" name="gender" disabled>
                                     <option value=""></option>
                                     <option value="male">Male</option>
@@ -416,7 +412,7 @@ if (isset($_POST['deleteReview'])) {
 
 
                             <div>
-                                <label class="userformLabels" for="user_type">User Type :</label>
+                                <label class="formLabels" for="user_type">User Type :</label>
                                 <select id="user_type" name="user_type" disabled>
 
                                     <option value=""></option>
@@ -502,48 +498,280 @@ if (isset($_POST['deleteReview'])) {
         <!-- =========================  CAR TABLE ========================== -->
         <div id="div5" class="content-div" style="display: none;">
             <div class="small-container">
-
-                <div class="table-container-adminReview">
-                    <table class="table-adminReview">
-
+                <div class="table-container-adminCars">
+                    <table class="table-adminCars">
                         <thead>
                             <tr>
                                 <th>Car ID</th>
                                 <th>Model</th>
-                                <th>Make </th>
-                                <th>Add</th>
+                                <th>Make</th>
                                 <th>Update</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-
-                            <?php foreach ($cars as $car): ?>
+                            <?php foreach ($cars as $allCars): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($car->id); ?></td>
-                                    <td><?php echo htmlspecialchars($car->make); ?></td>
-                                    <td><?php echo htmlspecialchars($review->model); ?></td>
+                                    <td><?php echo htmlspecialchars($allCars['ID']); ?></td>
+                                    <td><?php echo htmlspecialchars($allCars['model']); ?></td>
+                                    <td><?php echo htmlspecialchars($allCars['make']); ?></td>
+                                    <!-- <td>
+                                       
+                                        <form method="POST" action="admin.php" style="display:inline;">
+                                          
+                                            <input type="hidden" name="carID" value="<?php echo htmlspecialchars($allCars['ID']); ?>">
 
-                                    <td class="delete-icon-adminReview">
-                                        <!-- <form method="POST" action="admin.php" style="display:inline;">
-                                            <input type="hidden" name="reviewID"
-                                                value="<?php echo htmlspecialchars($review->id); ?>">
-                                            <input type="submit" value="" name="deleteReview" id="deleteReview-btn">
-                                            <i class="fa-solid fa-trash-can" style="color: #edeff2;"></i>
-                            
-                                        </form> -->
-                                        <!-- <form method="POST" action="admin.php" style="display:inline;">
-                                            <input type="hidden" name="reviewID" value="<?php echo htmlspecialchars($review->id); ?>">
-                                            <button type="submit" name="deleteReview" id="deleteReview-btn">
-                                                <i class="fa-solid fa-trash-can"></i>
+                                           
+                                            <button type="button" name="addCar" id="addCar-btn" onclick="toggleDivs('div5','div7')">
+                                                <i class="fa-solid fa-plus"></i>
                                             </button>
-                                        </form> -->
+                                        </form>
+                                    </td> -->
+
+
+                                    <td> <!-- Edit Button -->
+                                        <button type="button" name="editCar" id="editCar-btn" onclick="toggleDivs('div5','div7')">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+
+                                    </td>
+
+                                    <td> <!-- Delete Button -->
+                                        <button type="submit" name="deleteCar" id="deleteCar-btn">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-
                         </tbody>
+                        <!-- Hidden field for form action -->
+                        <input type="hidden" name="action" id="carFormformAction" value="">
+                        <div class="Car-CRUD_bigcontainer">
+                            <p class="controlPanel_text">control panel</p>
+
+                            <!-- Buttons -->
+                            <div class="CRUD_control">
+                                <div class="CRUDcontainer">
+                                    <!-- add -->
+                                    <button class="button" name="addUser" type="button" id="adduserButton"
+                                        onclick="enableFormFields(); switchAddButtons(); toggleDivs('div5','div7');"    >
+                                        <span class="button__text">Add Car</span>
+                                        <span class="button__icon">
+                                            <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
+                                        </span>
+                                    </button>
+
+                                    <button style="display:none" class="button" name="addButton" type="submit"
+                                        id="addButton" onclick="setActionCarForm('add')">
+                                        <span class="button__text">Add user</span>
+                                        <span class="button__icon">
+                                            <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
+                                        </span>
+                                    </button>
+
+                                    
+                                </div>
+                            </div>
+
+                        </div>
                     </table>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- =================== CAR FORM================== -->
+        <div id="div7" class="content-div" style="display: none;">
+            <div class="small-container">
+
+                <div class="formContainer">
+                    <form id="userForm" method="POST" action="admin.php" onsubmit="return validate(this)">
+
+                        <div class="carFormInputfields">
+
+                            <!-- Hidden Input -->
+                            <input type="hidden" name="car_id" id="car_id" value="">
+
+
+                            <!-- Image -->
+                            <div>
+                                <label class="formLabels" for="image">Image :</label>
+                                <input class="carInputs" type="file" name="image" id="image" accept="image/*">
+                                <span id="imageERR" class="error"></span>
+                            </div>
+
+                            <!-- Make -->
+                            <div>
+                                <label class="formLabels" for="make">Make :</label>
+                                <input class="carInputs" type="text" name="make" id="make">
+                                <span id="makeERR" class="error"></span>
+                            </div>
+
+                            <!-- Model -->
+                            <div>
+                                <label class="formLabels" for="model">Model :</label>
+                                <input class="carInputs" type="text" name="model" id="model">
+                                <span id="modelERR" class="error"></span>
+                            </div>
+
+                            <!-- Year (Select) -->
+                            <div>
+                                <label class="formLabels" for="year">Year :</label>
+                                <select class="carInputs" name="year" id="year">
+                                    <option value="">Select Year</option>
+                                    <?php
+
+                                    $currentYear = date("Y");
+                                    $startYear = 2018;
+
+                                    for ($year = $startYear; $year <= $currentYear; $year++) {
+                                        echo "<option value='$year'>$year</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <span id="yearERR" class="error"></span>
+                            </div>
+
+                            <!-- Price -->
+                            <div>
+                                <label class="formLabels" for="price">Price :</label>
+                                <input class="carInputs" type="number" name="price" id="price">
+                                <span id="priceERR" class="error"></span>
+                            </div>
+
+                            <!-- Type -->
+                            <div>
+                                <label class="formLabels" for="type">Type :</label>
+                                <input class="carInputs" type="text" name="type" id="type">
+                                <span id="typeERR" class="error"></span>
+                            </div>
+
+                            <!-- Persona (Select) -->
+                            <div>
+                                <label class="formLabels" for="persona">Persona :</label>
+                                <select class="carInputs" name="persona" id="persona">
+                                    <option value="">Select Persona</option>
+                                    <option value="Tech Geek">Tech Geek</option>
+                                    <option value="Performance Enthusiast">Performance Enthusiast</option>
+                                    <option value="Classic Car Lover">Classic Car Lover</option>
+                                    <option value="Family First">Family First</option>
+                                    <option value="Luxury Seeker">Luxury Seeker</option>
+                                    <option value="Budget Conscious">Budget Conscious</option>
+
+
+
+                                </select>
+                                <span id="personaERR" class="error"></span>
+                            </div>
+
+
+                            <!-- Horsepower -->
+                            <div>
+                                <label class="formLabels" for="horsePower">Horsepower :</label>
+                                <input class="carInputs" type="number" name="horsePower" id="horsePower">
+                                <span id="horsePowerERR" class="error"></span>
+                            </div>
+
+                            <!-- Doors (Select) -->
+                            <div>
+                                <label class="formLabels" for="doors">Doors :</label>
+                                <select class="carInputs" name="doors" id="doors">
+                                    <option value="">Select Doors</option>
+                                    <option value="2">2</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <span id="doorsERR" class="error"></span>
+                            </div>
+
+                            <!-- Engine -->
+                            <div>
+                                <label class="formLabels" for="engine">Engine :</label>
+                                <input class="carInputs" type="text" name="engine" id="engine">
+                                <span id="engineERR" class="error"></span>
+                            </div>
+
+                            <!-- Cylinders -->
+                            <div>
+                                <label class="formLabels" for="cylinders">Cylinders:</label>
+                                <select class="carInputs" id="cylinders" name="cylinders" required>
+                                    <option value="" disabled selected>Select Cylinders</option>
+                                    <option value="0">0 Cylinders</option>
+                                    <option value="4">4 Cylinders</option>
+                                    <option value="6">6 Cylinders</option>
+                                    <option value="8">8 Cylinders</option>
+                                    <option value="10">10 Cylinders</option>
+                                </select>
+                                <span id="cylindersERR" class="error"></span>
+                            </div>
+
+                            <!-- Torque -->
+                            <div>
+                                <label class="formLabels" for="torque">Torque :</label>
+                                <input class="carInputs" type="number" name="torque" id="torque">
+                                <span id="torqueERR" class="error"></span>
+                            </div>
+
+                            <div>
+                                <label class="formLabels" for="fuelEfficiency">Fuel Efficiency :</label>
+
+                                <input class="carInputs" type="number" name="fuelEfficiency" id="fuelEfficiency" value="50" step="0.1" min="0" required>
+
+                                <span id="fuelEfficiencyERR" class="error"></span>
+                            </div>
+
+
+
+                            <!-- Fuel Type -->
+                            <div>
+                                <label class="formLabels" for="fuelType">Fuel Type :</label>
+                                <select class="carInputs" name="fuelType" id="fuelType">
+                                    <option value=""></option>
+                                    <option value="Petrol">Petrol</option>
+                                    <option value="Diesel">Gasoline</option>
+                                    <option value="Electric">Electric</option>
+                                </select>
+                                <span id="fuelTypeERR" class="error"></span>
+                            </div>
+
+                            <!-- Transmission -->
+                            <div>
+                                <label class="formLabels" for="transmission">Transmission:</label>
+                                <select class="carInputs" id="transmission" name="transmission" required>
+                                    <option value="" disabled selected>Select Transmission</option>
+                                    <option value="manual">Manual</option>
+                                    <option value="automatic">Automatic</option>
+                                    <option value="CVT">CVT (Continuously Variable Transmission)</option>
+                                </select>
+                                <span id="transmissionERR" class="error"></span>
+                            </div>
+
+
+                            <!-- Driven Wheels -->
+                            <div>
+                                <label class="formLabels" for="drivenWheels">Driven Wheels:</label>
+                                <select class="carInputs" id="drivenWheels" name="drivenWheels" required>
+                                    <option value="" disabled selected>Select Driven Wheels</option>
+                                    <option value="front">Front-Wheel Drive (FWD)</option>
+                                    <option value="rear">Rear-Wheel Drive (RWD)</option>
+                                    <option value="all">All-Wheel Drive (AWD)</option>
+                                    <option value="four">Four-Wheel Drive (4WD)</option>
+                                </select>
+                                <span id="drivenWheelsERR" class="error"></span>
+                            </div>
+                            <!-- Description -->
+                            <div>
+                                <label class="formLabels" for="description">Description :</label>
+                                <textarea class="carInputs" name="description" id="description"></textarea>
+                                <span id="descriptionERR" class="error"></span>
+                            </div>
+                            <button type="submit">Save Car</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -558,8 +786,8 @@ if (isset($_POST['deleteReview'])) {
                         <thead>
                             <tr>
                                 <th>Review ID</th>
-                                <th>Username</th>
                                 <th>Review Content</th>
+                                <th>Category</th>
                                 <th>Date</th>
                                 <th>Delete</th>
                             </tr>

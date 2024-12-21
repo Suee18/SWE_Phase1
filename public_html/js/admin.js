@@ -97,7 +97,14 @@ function showDiv(divToShow) {
     div4.style.display = "none";
     div5.style.display = "none";
     div6.style.display = "none";
+    div7.style.display = "none";
     divToShow.style.display = "block";
+}
+
+
+function toggleDivs(hideDivId, showDivId) {
+    document.getElementById(hideDivId).style.display = "none";
+    document.getElementById(showDivId).style.display = "block";
 }
 
 function redirectTo(url) {
@@ -239,7 +246,7 @@ var postChart = new Chart(ctx, {
 
 
 
-
+//Recommendation Statistics
 var ctx = document.getElementById('RecommendationChart').getContext('2d');
 var recommendationChart = new Chart(ctx, {
     type: 'line', // Bar chart type
@@ -423,6 +430,11 @@ function setAction(action) {
     document.getElementById("formAction").value = action;
 }
 
+
+function setActionCarForm(action) {
+     document.getElementById('carformAction').value = action;
+    document.getElementById('carForm').submit();
+}
 // Form validation
 function validate(form) {
     let isValid = true;

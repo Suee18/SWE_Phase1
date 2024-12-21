@@ -405,44 +405,43 @@ class Users
         global $conn;
 
         // Query to calculate login statistics grouped by month and year
-        $sql = "
-        SELECT 
-            DATE_FORMAT(Timestamp, '%b %Y') AS month,  -- Use abbreviated month name (e.g., Jan 2024)
-            SUM(loginCounter) AS loginCount           -- Sum of loginCounter for each month
-        FROM 
-            user                                       -- Replace with your actual table name
-        GROUP BY 
-        month(Timestamp)         -- Group by year and month
-        ORDER BY 
-            MONTH(Timestamp) ASC;  -- Sort by year and month
-      ";
-
+        $query = "
+            SELECT 
+                DATE_FORMAT(Timestamp, '%b %Y') AS formattedMonth, -- Abbreviated month name (e.g., Jan 2024)
+                SUM(loginCounter) AS totalLogins                  -- Sum of loginCounter for each month
+            FROM 
+                user                                              -- Replace with your actual table name
+            GROUP BY 
+                YEAR(Timestamp), MONTH(Timestamp)                 -- Group by year and month
+            ORDER BY 
+                MIN(Timestamp) ASC                                -- Sort by earliest date in each group
+        ";
 
         // Execute the query
-        $result = $conn->query($sql);
+        $queryResult = $conn->query($query);
 
-        // Initialize arrays to store months and login counts
-        $months = [];
-        $logins = [];
+        // Initialize arrays to store formatted months and login counts
+        $formattedMonths = [];
+        $totalLoginCounts = [];
 
-        if ($result) { // Check if query execution was successful
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $months[] = $row['month'];        // Add month to months array
-                    $logins[] = $row['loginCount'];  // Add loginCount to logins array
+        if ($queryResult) { // Check if query execution was successful
+            if ($queryResult->num_rows > 0) {
+                while ($dataRow = $queryResult->fetch_assoc()) {
+                    $formattedMonths[] = $dataRow['formattedMonth'];      // Add formatted month to the array
+                    $totalLoginCounts[] = $dataRow['totalLogins'];        // Add total logins to the array
                 }
             } else {
                 // No data found, return empty arrays
-                return ['months' => [], 'logins' => []];
+                return ['formattedMonths' => [], 'totalLoginCounts' => []];
             }
         } else {
             // If the query fails, log or handle the error (optional)
             error_log("SQL Error: " . $conn->error);
-            return ['months' => [], 'logins' => []];
+            return ['formattedMonths' => [], 'totalLoginCounts' => []];
         }
 
-        // Return the arrays with months and login counts
-        return ['months' => $months, 'logins' => $logins];
+        // Return the arrays with formatted months and total login counts
+        return ['formattedMonths' => $formattedMonths, 'totalLoginCounts' => $totalLoginCounts];
     }
 
 
@@ -505,11 +504,11 @@ class Users
 
 
     //Posts Statstics
-    public static   function getPostsCountByMonth()
+    public static function getPostsCountByMonth()
     {
-    
+
         global $conn;
-    
+
         $sql = "
                     SELECT 
                         DATE_FORMAT(Timestamp, '%b %Y') AS month, 
@@ -520,26 +519,26 @@ class Users
                         month  
                     ORDER BY 
                         MIN(Timestamp) ASC";
-    
-    
+
+
         $result = $conn->query($sql);
-    
-    
+
+
         $months = [];
         $postCounts = [];
-    
+
         if ($result && $result->num_rows > 0) {
-    
+
             while ($row = $result->fetch_assoc()) {
                 $months[] = $row['month'];
                 $postCounts[] = $row['postCount'];
             }
         } else {
-    
+
             echo "No data found.";
         }
-    
-    
+
+
         return [
             'months' => $months,
             'postCounts' => $postCounts,
@@ -583,12 +582,13 @@ class Users
         return ['categories' => $categories, 'recommendations' => $recommendations];
     }
 
-//Reviews Statistics
-    public static function getReviewsStatistics(){
-     
-            global $conn;
-        
-            $sql = "
+    //Reviews Statistics
+    public static function getReviewsStatistics()
+    {
+
+        global $conn;
+
+        $sql = "
                 SELECT 
                     DATE_FORMAT(reviewDate, '%b %Y') AS month, 
                     COUNT(*) AS reviewCount 
@@ -599,21 +599,19 @@ class Users
                 ORDER BY 
                     MIN(reviewDate) ASC
             ";
-        
-            $result = $conn->query($sql);
-        
-            $months = [];
-            $reviewCounts = [];
-        
-            if ($result && $result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $months[] = $row['month'];
-                    $reviewCounts[] = $row['reviewCount'];
-                }
+
+        $result = $conn->query($sql);
+
+        $months = [];
+        $reviewCounts = [];
+
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $months[] = $row['month'];
+                $reviewCounts[] = $row['reviewCount'];
             }
-        
-            return ['months' => $months, 'reviewCounts' => $reviewCounts];
-        
-        
+        }
+
+        return ['months' => $months, 'reviewCounts' => $reviewCounts];
     }
 }
