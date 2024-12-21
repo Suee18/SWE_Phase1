@@ -292,3 +292,60 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+function addComment(postID) {
+    console.log("Entering add comment function");
+    var commentText = $("#post-" + postID + " .commentInput")
+        .val()
+        .trim();
+    if (commentText == "") {
+        alert("Please enter a comment!");
+        return;
+    }
+
+    // Send the comment to the server via AJAX
+    $.ajax({
+        type: "POST",
+        url: "../../views/user/platform.php",
+        data: {
+            action: "addComment",
+            postID: postID,
+            commentText: commentText,
+            userID: `<?php echo $_SESSION['userID']; ?>`, // Assuming userID is stored in session
+        },
+        success: function (response) {
+            console.log(response);
+            var data = JSON.parse(response);
+
+            if (data.error) {
+                alert(data.error); // Handle the error (e.g., duplicate comment)
+            } else {
+                // Check if the post has any comments
+                var commentList = $("#post-" + postID + " .commentList");
+
+                // If there are no comments (message p is present), remove it
+                if (
+                    commentList.length === 0 ||
+                    commentList.find("p").length > 0
+                ) {
+                    $("#post-" + postID + " .commentList p").remove(); // Remove the "No comments yet" message
+                }
+
+                // Add the new comment to the comment list
+                commentList.append(
+                    '<div class="comment">@' +
+                        data.username +
+                        ": " +
+                        data.commentText +
+                        "</div><hr>"
+                );
+
+                // Clear the input field after adding the comment
+                $("#post-" + postID + " .commentInput").val("");
+            }
+        },
+        error: function () {
+            alert("Failed to add comment.");
+        },
+    });
+}

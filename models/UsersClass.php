@@ -5,15 +5,15 @@ include_once __DIR__ . '/../controllers/SessionManager.php';
 class Users
 {
     public $id;
-    public $username;
-    public $birthdate;
-    public $gender;
-    public $password;
-    public $email;
-    public $userTypeID;
-    public $loginMethod;
-    public $personaID;
-    public $loginCounter;
+    public $username; //
+    public $birthdate; //
+    public $gender; //
+    public $password; //
+    public $email; //
+    public $userTypeID; 
+    public $loginMethod; //
+    public $personaID; //
+    public $loginCounter; //
     public $timeStamp;
 
     function __construct($username, $birthdate, $gender, $password, $email, $userTypeID, $loginMethod, $personaID, $loginCounter, $timeStamp)
@@ -34,6 +34,112 @@ class Users
     {
         $this->id = $id;
     }
+
+    function getId()
+    {
+        return $this->id;
+    }
+
+    function getUsername()
+    {
+        return $this->username;
+    }
+
+    function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+    function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+    }
+
+    function getGender()
+    {
+        return $this->gender;
+    }
+
+    function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    function getPassword()
+    {
+        return $this->password;
+    }
+
+    function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    function getEmail()
+    {
+        return $this->email;
+    }
+
+    function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    function getUserTypeID()
+    {
+        return $this->userTypeID;
+    }
+
+    function setUserTypeID($userTypeID)
+    {
+        $this->userTypeID = $userTypeID;
+    }
+
+    function getLoginMethod()
+    {
+        return $this->loginMethod;
+    }
+
+    function setLoginMethod($loginMethod)
+    {
+        $this->loginMethod = $loginMethod;
+    }
+
+    function getPersonaID()
+    {
+        return $this->personaID;
+    }
+
+    function setPersonaID($personaID)
+    {
+        $this->personaID = $personaID;
+    }
+
+    function getLoginCounter()
+    {
+        return $this->loginCounter;
+    }
+
+    function setLoginCounter($loginCounter)
+    {
+        $this->loginCounter = $loginCounter;
+    }
+
+    function getTimeStamp()
+    {
+        return $this->timeStamp;
+    }
+
+    function setTimeStamp($timeStamp)
+    {
+        $this->timeStamp = $timeStamp;
+    }
+
 
     // Check if userTypeID exists in the userType table
     private static function isValidUserType($userTypeID)
