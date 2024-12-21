@@ -14,9 +14,9 @@ $action = $_POST['action'] ?? $_GET['action'] ?? null;
 
 switch ($action) {
     case 'addPost':
-        if (!empty($_POST['text'])) {
-            $userID = (SessionManager::getUser()) ? SessionManager::getUser()->id : 0;  // Safely get user ID
-            $postText = $_POST['text'];
+        if (!empty(trim($_POST['text']))) {
+            $userID = (SessionManager::getUser()) ? SessionManager::getUser()->id : 0;
+            $postText = htmlspecialchars(trim($_POST['text']), ENT_QUOTES, 'UTF-8');
             $postImage = null;
 
             if (!empty($_FILES['image']['name'])) {
@@ -25,8 +25,11 @@ switch ($action) {
             }
 
             $platformController->createPost($userID, $postText, $postImage);
+            header("Location: platform.php");
+            exit();
         }
         break;
+
     case 'deletePost':
         if (!empty($_POST['postID'])) {
             $postID = $_POST['postID'];
@@ -34,7 +37,7 @@ switch ($action) {
 
             if (SessionManager::getUser() && SessionManager::getUser()->id == $post->userID) {
                 $platformController->removePost($postID);
-                echo 'Post deleted successfully';
+                header("Location: platform.php");
                 exit();
             } else {
                 echo 'You cannot delete a post you do not own.';
@@ -46,11 +49,10 @@ switch ($action) {
         }
         break;
 
-
     case 'editPost':
-        if (!empty($_POST['postID']) && !empty($_POST['text'])) {
+        if (!empty($_POST['postID']) && !empty(trim($_POST['text']))) {
             $postID = $_POST['postID'];
-            $postText = $_POST['text'];
+            $postText = htmlspecialchars_decode(trim($_POST['text']), ENT_QUOTES);
             $postImage = null;
             $post = $platformController->fetchPostByID($postID);
 
@@ -61,9 +63,15 @@ switch ($action) {
                 }
 
                 $platformController->updatePost($postID, $postText, $postImage);
+                header("Location: platform.php");
+                exit();
             } else {
                 echo 'You cannot edit a post that is not yours.';
+                exit();
             }
+        } else {
+            echo 'Invalid data provided.';
+            exit();
         }
         break;
 
@@ -71,6 +79,7 @@ switch ($action) {
         break;
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -88,7 +97,7 @@ switch ($action) {
 <body>
     <?php include "../../../public_html/components/userNavbar.php"; ?>
     <div class="container">
-        <h1>ApexConnect 🏎💨</h1>
+        <h1>ApexConnect 🏎️💨</h1>
         <button id="addPostBtn"><i class="fas fa-plus"></i></button>
 
         <div id="postsContainer">
@@ -171,8 +180,7 @@ switch ($action) {
                     <div id="charWarning" style="color: red; display: none;">
                         Please don't exceed 300 characters.
                     </div>
-                    <textarea id="postContent" name="text" placeholder="What's on your mind?" maxlength="300"
-                        required></textarea>
+                    <textarea id="postContent" name="text" placeholder="What's on your mind?" maxlength="300" required><?php echo isset($post->postText) ? htmlspecialchars($post->postText, ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
                     <input type="file" id="postFile" name="image" accept="image/,video/" style="display: none;" />
                     <label for="postFile" id="fileLabel" class="custom-file-label">Choose File</label>
                     <input type="hidden" name="action" value="addPost" id="formAction">

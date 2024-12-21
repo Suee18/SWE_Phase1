@@ -183,7 +183,6 @@
 //         });
 // };
 
-// DOM Elements
 
 document.addEventListener("DOMContentLoaded", function () {
   const addPostBtn = document.getElementById("addPostBtn");
@@ -273,11 +272,14 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   const editBtns = document.querySelectorAll(".editBtn");
+
   editBtns.forEach(function (btn) {
     btn.addEventListener("click", function () {
       const postID = btn.getAttribute("data-id");
-      const postText = btn.getAttribute("data-text");
-      const postImage = btn.getAttribute("data-image");
+      let postText = btn.getAttribute("data-text") || "";
+      const postImage = btn.getAttribute("data-image") || "";
+
+      postText = postText.replace(/&#39;/g, "'").replace(/&quot;/g, '"');
 
       document.getElementById("postContent").value = postText;
       document.getElementById("postID").value = postID;
