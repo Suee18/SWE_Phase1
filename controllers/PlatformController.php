@@ -38,8 +38,12 @@ class PlatformController
         return $this->model->getCommentsForPost($postID);
     }
 
-    public function addComment($postID, $userID, $commentText) {
+    public function fetchPostByID($postID)
+    {
+        return $this->model->getPostByID($postID);
+    }
+
+  public function addComment($postID, $userID, $commentText) {
         $this->model->insertComment($postID, $userID, $commentText);
     }    
-
 }

@@ -14,9 +14,9 @@ $action = $_POST['action'] ?? $_GET['action'] ?? null;
 
 switch ($action) {
     case 'addPost':
-        if (!empty($_POST['text'])) {
-            $userID = SessionManager::getUser() ? SessionManager::getUser()->id : 0;
-            $postText = $_POST['text'];
+        if (!empty(trim($_POST['text']))) {
+            $userID = (SessionManager::getUser()) ? SessionManager::getUser()->id : 0;
+            $postText = htmlspecialchars(trim($_POST['text']), ENT_QUOTES, 'UTF-8');
             $postImage = null;
 
             if (!empty($_FILES['image']['name'])) {
@@ -25,30 +25,53 @@ switch ($action) {
             }
 
             $platformController->createPost($userID, $postText, $postImage);
+            header("Location: platform.php");
+            exit();
         }
         break;
 
     case 'deletePost':
         if (!empty($_POST['postID'])) {
-            $platformController->removePost($_POST['postID']);
-            echo 'Post deleted successfully';
+            $postID = $_POST['postID'];
+            $post = $platformController->fetchPostByID($postID);
+
+            if (SessionManager::getUser() && SessionManager::getUser()->id == $post->userID) {
+                $platformController->removePost($postID);
+                header("Location: platform.php");
+                exit();
+            } else {
+                echo 'You cannot delete a post you do not own.';
+                exit();
+            }
         } else {
             echo 'Post ID is missing.';
+            exit();
         }
         break;
 
     case 'editPost':
-        if (!empty($_POST['postID']) && !empty($_POST['text'])) {
+        if (!empty($_POST['postID']) && !empty(trim($_POST['text']))) {
             $postID = $_POST['postID'];
-            $postText = $_POST['text'];
+            $postText = htmlspecialchars_decode(trim($_POST['text']), ENT_QUOTES);
             $postImage = null;
+            $post = $platformController->fetchPostByID($postID);
 
-            if (!empty($_FILES['image']['name'])) {
-                $postImage = $_FILES['image']['name'];
-                move_uploaded_file($_FILES['image']['tmp_name'], "../../../public_html/media/uploads/$postImage");
+            if (SessionManager::getUser() && SessionManager::getUser()->id == $post->userID) {
+                if (!empty($_FILES['image']['name'])) {
+                    $postImage = $_FILES['image']['name'];
+                    move_uploaded_file($_FILES['image']['tmp_name'], "../../../public_html/media/uploads/$postImage");
+                }
+
+                $platformController->updatePost($postID, $postText, $postImage);
+                header("Location: platform.php");
+                exit();
+            } else {
+                echo 'You cannot edit a post that is not yours.';
+                exit();
             }
-
-            $platformController->updatePost($postID, $postText, $postImage);
+        } else {
+            echo 'Invalid data provided.';
+            exit();
         }
         break;
     case 'addComment':
@@ -81,12 +104,12 @@ switch ($action) {
             }
         }
         break;
-
-
     default:
         break;
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -107,49 +130,58 @@ switch ($action) {
 <body>
     <?php include "../../../public_html/components/userNavbar.php"; ?>
     <div class="container">
-        <h1>ApexConnect 🏎💨</h1>
+        <h1>ApexConnect 🏎️💨</h1>
         <button id="addPostBtn"><i class="fas fa-plus"></i></button>
 
         <div id="postsContainer">
             <?php
             $posts = $platformController->fetchPosts();
             foreach ($posts as $post) {
-                // Fetch comments for the post
                 $comments = $platformController->fetchComments($post->postID);
 
                 echo "
-            <div class='post' id='post-{$post->postID}'>
-                        <div class='post-card'>
+        <div class='post' id='post-{$post->postID}'>
+            <div class='post-card'>
                 <div class='post-header'>
                     <div style='display: flex; align-items: center;'>
                         <div class='post-userphoto'></div>
                         <span class='post-username'>{$post->username}</span>
-                    </div>
-                    <div class='dots' onclick='toggleDropdown(event)'>
-                        &#x22EE;
-                    </div>
-                    <ul class='dropdown' style='display: none;'>
-                        <li class='dropdown-item editBtn' data-id='{$post->postID}' data-text='{$post->postText}' data-image='{$post->postImage}'>Edit Post</li>
-                        <li class='dropdown-item' data-id='{$post->postID}'>Delete Post</li>
-                    </ul>
-                </div>
+                    </div>";
 
+                $currentUser = SessionManager::getUser();
+                if ($post->userID == $currentUser->id) {
+                    echo "
+                <div class='dots' onclick='toggleDropdown(event)'>
+                    &#x22EE;
+                </div>
+                <ul class='dropdown' style='display: none;'>
+                    <li class='dropdown-item editBtn' data-id='{$post->postID}' data-text='{$post->postText}' data-image='{$post->postImage}'>Edit Post</li>
+                    <li class='dropdown-item deletePostBtn' data-id='{$post->postID}'>Delete Post</li>
+                </ul>";
+                }
+
+                echo "
+                </div>
                 <div class='post-content'>
                     <div class='post-text'>
                         <p>{$post->postText}</p>
-                    </div>
-                    " . (!empty($post->postImage) ? "
-                    <div class='post-image'>
-                        <img src='../../../public_html/media/uploads/{$post->postImage}' alt='Post Image' />
-                    </div>
-                    " : '') . "
+                    </div>";
+
+                if (!empty($post->postImage)) {
+                    echo "
+                <div class='post-image'>
+                    <img src='../../../public_html/media/uploads/{$post->postImage}' alt='Post Image' />
+                </div>";
+                }
+
+                echo "
                     <div class='post-footer'>
                         <span class='heart' onclick='toggleLike(this, {$post->postID})'>&#9829;</span>
                         <span class='likes-count'>{$post->postLikes} Likes</span>
                     </div>
                     <div class='comments'>
                         <textarea class='commentInput' placeholder='Add a comment...'></textarea>
-                        <button type='button' onclick='addComment({$post->postID})'>↑</button>   
+                        <button type='button' onclick='addComment({$post->postID})'>&uarr;</button>
                     </div>
                     <h3>Comments section:</h3>";
 
@@ -166,7 +198,8 @@ switch ($action) {
                     echo "</div>";
                 }
 
-                echo "</div>
+                echo "
+                </div>
             </div>
         </div>";
             }
@@ -183,8 +216,7 @@ switch ($action) {
                     <div id="charWarning" style="color: red; display: none;">
                         Please don't exceed 300 characters.
                     </div>
-                    <textarea id="postContent" name="text" placeholder="What's on your mind?" maxlength="300"
-                        required></textarea>
+                    <textarea id="postContent" name="text" placeholder="What's on your mind?" maxlength="300" required><?php echo isset($post->postText) ? htmlspecialchars($post->postText, ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
                     <input type="file" id="postFile" name="image" accept="image/,video/" style="display: none;" />
                     <label for="postFile" id="fileLabel" class="custom-file-label">Choose File</label>
                     <input type="hidden" name="action" value="addPost" id="formAction">

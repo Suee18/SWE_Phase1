@@ -554,7 +554,8 @@ textarea.active,
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Dark background */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
     z-index: 9999; /* Ensure it’s above all other elements */
     opacity: 0;
     transition: opacity 0.3s ease; /* Fade-in transition */
@@ -602,26 +603,28 @@ textarea.active,
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
+    font-family: var(--paragraph_font);
 }
 
 /* Submit Button */
 .search-modal-submit-btn {
     position: absolute;
-    bottom: 1rem; /* Fixed to the bottom of the modal content */
+    bottom: 1rem; 
     left: 50%;
-    transform: translateX(-50%); /* Center the button horizontally */
-    padding: 0.75rem 1.5rem;
-    background-color: #007bff;
+    transform: translateX(-50%); 
+    padding: 10px 15px;
+    background-color: #5aa5cd9a;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s ease;
+    font-family: var(--paragraph_font);
 }
 
 .search-modal-submit-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--powder_blue);
 }
 
 /* Search Results List */
@@ -634,6 +637,7 @@ textarea.active,
     text-align: left;
     opacity: 0;
     transition: opacity 0.3s ease; /* Fade-in transition */
+    color: var(--white);
 }
 
 /* Individual Search Result */
@@ -644,7 +648,7 @@ textarea.active,
 }
 
 .search-results-list .result-item:hover {
-    background-color: #f1f1f1;
+    background-color: #1e536e7e;
 }
 
 /* Open Search Button Style */
@@ -667,4 +671,8 @@ textarea.active,
 
 .search-results-list.show {
     opacity: 1; /* Fully visible */
+}
+#searchModal h2{
+    font-family: var(--technoRace_font);
+    letter-spacing: 2px;
 }
