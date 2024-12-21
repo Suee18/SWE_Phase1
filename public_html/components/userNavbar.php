@@ -61,7 +61,7 @@ include_once __DIR__ . '/../../controllers/SessionManager.php';
                 <span class="material-symbols-outlined">favorite</span>
                 <a href="../../../app/views/user/favorites.php">Favorites</a>
             </li>
-            <li onclick="location.href='../../../app/views/user/persona.php';">
+            <li onclick="location.href='../../../app/views/user/personaSaved.php';">
                 <img src="../../../public_html/media/persona-icon.png" alt="persona-icon" />
                 <a href="../../../app/views/user/personaSaved.php">Your Persona</a>
             </li>

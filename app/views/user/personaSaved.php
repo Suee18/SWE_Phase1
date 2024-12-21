@@ -8,16 +8,20 @@ require_once __DIR__ . '/../../../controllers/SessionManager.php';
 
 SessionManager::startSession();
 
-$personaID = (int) $_SESSION['user']->personaID;
+$personaID = isset($_SESSION['user']->personaID) ? (int)$_SESSION['user']->personaID : null;
 
-// Fetch persona details from the model
+if ($personaID === null) {
+    header("Location: ../user/persona_test_landing_page.php");
+    exit();
+}
 $personasModel = new PersonasModel($conn);
 $topPersona = $personasModel->fetchPersonaById($personaID);
+
+// Fetch cars linked to the persona
 $carsModel = new CarsModel($conn);
 $cars = $carsModel->getCarsByPersona($personaID);
-
-
 ?>
+
 
 
 <!DOCTYPE html>
