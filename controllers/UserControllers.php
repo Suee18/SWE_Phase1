@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     switch ($action) {
         case 'add-user':
-
             $username = $_POST['username'];
             $birthdate = $_POST['age'];
             $password = $_POST['password'];
@@ -33,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             UserController::deleteUserCtrl($user_id);
             break;
     }
+    
     header('Location: admin.php');
 }
 
@@ -41,17 +41,13 @@ class UserController
 
     public static function addNewUserCtrl($username, $password, $birthdate, $userType, $email, $gender)
     {
-
         Users::addUserByAdmin($username, $password, $birthdate, $userType, $email, $gender);
     }
 
-
     public static function updateUserCtrl($user_id, $username, $birthdate, $gender, $password, $email, $userType)
     {
-
         Users::updateUser($user_id, $username, $birthdate, $gender, $password, $email, $userType);
     }
-
 
     public static function deleteUserCtrl($user_id)
     {

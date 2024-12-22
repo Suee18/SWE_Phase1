@@ -793,7 +793,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                             <div>
                                 <label class="formLabels" for="persona">Persona :</label>
                                 <select class="carInputs" name="persona" id="persona">
-                                    <option value="" disabled>Select Persona</option>
+                                    <option value="" disabled selected>Select Persona</option>
                                     <option value="1">Eco-Warrior</option>
                                     <option value="2">Tech Geek</option>
                                     <option value="3">Performance Enthusiast</option>
@@ -815,15 +815,15 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
                             <!-- Top Speed -->
                             <div>
-                                <label for="topSpeed">Top Speed (km/h):</label>
-                                <input type="number" id="topSpeed" name="topSpeed" required><br><br>
+                                <label class="formLabels" for="topSpeed">Top Speed:</label>
+                                <input class="carInputs" type="number" id="topSpeed" name="topSpeed" required><br><br>
                                 <span id="topSpeedERR" class="error"></span>
                             </div>
 
                             <!-- Acceleration -->
                             <div>
-                                <label for="acceleration">Acceleration (0-100 km/h):</label>
-                                <input type="number" id="acceleration" name="acceleration" required><br><br>
+                                <label class="formLabels" for="acceleration">Acceleration:</label>
+                                <input class="carInputs" type="number" id="acceleration" name="acceleration" required><br><br>
 
                                 <span id="accelerationERR" class="error"></span>
                             </div>
@@ -893,7 +893,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
                             <div>
                                 <label class="formLabels" for="fuelEfficiency">Fuel Efficiency :</label>
-                                <input class="carInputs" type="number" name="fuelEfficiency" id="fuelEfficiency" value="50" step="0.1" min="0" required>
+                                <input class="carInputs" type="number" name="fuelEfficiency" id="fuelEfficiency" value="" step="0.1" min="0" required>
                                 <span id="fuelEfficiencyERR" class="error"></span>
                             </div>
 
@@ -927,8 +927,8 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
                             <!-- Driven Wheels -->
                             <div>
-                                <label for="drivenWheels">Driven Wheels:</label>
-                                <select id="drivenWheels" name="drivenWheels" required>
+                                <label class="formLabels" for="drivenWheels">Driven Wheels:</label>
+                                <select class="carInputs" id="drivenWheels" name="drivenWheels" required>
                                 <option value="" disabled selected>Select Driven Wheels</option>
                                     <option value="FWD">FWD</option>
                                     <option value="AWD">AWD</option>
@@ -948,7 +948,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
 
                             <div>
-                                <input type="submit" value="Submit" onclick="setActionCarForm();">
+                                <input  class="submit-btn" type="submit" value="Submit" onclick="setActionCarForm();">
                             </div>
 
                         </div>

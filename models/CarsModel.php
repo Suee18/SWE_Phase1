@@ -288,8 +288,6 @@
             }
 
 
-            $conn->close();
-
 
             return $cars;
         }
