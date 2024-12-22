@@ -436,11 +436,11 @@ function setAction(action) {
     document.getElementById("formAction").value = action;
 }
 
-
 // Form validation
 function validate(form) {
     let isValid = true;
 
+    // Helper function to set error messages
     function setError(field, message) {
         field.errorElement.textContent = message;
         isValid = false;
@@ -454,23 +454,30 @@ function validate(form) {
     username.errorElement = usernameERR;
     if (username.value.trim() === "") {
         setError(username, "Username is required");
-    } else if (username.value.length < 3) {
-        setError(username, "Username must be at least 3 characters");
+    } else if (username.value.length < 1) {
+        setError(username, "Username must be at least 1 character");
     } else if (!usernamePattern.test(username.value)) {
-        setError(username, "Username must contain only letters ");
+        setError(username, "Username must contain only letters");
     } else {
         usernameERR.textContent = "";
     }
 
     // Birthdate validation
-    const age = document.getElementById("age");
+    const birthdate = document.getElementById("age");
     const birthDateERR = document.getElementById("birthDateERR");
-    age.errorElement = birthDateERR;
+    birthdate.errorElement = birthDateERR;
 
-    if (age.value.trim() === "") {
-        setError(age, "Date of Birth is required");
+    if (birthdate.value.trim() === "") {
+        setError(birthdate, "Date of Birth is required");
     } else {
-        birthDateERR.textContent = "";
+        // Optional: You could add additional checks, like age verification
+        // For example, the user must be at least 18 years old
+        const age = calculateAge(birthdate.value);
+        if (age < 18) {
+            setError(birthdate, "You must be at least 18 years old");
+        } else {
+            birthDateERR.textContent = "";
+        }
     }
 
     // Gender validation
@@ -501,6 +508,7 @@ function validate(form) {
     const userType = document.getElementById("user_type");
     const userTypeERR = document.getElementById("userTypeERR");
     userType.errorElement = userTypeERR;
+
     if (userType.value.trim() === "") {
         setError(userType, "User type is required");
     } else {
@@ -522,6 +530,21 @@ function validate(form) {
     }
 
     return isValid;
+}
+
+// Helper function to calculate age from birthdate
+function calculateAge(birthdate) {
+    const birthDate = new Date(birthdate);
+    const currentDate = new Date();
+    const age = currentDate.getFullYear() - birthDate.getFullYear();
+    const monthDifference = currentDate.getMonth() - birthDate.getMonth();
+
+    // Adjust age if the birthday hasn't occurred yet this year
+    if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < birthDate.getDate())) {
+        return age - 1;
+    }
+
+    return age;
 }
 
 

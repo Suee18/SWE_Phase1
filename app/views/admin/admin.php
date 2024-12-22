@@ -56,149 +56,11 @@ $reviewCategoryCounts = $reviewStatistics['reviewCategoryCounts'];
 
 
 
-//USER / CAR CRUDS
+//USER CRUDS
 $users = UserController::viewAllUsers();
 
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//     $action = $_POST['action'] ?? 'read';
-
-//     switch ($action) {
-//         case 'add-user':
-
-//             $username = $_POST['username'];
-//             $birthdate = $_POST['age'];
-//             $password = $_POST['password'];
-//             $userType = $_POST['user_type'];
-//             $email = $_POST['email'];
-//             $gender = $_POST['gender'];
-//             UserController::addNewUserCtrl($username, $password, $birthdate, $userType, $email, $gender);
-//             break;
-//         case 'update-user':
-//             $user_id = $_POST['user_id'];
-//             $username = $_POST['username'];
-//             $birthdate = $_POST['age'];
-//             $password = $_POST['password'];
-//             $userType = $_POST['user_type'];
-//             $email = $_POST['email'];
-//             $gender = $_POST['gender'];
-//             UserController::updateUserCtrl($user_id, $username, $birthdate, $gender, $password, $email, $userType);
-//             break;
-//         case 'delete-user':
-//             $user_id = $_POST['user_id'];
-//             UserController::deleteUserCtrl($user_id);
-//             break;
-
-            //CAR CRUDS
-    //     case 'add-car':
-
-    //         $image = $_FILES['image']['name'] ?? '';
-    //         $make = $_POST['make'] ?? '';
-    //         $model = $_POST['model'] ?? '';
-    //         $year = $_POST['year'] ?? '';
-    //         $price = $_POST['price'] ?? '';
-    //         $type = $_POST['type'] ?? '';
-    //         $persona = $_POST['persona'] ?? '';
-    //         $engine = $_POST['Engine'] ?? '';
-    //         $horsePower = $_POST['horsePower'] ?? '';
-    //         $doors = $_POST['Doors'] ?? '';
-    //         $torque = $_POST['Torque'] ?? '';
-    //         $topSpeed = $_POST['topSpeed'] ?? '';
-    //         $acceleration = $_POST['acceleration'] ?? '';
-    //         $fuelEfficiency = $_POST['fuelEfficiency'] ?? '';
-    //         $fuelType = $_POST['fuelType'] ?? '';
-    //         $cylinders = $_POST['cylinders'] ?? '';
-    //         $transmission = $_POST['transmission'] ?? '';
-    //         $drivenWheels = $_POST['drivenWheels'] ?? '';
-    //         $marketCategory = $_POST['marketCategory'] ?? '';
-    //         $description = $_POST['description'] ?? '';
-    //         $personaDescription = $_POST['personaDescription'] ?? '';
-
-    //         CarController::addCar(
-    //             $image,
-    //             $make,
-    //             $model,
-    //             $year,
-    //             $price,
-    //             $type,
-    //             $persona,
-    //             $engine,
-    //             $horsePower,
-    //             $doors,
-    //             $torque,
-    //             $topSpeed,
-    //             $acceleration,
-    //             $fuelEfficiency,
-    //             $fuelType,
-    //             $cylinders,
-    //             $transmission,
-    //             $drivenWheels,
-    //             $marketCategory,
-    //             $description,
-    //             $personaDescription
-    //         );
-    //         break;
-
-    //     case 'update-car':
-    //         $car_id = $_POST['car_id'] ?? '';
-    //         $image = $_FILES['image']['name'] ?? '';
-    //         $make = $_POST['make'] ?? '';
-    //         $model = $_POST['model'] ?? '';
-    //         $year = $_POST['year'] ?? '';
-    //         $price = $_POST['price'] ?? '';
-    //         $type = $_POST['type'] ?? '';
-    //         $persona = $_POST['persona'] ?? '';
-    //         $engine = $_POST['Engine'] ?? '';
-    //         $horsePower = $_POST['horsePower'] ?? '';
-    //         $doors = $_POST['Doors'] ?? '';
-    //         $torque = $_POST['Torque'] ?? '';
-    //         $topSpeed = $_POST['topSpeed'] ?? '';
-    //         $acceleration = $_POST['acceleration'] ?? '';
-    //         $fuelEfficiency = $_POST['fuelEfficiency'] ?? '';
-    //         $fuelType = $_POST['fuelType'] ?? '';
-    //         $cylinders = $_POST['cylinders'] ?? '';
-    //         $transmission = $_POST['transmission'] ?? '';
-    //         $drivenWheels = $_POST['drivenWheels'] ?? '';
-    //         $marketCategory = $_POST['marketCategory'] ?? '';
-    //         $description = $_POST['description'] ?? '';
-    //         $personaDescription = $_POST['personaDescription'] ?? '';
-
-    //                     carController::updateCar(
-    //             $car_id,
-    //             $image,
-    //             $make,
-    //             $model,
-    //             $year,
-    //             $price,
-    //             $type,
-    //             $persona,
-    //             $engine,
-    //             $horsePower,
-    //             $doors,
-    //             $torque,
-    //             $topSpeed,
-    //             $acceleration,
-    //             $fuelEfficiency,
-    //             $fuelType,
-    //             $cylinders,
-    //             $transmission,
-    //             $drivenWheels,
-    //             $marketCategory,
-    //             $description,
-    //             $personaDescription
-    //         );
-    //         break; 
-    //     case 'delete-car':
-    //         $carID = $_POST['carID'];
-    //         carController::deleteCar($carID);
-    //         break;
-    // }
-   // header('Location: admin.php');
-//}
-
 //Reviews Cruds
-
-
-$reviews = ReviewController::getReviews();
+$reviews = ReviewController::getAllReviews();
 
 if (isset($_POST['deleteReview'])) {
 
@@ -789,7 +651,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                             <div>
                                 <label class="formLabels" for="persona">Persona :</label>
                                 <select class="carInputs" name="persona" id="persona">
-                                    <option value="" disabled>Select Persona</option>
+                                    <option value="" disabled selected>Select Persona</option>
                                     <option value="1">Eco-Warrior</option>
                                     <option value="2">Tech Geek</option>
                                     <option value="3">Performance Enthusiast</option>
@@ -811,15 +673,15 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
                             <!-- Top Speed -->
                             <div>
-                                <label for="topSpeed">Top Speed (km/h):</label>
-                                <input type="number" id="topSpeed" name="topSpeed" required><br><br>
+                                <label class="formLabels" for="topSpeed">Top Speed:</label>
+                                <input class="carInputs" type="number" id="topSpeed" name="topSpeed" required><br><br>
                                 <span id="topSpeedERR" class="error"></span>
                             </div>
 
                             <!-- Acceleration -->
                             <div>
-                                <label for="acceleration">Acceleration (0-100 km/h):</label>
-                                <input type="number" id="acceleration" name="acceleration" required><br><br>
+                                <label class="formLabels" for="acceleration">Acceleration:</label>
+                                <input class="carInputs" type="number" id="acceleration" name="acceleration" required><br><br>
 
                                 <span id="accelerationERR" class="error"></span>
                             </div>
@@ -889,7 +751,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
                             <div>
                                 <label class="formLabels" for="fuelEfficiency">Fuel Efficiency :</label>
-                                <input class="carInputs" type="number" name="fuelEfficiency" id="fuelEfficiency" value="50" step="0.1" min="0" required>
+                                <input class="carInputs" type="number" name="fuelEfficiency" id="fuelEfficiency" value="" step="0.1" min="0" required>
                                 <span id="fuelEfficiencyERR" class="error"></span>
                             </div>
 
@@ -923,8 +785,8 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
                             <!-- Driven Wheels -->
                             <div>
-                                <label for="drivenWheels">Driven Wheels:</label>
-                                <select id="drivenWheels" name="drivenWheels" required>
+                                <label class="formLabels" for="drivenWheels">Driven Wheels:</label>
+                                <select class="carInputs" id="drivenWheels" name="drivenWheels" required>
                                 <option value="" disabled selected>Select Driven Wheels</option>
                                     <option value="FWD">FWD</option>
                                     <option value="AWD">AWD</option>
@@ -944,7 +806,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
 
                             <div>
-                                <input type="submit" value="Submit" onclick="setActionCarForm();">
+                                <input  class="submit-btn" type="submit" value="Submit" onclick="setActionCarForm();">
                             </div>
 
                         </div>

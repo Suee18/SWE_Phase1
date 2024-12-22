@@ -27,7 +27,7 @@ class ReviewDatabaseStrategy implements ReviewStrategyInterface
     {
         return Reviews::deleteReviewFromDB($reviewID);
     }
-  
+
     public function getCategories()
     {
         return Reviews::getAllCategoriesFromDB();
@@ -69,7 +69,8 @@ class ReviewController
         return Reviews::getLastNumberOfReviews($numberOfReviews);
     }
 
-    public static function getReviews(){
-        return Reviews::getAllReviews();
+    public static function getAllReviews()
+    {
+        return  Reviews::getAllReviews();
     }
 }
