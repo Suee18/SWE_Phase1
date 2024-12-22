@@ -1,32 +1,27 @@
 <?php
-
-// Include the CarsModel to fetch car details
-require_once __DIR__ . '/../../../models/CarsModel.php';
 require_once __DIR__ . '/../../../app/config/db_config.php';
+require_once __DIR__ . '/../../../models/PersonasModel.php';
+require_once __DIR__ . '/../../../models/CarsModel.php';
 require_once __DIR__ . '/../../../vendor/autoload.php';
 require_once __DIR__ . '/../../../models/UsersClass.php';
 require_once __DIR__ . '/../../../controllers/SessionManager.php';
 
-// session_start();
 SessionManager::startSession();
 
-if (!isset($_SESSION['topPersona'])) {
-    echo "No persona data found. Please retake the test.";
-    exit;
+$personaID = isset($_SESSION['user']->personaID) ? (int)$_SESSION['user']->personaID : null;
+
+if ($personaID === null) {
+    header("Location: ../user/persona_test_landing_page.php");
+    exit();
 }
+$personasModel = new PersonasModel($conn);
+$topPersona = $personasModel->fetchPersonaById($personaID);
 
-// Load the top persona details from the session
-$topPersona = $_SESSION['topPersona'];
- $_SESSION['user']->personaID=$topPersona['id'];
-
-// Instantiate the CarsModel and fetch cars for the persona
+// Fetch cars linked to the persona
 $carsModel = new CarsModel($conn);
-$cars = $carsModel->getCarsByPersona($topPersona['id']);
-
-// Debugging
-file_put_contents('debug_cars.txt', print_r($cars, true));
-
+$cars = $carsModel->getCarsByPersona($personaID);
 ?>
+
 
 
 <!DOCTYPE html>
@@ -69,11 +64,12 @@ file_put_contents('debug_cars.txt', print_r($cars, true));
 
             <div class="left-column">
                 <div class="persona-info">
-                    <img src="<?= htmlspecialchars($topPersona['icon']); ?>" alt="Persona Icon" class="persona-image">
+
+                    <img src="<?= htmlspecialchars($topPersona['personaIcon']); ?>" alt="Persona Icon" class="persona-image">
                     <div>
-                        <p class="persona-title"><?= htmlspecialchars($topPersona['name']); ?></p>
+                        <p class="persona-title"><?= htmlspecialchars($topPersona['personaName']); ?></p>
                     </div>
-                    <p class="personaDiscriptionParagraph"><?= htmlspecialchars($topPersona['description']); ?></p>
+                    <p class="personaDiscriptionParagraph"><?= htmlspecialchars($topPersona['personaDescription']); ?></p>
                 </div>
             </div>
 
@@ -387,6 +383,6 @@ file_put_contents('debug_cars.txt', print_r($cars, true));
 // Clear the stored persona and cars data
 // unset($_SESSION['personaID']);
 // unset($_SESSION['cars']);
-unset($_SESSION['answers']); 
+// unset($_SESSION['answers']); 
 // unset($_SESSION['topPersona']); 
 ?>

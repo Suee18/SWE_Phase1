@@ -32,6 +32,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //********Edit button js*******
 
+// function editInfo(icon) {
+//   const infoContent = icon.previousElementSibling;
+
+//   if (infoContent.isContentEditable) {
+//     infoContent.contentEditable = false;
+//     icon.textContent = "edit";
+//   } else {
+//     infoContent.contentEditable = true;
+//     infoContent.focus();
+//     icon.textContent = "check";
+//   }
+// }
+
 function editInfo(icon) {
   // Select the input field preceding the icon
   const inputField = icon.previousElementSibling;
@@ -47,6 +60,7 @@ function editInfo(icon) {
     icon.textContent = "edit"; // Revert the icon back to edit
     inputField.form.submit();
   }
+
 }
 
 

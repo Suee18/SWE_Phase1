@@ -15,7 +15,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
         rel="stylesheet">
-<link rel="icon" href="../../../public_html/media/persona-icon.png" alt="persona-icon" />
+    <link rel="icon" href="../../../public_html/media/persona-icon.png" alt="persona-icon" />
 
     <title>Personality test</title>
     <link rel="stylesheet" href="../../../public_html/css/persona_test_landing_page.css">
@@ -124,6 +124,16 @@
                             <h4>Classic Car Lover</h4>
                             <p class="persona-paragraph">Seeks timeless, vintage, or iconic car designs, sometimes
                                 preferring restored older models.</p>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="persona-card">
+                            <img src="../../../public_html/media/Persona_Test_Images/Test_Images/icons/i_dont_know.png"
+                                alt="Classic Car Lover Icon" class="persona-icon">
+                            <h4>The path Finder</h4>
+                            <p class="persona-paragraph">
+                                Doesn't have any idea about their prefrences on wheels, but are driven by curiousty to find out.
+                            </p>
                         </div>
                     </div>
                 </div>

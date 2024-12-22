@@ -2,7 +2,6 @@
 include_once "../../config/db_config.php";
 include_once __DIR__ . '../../models/UsersClass.php';
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action = $_POST['action'] ?? 'read';
 

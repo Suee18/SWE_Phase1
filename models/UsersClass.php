@@ -23,9 +23,9 @@ class Users
         $this->gender = $gender;
         $this->password = $password;
         $this->email = $email;
-        $this->userTypeID = (int) $userTypeID;
+        $this->userTypeID = $userTypeID;
         $this->loginMethod = $loginMethod;
-        $this->personaID = (int) $personaID;
+        $this->personaID = $personaID;
         $this->loginCounter = (int) $loginCounter;
         $this->timeStamp = $timeStamp;
     }
@@ -358,6 +358,8 @@ class Users
         } else {
             return "User does not exist.";
         }
+
+        
     }
 
     static function signUpUser($username, $birthdate, $gender, $password, $email, $userType, $timeStamp, $loginMethod)
@@ -387,16 +389,7 @@ class Users
         }
 
         // If no errors, proceed to create the user
-        return self::addUser(
-            $username,
-            $birthdate,
-            $gender,
-            $password,
-            $email,
-            $userType,
-            $timeStamp,
-            $loginMethod
-        );
+        return self::addUser($username, $birthdate, $gender, $password, $email, $userType, $timeStamp, $loginMethod);
     }
 
 
@@ -409,25 +402,10 @@ class Users
         $resultEmail = mysqli_query($conn, $sqlEmail);
 
         if (mysqli_num_rows($resultEmail) > 0) {
-            $response = mysqli_fetch_assoc($resultEmail);
-
-            $user = new Users(
-                $response['userName'],
-                $response['birthdate'] ?? null,
-                $response['gender'] ?? null,
-                $response['password'] ?? null,
-                $response['email'],
-                (int) $response['userTypeID'],
-                $response['loginMethod'],
-                $response['personID'] ?? null,
-                (int) $response['loginCounter'],
-                $response['Timestamp'],
-            );
-
-            $user->id = $response['ID'];
+            $user = mysqli_fetch_assoc($resultEmail);
 
             // Check if the user has logged in with Google before
-            if ($response['loginMethod'] == 'google') {
+            if ($user['loginMethod'] == 'google') {
                 // Allow the user to log in normally
                 return [
                     'status' => true,
@@ -459,25 +437,10 @@ class Users
             $result = mysqli_query($conn, $sqlFindUser);
             $user = mysqli_fetch_assoc($result);
 
-            $newUser = new Users(
-                $user['userName'],
-                $user['birthdate'] ?? null,
-                $user['gender'] ?? null,
-                $user['password'] ?? null,
-                $user['email'],
-                (int) $user['userTypeID'],
-                $user['loginMethod'],
-                $user['personID'] ?? null,
-                (int) $user['loginCounter'],
-                $user['Timestamp'],
-            );
-
-            $newUser->id = $user['ID'];
-
             return [
                 'status' => true,
                 'message' => "User created and logged in successfully.",
-                'user' => $newUser // Return user object
+                'user' => $user // Return user object
             ];
         } else {
             return [
@@ -498,7 +461,6 @@ class Users
 
         if (mysqli_num_rows($sqlResult) === 0) {
             // User doesn't exist, so create a new user using the Google login method
-
             return self::addUserIntoDBGoogle($name, $email, $gender, date("Y-m-d H:i:s"));
         } else {
             $result = mysqli_fetch_assoc($sqlResult);
@@ -723,12 +685,9 @@ class Users
                 $recommendations[] = $row['totalRecommendations'];
             }
         } else {
-            // If no results, return empty arrays
-            return ['categories' => [], 'recommendations' => []];
-        }
-
         // Return categories and their recommendation counts
         return ['categories' => $categories, 'recommendations' => $recommendations];
+        }
     }
 
 

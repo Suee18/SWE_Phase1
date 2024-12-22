@@ -3,7 +3,7 @@
 body {
     font-family: Arial, sans-serif;
     /* background-color: var(--blue_gray_dark); */
-    background-image: url("../media/Persona_Test_Images/Test_images/background.jpg" );
+    background-image: url("../media/Persona_Test_Images/Test_images/background.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -12,7 +12,21 @@ body {
     margin: 0;
 }
 
-.sidebar{
+.option input[type="radio"] {
+    display: none;
+}
+
+/* Style the label to make it look like a clickable button */
+.option {
+    cursor: pointer;
+    text-align: center;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 10px;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.sidebar {
     z-index: 100000;
 }
 
@@ -100,9 +114,10 @@ body {
 }
 
 .question-text {
-font-family: var(--paragraphs_font);
-font-size: 1.5rem;
-margin-bottom: 2rem;}
+    font-family: var(--paragraphs_font);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
 
 .options-container {
     display: grid;
@@ -196,6 +211,15 @@ margin-bottom: 2rem;}
     transform: scale(1.6);
 }
 
+.btn {
+    width: 50vw;
+    height: 50vh;
+    z-index: 100000;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .swiper-button-next.disabled {
     opacity: 0.5;
     pointer-events: none;
@@ -208,19 +232,22 @@ margin-bottom: 2rem;}
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(15px);
+    /* color:#f0f0f0d2; */
     border-radius: 15px;
     text-align: center;
+    font-family: var(--header_font);
+    font-weight: 100;
 }
 
 .swiper-slide.last-slide h3 {
-    font-size: 28px;
-    color: var(--white);
-    margin-bottom: 13px;
+    /* font-size: 28px; */
+    /* color: var(--white);
+    margin-bottom: 13px; */
 }
 
 /* Button style */
 .submit-button {
-    background-color: var(--powder_blue);
+    /* background-color: var(--powder_blue);
     color: var(--white);
     font-size: 18px;
     padding: 14px 30px;
@@ -229,35 +256,45 @@ margin-bottom: 2rem;}
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000; */
 }
 
 /* Button hover effect */
 .submit-button:hover {
-    background-color: rgba(255, 255, 255, 0.241);
-    transform: scale(1.05);
+    /* background-color: rgba(255, 255, 255, 0.241);
+    transform: scale(1.05); */
 }
 
 /* Button active state */
 .submit-button:active {
-    background-color: rgba(255, 255, 255, 0.3);
-    transform: scale(1.02);
+    /* background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.02); */
 }
 
 /* Make the last slide stand out a bit more */
 .swiper-slide.last-slide {
-    margin-top: 20px;
-    width: 60%; /* Adjust the width for a centered look */
+    /* margin-top: 20px;
+    width: 60%; Adjust the width for a centered look */
+}
+
+.title {
+    font-size: 300%;
+    font-weight: 100;
+    color: rgba(230, 230, 230, 0.575);
 }
 
 .subtext {
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 20px;
+    font-size: 200%;
+    font-weight: 100;
+    color: rgba(255, 255, 255, 0.89);
+    text-shadow: 2px 2px 2px rgba(53, 67, 129, 0.836);
+    letter-spacing: 1.2px;
 }
 
 .persona-icon {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     margin-bottom: 15px;
-    filter: invert(1) brightness(1.2); /* Adjust if necessary to match your design */
+    filter: invert(1) brightness(1.2);
+    /* Adjust if necessary to match your design */
 }

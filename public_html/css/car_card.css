@@ -13,6 +13,7 @@
     display: flex;
     justify-content: center;
     padding: 20px;
+    
 }
 
 .container2 {
@@ -29,7 +30,7 @@
 .car-card {
   flex: 1 1 calc(25% - 20px); /* Four cards per row on large screens */
   max-width: calc(25% - 20px);
-  height: 580px; /* The card height is fixed */
+  height: 490px; /* The card height is fixed */
   perspective: 1000px; /* Enables 3D space for the flip effect */
   margin-bottom: 20px;
   position: relative; /* Required for flip effect positioning */
@@ -242,9 +243,9 @@
 .con-like {
   --red: rgb(255, 50, 50);
   position: relative;
-  margin-left: 140px;
-  width: 30px;
-  height: 30px;
+  margin-left: 8.5rem;
+  width: 2rem;
+  height: 2rem;
 }
 
 .con-like .like {
