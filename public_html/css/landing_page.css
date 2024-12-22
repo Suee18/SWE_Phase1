@@ -290,6 +290,16 @@ body {
     font-weight: 100;
 }
 
+.rating {
+  font-size: 35px;
+  color: #ccc;
+  margin-top: 50px;
+}
+
+.rating.filled {
+  color: gold;
+}
+
 .swiper-slide-active {
     transform: scale(1.2);
     transition: transform 0.5s ease-in-out;
@@ -300,17 +310,18 @@ body {
 }
 
 .review-paragraph {
-    font-size: 1.3rem;
-    font-family: var(--paragraphs_font);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    margin-top: 50px;
-    margin-left: 60px;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    max-width: 300px;
+  font-size: 1.3rem;
+  font-family: var(--paragraphs_font);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  margin-top: 50px;
+  margin-left: 60px;
+  margin-bottom: 50px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 300px;
 }
 
 .overlay {
@@ -491,6 +502,30 @@ body {
     transform: scale(1);
 }
 
+#starRatingContainer {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+  gap: 5px;
+}
+
+.star {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.star.highlighted {
+  color: gold;
+}
+
+textarea.active,
+.submitBtn.active {
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
 .closeBtn {
     position: absolute;
     top: 15px;
@@ -519,7 +554,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* Dark background */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
     z-index: 9999; /* Ensure it’s above all other elements */
     opacity: 0;
     transition: opacity 0.3s ease; /* Fade-in transition */
@@ -567,26 +603,28 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
+    font-family: var(--paragraph_font);
 }
 
 /* Submit Button */
 .search-modal-submit-btn {
     position: absolute;
-    bottom: 1rem; /* Fixed to the bottom of the modal content */
+    bottom: 1rem; 
     left: 50%;
-    transform: translateX(-50%); /* Center the button horizontally */
-    padding: 0.75rem 1.5rem;
-    background-color: #007bff;
+    transform: translateX(-50%); 
+    padding: 10px 15px;
+    background-color: #5aa5cd9a;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s ease;
+    font-family: var(--paragraph_font);
 }
 
 .search-modal-submit-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--powder_blue);
 }
 
 /* Search Results List */
@@ -599,6 +637,7 @@ body {
     text-align: left;
     opacity: 0;
     transition: opacity 0.3s ease; /* Fade-in transition */
+    color: var(--white);
 }
 
 /* Individual Search Result */
@@ -609,7 +648,7 @@ body {
 }
 
 .search-results-list .result-item:hover {
-    background-color: #f1f1f1;
+    background-color: #1e536e7e;
 }
 
 /* Open Search Button Style */
@@ -632,4 +671,8 @@ body {
 
 .search-results-list.show {
     opacity: 1; /* Fully visible */
+}
+#searchModal h2{
+    font-family: var(--technoRace_font);
+    letter-spacing: 2px;
 }

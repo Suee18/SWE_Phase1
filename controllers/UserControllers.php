@@ -1,8 +1,38 @@
 <?php
-
 include_once "../../config/db_config.php";
 include_once __DIR__ . '../../models/UsersClass.php';
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $action = $_POST['action'] ?? 'read';
+
+    switch ($action) {
+        case 'add-user':
+
+            $username = $_POST['username'];
+            $birthdate = $_POST['age'];
+            $password = $_POST['password'];
+            $userType = $_POST['user_type'];
+            $email = $_POST['email'];
+            $gender = $_POST['gender'];
+            UserController::addNewUserCtrl($username, $password, $birthdate, $userType, $email, $gender);
+            break;
+        case 'update-user':
+            $user_id = $_POST['user_id'];
+            $username = $_POST['username'];
+            $birthdate = $_POST['age'];
+            $password = $_POST['password'];
+            $userType = $_POST['user_type'];
+            $email = $_POST['email'];
+            $gender = $_POST['gender'];
+            UserController::updateUserCtrl($user_id, $username, $birthdate, $gender, $password, $email, $userType);
+            break;
+        case 'delete-user':
+            $user_id = $_POST['user_id'];
+            UserController::deleteUserCtrl($user_id);
+            break;
+    }
+    header('Location: admin.php');
+}
 
 class UserController
 {
@@ -31,8 +61,6 @@ class UserController
         return Users::viewAllUsers();
     }
 
-
-
     public static function getPersonas()
     {
         return Users::getPersonas();
@@ -53,16 +81,13 @@ class UserController
         return Users::getPostsCountByMonth();
     }
 
-    public static function getRecommendationCounts(){
+    public static function getRecommendationCounts()
+    {
         return Users::getRecommendationStatistics();
     }
 
-    public static function getReviewsStatistics(){
+    public static function getReviewsStatistics()
+    {
         return Users::getReviewsStatistics();
     }
-
-
-
-    
-  
 }

@@ -49,8 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     searchTerm: query, // Send the search term
                 },
                 success: function (response) {
-                    try {   
-                        console.log('Raw response: ', response);
+                    try {
+                        console.log("Raw response: ", response);
                         const cars = JSON.parse(response); // Parse the JSON response
                         displayResults(cars); // Display the results
                     } catch (e) {
@@ -115,9 +115,27 @@ document.addEventListener("DOMContentLoaded", function () {
     searchSubmitBtn.addEventListener("click", function () {
         const query = searchInput.value.trim();
         if (query.length > 0) {
-                window.location.href = `../app/views/user/search_results.php?query=${query}`;
-            
+            window.location.href = `../app/views/user/search_results.php?query=${query}`;
         }
+    });
+    
+    const swiper = new Swiper(".swiper-container", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+            rotate: 0,
+            stretch: 10,
+            depth: 200,
+            modifier: 1,
+            slideShadows: true,
+        },
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false,
+        },
+        loop: true,
     });
 });
 
@@ -182,25 +200,6 @@ function showSlideOnClick(n) {
 
 // *******REVIEWS' JS*******
 
-const swiper = new Swiper(".swiper-container", {
-    effect: "coverflow",
-    grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: "auto",
-    coverflowEffect: {
-        rotate: 0,
-        stretch: 10,
-        depth: 200,
-        modifier: 1,
-        slideShadows: true,
-    },
-    autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-    },
-    loop: true,
-});
-
 const openOverlayBtn = document.getElementById("openOverlay");
 const overlay = document.getElementById("reviewOverlay");
 const closeOverlayBtn = document.getElementById("closeOverlay");
@@ -228,8 +227,12 @@ window.addEventListener("click", (e) => {
 const reviewButtons = document.getElementById("reviewButtons");
 const textarea = document.getElementById("reviewText");
 const submitBtn = document.getElementById("submitReview");
+const starRatingContainer = document.getElementById("starRatingContainer");
+
 textarea.style.display = "none";
 submitBtn.style.display = "none";
+
+let selectedRating = 0;
 
 reviewButtons.addEventListener("click", (e) => {
     const button = e.target.closest(".button");
@@ -272,5 +275,46 @@ reviewButtons.addEventListener("click", (e) => {
             textarea.classList.add("active");
             submitBtn.classList.add("active");
         }, 0);
+
+        starRatingContainer.style.display = "flex";
+        addStarRating();
     }
+});
+
+function addStarRating() {
+    starRatingContainer.innerHTML = "";
+    selectedRating = 0;
+
+    for (let i = 1; i <= 5; i++) {
+        const star = document.createElement("span");
+        star.classList.add("star");
+        star.setAttribute("data-value", i);
+        star.textContent = "★";
+
+        star.addEventListener("click", () => {
+            selectedRating = i;
+            fillStars(i);
+            document.getElementById("starRating").value = selectedRating;
+        });
+
+        starRatingContainer.appendChild(star);
+    }
+}
+
+function fillStars(rating) {
+    const stars = document.querySelectorAll(".star");
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add("highlighted");
+        } else {
+            star.classList.remove("highlighted");
+        }
+    });
+}
+
+document.querySelectorAll(".review-buttons .button").forEach((button) => {
+    button.addEventListener("click", function () {
+        document.getElementById("reviewCategory").value =
+            this.getAttribute("data-choice");
+    });
 });
