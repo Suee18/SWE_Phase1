@@ -1,386 +1,286 @@
-// let currentPostId = null;
-
-// document.getElementById("addPostBtn").onclick = function () {
-//     document.getElementById("postModal").style.display = "block";
-//     document.getElementById("postContent").value = "";
-//     document.getElementById("postFile").value = "";
-//     currentPostId = null;
-// };
-
-// document.getElementById("closeModal").onclick = function () {
-//     document.getElementById("postModal").style.display = "none";
-// };
-// function addComment(postId) {
-//     const postElement = document.getElementById(`post-${postId}`);
-//     const commentInput = postElement.querySelector(".commentInput");
-//     const commentText = commentInput.value;
-
-//     if (commentText) {
-//         const comment = document.createElement("div");
-//         comment.className = "comment";
-
-//         const userComment = document.createElement("span");
-//         userComment.className = "user-comment";
-//         userComment.innerText = `@username : ${commentText} `;
-//         comment.appendChild(userComment);
-//         const commentList = postElement.querySelector(".commentList");
-//         commentList.appendChild(comment);
-//         const noCommentsMessage = commentList.querySelector(
-//             ".no-comments-message"
-//         );
-//         if (noCommentsMessage) {
-//             noCommentsMessage.style.display = "none";
-//         }
-//         const hr = document.createElement("hr");
-//         commentList.appendChild(hr);
-//         commentInput.value = "";
-//     }
-// }
-
-// function checkComments(postId) {
-//     const postElement = document.getElementById(`post-${postId}`);
-//     const commentList = postElement.querySelector(".commentList");
-//     const comments = commentList.querySelectorAll(".comment");
-
-//     if (comments.length === 0) {
-//         const noCommentsMessage = commentList.querySelector(
-//             ".no-comments-message"
-//         );
-//         if (noCommentsMessage) {
-//             noCommentsMessage.style.display = "block";
-//         }
-//     }
-// }
-
-// function toggleLike(element, postId) {
-//     element.classList.toggle("liked");
-//     let likesCountElement = element.nextElementSibling;
-//     let currentLikes = parseInt(likesCountElement.textContent);
-//     if (element.classList.contains("liked")) {
-//         likesCountElement.textContent = `${currentLikes + 1} Likes`;
-//     } else {
-//         likesCountElement.textContent = `${currentLikes - 1} Likes`;
-//     }
-// }
-
-// function toggleDropdown(event) {
-//     const dropdown = event.currentTarget.nextElementSibling;
-//     dropdown.style.display =
-//         dropdown.style.display === "block" ? "none" : "block";
-//     event.stopPropagation();
-// }
-
-// document.addEventListener("click", function (event) {
-//     const isDropdown = event.target.matches(".dots");
-//     if (!isDropdown) {
-//         document.querySelectorAll(".dropdown").forEach((drop) => {
-//             drop.style.display = "none";
-//         });
-//     }
-// });
-
-// document.getElementById("postFile").addEventListener("change", function () {
-//     const fileInput = this;
-//     const fileLabel = document.getElementById("fileLabel");
-
-//     if (fileInput.files.length > 0) {
-//         fileLabel.textContent = fileInput.files[0].name;
-//         fileLabel.classList.add("file-selected");
-//     } else {
-//         fileLabel.textContent = "Choose File";
-//         fileLabel.classList.remove("file-selected");
-//     }
-// });
-// function editPost(id) {
-//     const postElement = document.getElementById(`post-${id}`);
-//     const content = postElement.querySelector("p").innerText;
-//     document.getElementById("postContent").value = content;
-//     document.getElementById("postModal").style.display = "block";
-//     currentPostId = id;
-//     toggleDropdown(event);
-// }
-
-// function deletePost(id) {
-//     const postElement = document.getElementById(`post-${id}`);
-//     if (postElement) {
-//         postElement.remove();
-//     }
-//     toggleDropdown(event);
-// }
-// document.getElementById("postContent").addEventListener("input", function () {
-//     const contentLength = this.value.length;
-//     const charCount = document.getElementById("charCount");
-//     const charWarning = document.getElementById("charWarning");
-//     const savePostBtn = document.getElementById("savePostBtn");
-
-//     charCount.textContent = `${contentLength} / 300`;
-
-//     if (contentLength > 300) {
-//         charCount.style.color = "red";
-//         charWarning.style.display = "block";
-//         savePostBtn.disabled = true; // Disable save button if exceeds 300 chars
-//     } else {
-//         charCount.style.color = "inherit";
-//         charWarning.style.display = "none";
-//         savePostBtn.disabled = contentLength === 0; // Disable if no content
-//     }
-// });
-// document.getElementById("savePostBtn").onclick = function (event) {
-//     event.preventDefault(); // Prevent the default form submission
-
-//     const content = document.getElementById("postContent").value.trim();
-//     const fileInput = document.getElementById("postFile");
-//     const file = fileInput.files[0];
-//     const errorMessage = document.getElementById("errorMessage");
-
-//     if (content === "" && !file) {
-//         errorMessage.textContent =
-//             "Please add some content or choose a photo/video before posting.";
-//         errorMessage.style.display = "block";
-//         return;
-//     }
-
-//     const formData = new FormData();
-//     formData.append("text", content);
-//     if (file) formData.append("image", file);
-//     formData.append("action", "addPost");
-
-//     fetch("../../../controllers/PlatformController.php", {
-//         method: "POST",
-//         body: formData,
-//     })
-//         .then((response) => response.json())
-//         .then((data) => {
-//             if (data.success) {
-//                 // Add the new post dynamically to the UI
-//                 const newPost = document.createElement("div");
-//                 newPost.className = "post";
-//                 newPost.innerHTML = `
-//           <div class="post-card">
-//             <p>${content}</p>
-//             ${
-//                 file ? (
-//                     <img src="${URL.createObjectURL(file)}" alt="Post Image" />
-//                 ) : (
-//                     ""
-//                 )
-//             }
-//           </div>`;
-//                 document.getElementById("postsContainer").prepend(newPost);
-
-//                 // Close the modal
-//                 document.getElementById("postModal").style.display = "none";
-//             } else {
-//                 errorMessage.textContent =
-//                     data.error || "Failed to save the post.";
-//                 errorMessage.style.display = "block";
-//             }
-//         })
-//         .catch((error) => {
-//             console.error("Error:", error);
-//             errorMessage.textContent = "An error occurred. Please try again.";
-//             errorMessage.style.display = "block";
-//         });
-// };
-
 document.addEventListener("DOMContentLoaded", function () {
-    const addPostBtn = document.getElementById("addPostBtn");
-    const postModal = document.getElementById("postModal");
-    const closeModal = document.getElementById("closeModal");
-    const postForm = document.getElementById("postForm");
-    const postContent = document.getElementById("postContent");
-    const charCount = document.getElementById("charCount");
-    const savePostBtn = document.getElementById("savePostBtn");
-    const fileLabel = document.getElementById("fileLabel");
-    const postFile = document.getElementById("postFile");
+  const addPostBtn = document.getElementById("addPostBtn");
+  const postModal = document.getElementById("postModal");
+  const closeModal = document.getElementById("closeModal");
+  const postForm = document.getElementById("postForm");
+  const postContent = document.getElementById("postContent");
+  const charCount = document.getElementById("charCount");
+  const savePostBtn = document.getElementById("savePostBtn");
+  const fileLabel = document.getElementById("fileLabel");
+  const postFile = document.getElementById("postFile");
 
-    addPostBtn.addEventListener("click", function () {
-        postModal.style.display = "block";
-    });
+  addPostBtn.addEventListener("click", function () {
+    postModal.style.display = "block";
+  });
 
-    closeModal.addEventListener("click", function () {
-        postModal.style.display = "none";
-    });
+  closeModal.addEventListener("click", function () {
+    postModal.style.display = "none";
+  });
 
-    postContent.addEventListener("input", function () {
-        const textLength = postContent.value.length;
-        charCount.textContent = `${textLength} / 300`;
-        if (textLength > 300) {
-            charCount.style.color = "red";
-            savePostBtn.disabled = true;
-            document.getElementById("charWarning").style.display = "block";
-        } else {
-            charCount.style.color = "black";
-            savePostBtn.disabled = false;
-            document.getElementById("charWarning").style.display = "none";
-        }
-    });
-
-    postFile.addEventListener("change", function () {
-        const fileName = postFile.files[0] ? postFile.files[0].name : "";
-        fileLabel.textContent = fileName ? fileName : "Choose File";
-    });
-
-    const dotsBtns = document.querySelectorAll(".dots");
-    dotsBtns.forEach(function (btn) {
-        btn.addEventListener("click", function (event) {
-            const dropdown = event.target.nextElementSibling;
-            const allDropdowns = document.querySelectorAll(".dropdown");
-
-            allDropdowns.forEach(function (menu) {
-                if (menu !== dropdown) {
-                    menu.style.display = "none";
-                }
-            });
-
-            dropdown.style.display =
-                dropdown.style.display === "block" ? "none" : "block";
-        });
-    });
-    const deletePost = function (postID) {
-        const formData = new FormData();
-        formData.append("action", "deletePost");
-        formData.append("postID", postID);
-
-        fetch("platform.php", {
-            method: "POST",
-            body: formData,
-        })
-            .then((response) => response.text())
-            .then((response) => {
-                console.log("Response from server: " + response);
-
-                if (response.trim() === "Post deleted successfully") {
-                    const postElement = document.getElementById(
-                        "post-" + postID
-                    );
-                    postElement.remove();
-                } else {
-                    console.error(
-                        "There was an issue deleting the post: " + response
-                    );
-                }
-            })
-            .catch((error) => console.error("Error:", error));
-    };
-
-    const deleteBtns = document.querySelectorAll(".dropdown-item");
-    deleteBtns.forEach(function (btn) {
-        if (btn.textContent.trim() === "Delete Post") {
-            btn.addEventListener("click", function () {
-                const postID = btn.getAttribute("data-id");
-                deletePost(postID);
-            });
-        }
-    });
-
-    const editBtns = document.querySelectorAll(".editBtn");
-
-    editBtns.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-            const postID = btn.getAttribute("data-id");
-            let postText = btn.getAttribute("data-text") || "";
-            const postImage = btn.getAttribute("data-image") || "";
-
-            postText = postText.replace(/&#39;/g, "'").replace(/&quot;/g, '"');
-
-            document.getElementById("postContent").value = postText;
-            document.getElementById("postID").value = postID;
-            document.getElementById("formAction").value = "editPost";
-            if (postImage) {
-                document.getElementById("fileLabel").textContent = postImage;
-            }
-
-            postModal.style.display = "block";
-        });
-    });
-
-    document.querySelectorAll(".heart").forEach((heart) => {
-        heart.addEventListener("click", function () {
-            const postID = this.getAttribute("data-id");
-
-            // AJAX request to toggle like
-            $.ajax({
-                type: "POST",
-                url: "../../views/user/platform.php",
-                data: {
-                    action: "toggleLike",
-                    postID: postID,
-                },
-                success: function (response) {
-                    console.log("Response: ", response);
-                    const data = JSON.parse(response);
-
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        // Update likes count and toggle heart style
-                        const likesCountElem = heart.nextElementSibling;
-                        heart.classList.toggle("liked", data.liked);
-                        likesCountElem.textContent = `${data.likesCount} Likes`;
-                    }
-                },
-                error: function () {
-                    alert("Failed to toggle like. Please try again.");
-                },
-            });
-        });
-    });
-});
-
-function addComment(postID) {
-    console.log("Entering add comment function");
-    var commentText = $("#post-" + postID + " .commentInput")
-        .val()
-        .trim();
-    if (commentText == "") {
-        alert("Please enter a comment!");
-        return;
+  postContent.addEventListener("input", function () {
+    const textLength = postContent.value.length;
+    charCount.textContent = `${textLength} / 300`;
+    if (textLength > 300) {
+      charCount.style.color = "red";
+      savePostBtn.disabled = true;
+      document.getElementById("charWarning").style.display = "block";
+    } else {
+      charCount.style.color = "white";
+      savePostBtn.disabled = false;
+      document.getElementById("charWarning").style.display = "none";
     }
+  });
 
-    // Send the comment to the server via AJAX
-    $.ajax({
+  postFile.addEventListener("change", function () {
+    const fileName = postFile.files[0] ? postFile.files[0].name : "";
+    fileLabel.textContent = fileName ? fileName : "Choose File";
+  });
+
+  const dotsBtns = document.querySelectorAll(".dots");
+  dotsBtns.forEach(function (btn) {
+    btn.addEventListener("click", function (event) {
+      const dropdown = event.target.nextElementSibling;
+      const allDropdowns = document.querySelectorAll(".dropdown");
+
+      allDropdowns.forEach(function (menu) {
+        if (menu !== dropdown) {
+          menu.style.display = "none";
+        }
+      });
+
+      dropdown.style.display =
+        dropdown.style.display === "block" ? "none" : "block";
+    });
+  });
+
+  const editBtns = document.querySelectorAll(".editBtn");
+
+  editBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const postID = btn.getAttribute("data-id");
+      let postText = btn.getAttribute("data-text") || "";
+      const postImage = btn.getAttribute("data-image") || "";
+
+      const textArea = document.createElement("textarea");
+      textArea.innerHTML = postText;
+      postText = textArea.value;
+
+      document.getElementById("postContent").value = postText;
+      document.getElementById("postID").value = postID;
+      document.getElementById("formAction").value = "editPost";
+      if (postImage) {
+        document.getElementById("fileLabel").textContent = postImage;
+      }
+
+      postModal.style.display = "block";
+    });
+  });
+
+  document.querySelectorAll(".heart").forEach((heart) => {
+    heart.addEventListener("click", function () {
+      const postID = this.getAttribute("data-id");
+
+      $.ajax({
         type: "POST",
         url: "../../views/user/platform.php",
         data: {
-            action: "addComment",
-            postID: postID,
-            commentText: commentText,
-            userID: `<?php echo $_SESSION['userID']; ?>`, // Assuming userID is stored in session
+          action: "toggleLike",
+          postID: postID,
         },
         success: function (response) {
-            console.log(response);
-            var data = JSON.parse(response);
+          console.log("Response: ", response);
+          const data = JSON.parse(response);
 
-            if (data.error) {
-                alert(data.error); // Handle the error (e.g., duplicate comment)
-            } else {
-                // Check if the post has any comments
-                var commentList = $("#post-" + postID + " .commentList");
-
-                // If there are no comments (message p is present), remove it
-                if (
-                    commentList.length === 0 ||
-                    commentList.find("p").length > 0
-                ) {
-                    $("#post-" + postID + " .commentList p").remove(); // Remove the "No comments yet" message
-                }
-
-                // Add the new comment to the comment list
-                commentList.append(
-                    '<div class="comment">@' +
-                        data.username +
-                        ": " +
-                        data.commentText +
-                        "</div><hr>"
-                );
-
-                // Clear the input field after adding the comment
-                $("#post-" + postID + " .commentInput").val("");
-            }
+          if (data.error) {
+            alert(data.error);
+          } else {
+            const likesCountElem = heart.nextElementSibling;
+            heart.classList.toggle("liked", data.liked);
+            likesCountElem.textContent = `${data.likesCount} Likes`;
+          }
         },
         error: function () {
-            alert("Failed to add comment.");
+          alert("Failed to toggle like. Please try again.");
         },
+      });
     });
+  });
+});
+
+document.getElementById("addPostBtn").addEventListener("click", function () {
+  const postForm = document.getElementById("postForm");
+  const modalTitle = document.querySelector("#postModal h2");
+  const savePostBtn = document.getElementById("savePostBtn");
+  postForm.reset();
+  modalTitle.textContent = "Create a Post";
+  savePostBtn.textContent = "Save Post";
+  document.getElementById("formAction").value = "addPost";
+  document.getElementById("postID").value = "";
+  document.getElementById("postContent").value = "";
+  document.getElementById("charCount").textContent = "0 / 300";
+  document.getElementById("savePostBtn").disabled = true;
+
+  document.getElementById("postModal").style.display = "flex";
+});
+
+document.querySelectorAll(".editBtn").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    const modalTitle = document.querySelector("#postModal h2");
+    const savePostBtn = document.getElementById("savePostBtn");
+    const postID = btn.getAttribute("data-id");
+    const postText = btn.getAttribute("data-text");
+    const postImage = btn.getAttribute("data-image");
+    modalTitle.textContent = "Edit Post";
+    savePostBtn.textContent = "Update Post";
+    document.getElementById("formAction").value = "editPost";
+    document.getElementById("postID").value = postID;
+    document.getElementById("postContent").value = postText || "";
+    document.getElementById(
+      "charCount"
+    ).textContent = `${postText.length} / 300`;
+    document.getElementById("savePostBtn").disabled = false;
+
+    const fileLabel = document.getElementById("fileLabel");
+    fileLabel.textContent = postImage
+      ? `Selected: ${postImage}`
+      : "Choose File";
+
+    document.getElementById("postModal").style.display = "flex";
+  });
+});
+
+document.getElementById("closeModal").addEventListener("click", function () {
+  const postForm = document.getElementById("postForm");
+  postForm.reset();
+
+  document.getElementById("postModal").style.display = "none";
+});
+document.getElementById("postContent").addEventListener("input", function () {
+  const charCount = document.getElementById("charCount");
+  const savePostBtn = document.getElementById("savePostBtn");
+  const textLength = this.value.length;
+
+  charCount.textContent = `${textLength} / 300`;
+
+  if (textLength > 0 && textLength <= 300) {
+    savePostBtn.disabled = false;
+  } else {
+    savePostBtn.disabled = true;
+  }
+});
+
+let currentPostID = null;
+
+const showDeleteModal = function (postID) {
+  currentPostID = postID;
+  const modal = document.getElementById("confirmModal");
+  modal.style.display = "flex";
+};
+
+const hideDeleteModal = function () {
+  const modal = document.getElementById("confirmModal");
+  modal.style.display = "none";
+};
+
+const deletePost = function () {
+  if (!currentPostID) return;
+
+  const formData = new FormData();
+  formData.append("action", "deletePost");
+  formData.append("postID", currentPostID);
+
+  fetch("platform.php", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.text())
+    .then((response) => {
+      console.log("Response from server: " + response);
+
+      if (response.trim() === "Post and associated data deleted successfully") {
+        const postElement = document.getElementById("post-" + currentPostID);
+        if (postElement) {
+          postElement.remove();
+        }
+      } else {
+        console.error("There was an issue deleting the post: " + response);
+      }
+
+      hideDeleteModal();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      hideDeleteModal();
+    });
+};
+
+document
+  .getElementById("confirmDeleteBtn")
+  .addEventListener("click", deletePost);
+document
+  .getElementById("cancelDeleteBtn")
+  .addEventListener("click", hideDeleteModal);
+
+const deleteBtns = document.querySelectorAll(".dropdown-item");
+deleteBtns.forEach(function (btn) {
+  if (btn.textContent.trim() === "Delete Post") {
+    btn.addEventListener("click", function () {
+      const postID = btn.getAttribute("data-id");
+      showDeleteModal(postID);
+    });
+  }
+});
+
+function addComment(postID) {
+  console.log("Entering add comment function");
+  var commentText = $("#post-" + postID + " .commentInput")
+    .val()
+    .trim();
+  if (commentText == "") {
+    alert("Please enter a comment!");
+    return;
+  }
+
+  // Send the comment to the server via AJAX
+  $.ajax({
+    type: "POST",
+    url: "../../views/user/platform.php",
+    data: {
+      action: "addComment",
+      postID: postID,
+      commentText: commentText,
+      userID: `<?php echo $_SESSION['userID']; ?>`, // Assuming userID is stored in session
+    },
+    success: function (response) {
+      console.log(response);
+      var data = JSON.parse(response);
+
+      if (data.error) {
+        alert(data.error); // Handle the error (e.g., duplicate comment)
+      } else {
+        // Check if the post has any comments
+        var commentList = $("#post-" + postID + " .commentList");
+
+        // If there are no comments (message p is present), remove it
+        if (commentList.length === 0 || commentList.find("p").length > 0) {
+          $("#post-" + postID + " .commentList p").remove(); // Remove the "No comments yet" message
+        }
+
+        // Add the new comment to the comment list
+        commentList.append(
+          '<div class="comment">@' +
+            data.username +
+            ": " +
+            data.commentText +
+            "</div><hr>"
+        );
+
+        // Clear the input field after adding the comment
+        $("#post-" + postID + " .commentInput").val("");
+      }
+    },
+    error: function () {
+      alert("Failed to add comment.");
+    },
+  });
 }

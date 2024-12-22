@@ -59,7 +59,6 @@ $reviewCategoryCounts = $reviewStatistics['reviewCategoryCounts'];
 //USER CRUDS
 $users = UserController::viewAllUsers();
 
-
 //Reviews Cruds
 $reviews = ReviewController::getAllReviews();
 

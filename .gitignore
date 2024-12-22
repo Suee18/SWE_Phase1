@@ -3,3 +3,6 @@ vendor/
 
 #Enviroment file
 .env
+
+# Debug file
+debug/

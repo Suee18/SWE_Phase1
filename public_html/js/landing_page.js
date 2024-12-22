@@ -118,6 +118,25 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = `../app/views/user/search_results.php?query=${query}`;
         }
     });
+    
+    const swiper = new Swiper(".swiper-container", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+            rotate: 0,
+            stretch: 10,
+            depth: 200,
+            modifier: 1,
+            slideShadows: true,
+        },
+        autoplay: {
+            delay: 2000,
+            disableOnInteraction: false,
+        },
+        loop: true,
+    });
 });
 
 // Function to show the current slide
@@ -181,24 +200,6 @@ function showSlideOnClick(n) {
 
 // *******REVIEWS' JS*******
 
-const swiper = new Swiper(".swiper-container", {
-    effect: "coverflow",
-    grabCursor: true,
-    centeredSlides: true,
-    slidesPerView: "auto",
-    coverflowEffect: {
-        rotate: 0,
-        stretch: 10,
-        depth: 200,
-        modifier: 1,
-        slideShadows: true,
-    },
-    autoplay: {
-        delay: 2000,
-        disableOnInteraction: false,
-    },
-    loop: true,
-});
 const openOverlayBtn = document.getElementById("openOverlay");
 const overlay = document.getElementById("reviewOverlay");
 const closeOverlayBtn = document.getElementById("closeOverlay");
