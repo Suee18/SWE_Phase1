@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . "/../app/config/db_config.php";
+include_once __DIR__ . '/../models/ReviewsClass.php';
 
 interface ReviewStrategyInterface
 {

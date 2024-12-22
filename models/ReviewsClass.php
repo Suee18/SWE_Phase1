@@ -1,5 +1,5 @@
 <?php
-    require_once __DIR__ . '/../app/config/db_config.php';
+require_once __DIR__ . '/../app/config/db_config.php';
 
 class Reviews
 {
@@ -77,6 +77,11 @@ class Reviews
     static function getReviewsByRating($rating)
     {
         global $conn;
+
+        if (!$conn || $conn->connect_error) {
+            die('Database connection is not active. Error: ' . $conn->connect_error);
+        }
+        
         $sql = "
         SELECT reviewID, reviewText, reviewCategory, reviewDate, reviewRating, userID
         FROM reviews
@@ -138,7 +143,7 @@ class Reviews
         global $conn;
         $sql = "SELECT reviewCategory, COUNT(*) as count FROM reviews GROUP BY reviewCategory";
         $result = mysqli_query($conn, $sql);
-    
+
         $categories = [];
         if ($result) {
             while ($row = mysqli_fetch_assoc($result)) {
@@ -148,8 +153,8 @@ class Reviews
                 ];
             }
         }
-    
+
         return $categories;
     }
-    
+
 }

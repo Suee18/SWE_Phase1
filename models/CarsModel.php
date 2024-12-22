@@ -286,11 +286,6 @@
             } else {
                 $cars = [];
             }
-
-
-            $conn->close();
-
-
             return $cars;
         }
     }

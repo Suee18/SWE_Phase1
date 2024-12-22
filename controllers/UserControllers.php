@@ -1,5 +1,4 @@
 <?php
-
 include_once "../../config/db_config.php";
 include_once __DIR__ . '../../models/UsersClass.php';
 
