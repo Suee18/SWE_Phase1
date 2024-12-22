@@ -4,7 +4,5 @@ vendor/
 #Enviroment file
 .env
 
-debug_log.txt
-debug_cars.txt
-debug_session2.txt
-debug_sessionManager.txt
+# Debug file
+debug/

@@ -25,7 +25,7 @@ class SessionManager
         }
 
 //Debug 
-        $filePath = __DIR__ . '/debug_sessionManager.txt';
+        $filePath = __DIR__ . '/../debug/debug_sessionManager.txt';
         file_put_contents($filePath, print_r($_SESSION, true));  // Check if session data is available
 
     }
@@ -44,7 +44,7 @@ class SessionManager
         session_unset();
         session_destroy();
         self::$isSessionActive = false;
-        $filePath = __DIR__ . '/debug_sessionManager.txt';
+        $filePath = __DIR__ . '/../debug/debug_sessionManager.txt';
 
         // Write the data to the file (APPEND mode to keep adding to the file)
 
@@ -99,7 +99,7 @@ class SessionManager
         return $result;
 
         // Specify the path to the debug file
-        $filePath = __DIR__ . '/debug_sessionManager.txt';
+        $filePath = __DIR__ . '/../debug/debug_sessionManager.txt';
 
         // Write the data to the file (APPEND mode to keep adding to the file)
 

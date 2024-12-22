@@ -24,7 +24,7 @@ $carsModel = new CarsModel($conn);
 $cars = $carsModel->getCarsByPersona($topPersona['id']);
 
 // Debugging
-file_put_contents('debug_cars.txt', print_r($cars, true));
+file_put_contents(__DIR__ . '/../../../debug/debug_cars.txt', print_r($cars, true));
 
 ?>
 

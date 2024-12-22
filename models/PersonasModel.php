@@ -39,7 +39,7 @@ class PersonasModel {
         $query = "SELECT * FROM " . $this->table . " ORDER BY " . $this->personaName . " ASC";
         $result = $this->conn->query($query);
     
-        $logFile = __DIR__ . '/debug_log.txt'; // Path to the log file
+        $logFile = __DIR__ . '/../debug/debug_log.txt'; // Path to the log file
     
         if ($result === false) {
             $errorMessage = "Error executing query: " . $this->conn->error . PHP_EOL;
