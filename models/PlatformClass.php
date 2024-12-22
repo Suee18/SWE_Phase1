@@ -96,18 +96,18 @@ class PlatformModel
     public function deletePost($postID)
     {
         $this->db->begin_transaction();
-    
+
         try {
             $queryComments = "DELETE FROM comments WHERE postID = ?";
             $stmtComments = $this->db->prepare($queryComments);
             $stmtComments->bind_param('i', $postID);
             $stmtComments->execute();
-    
+
             $queryLikes = "DELETE FROM likes WHERE postID = ?";
             $stmtLikes = $this->db->prepare($queryLikes);
             $stmtLikes->bind_param('i', $postID);
             $stmtLikes->execute();
-    
+
             $queryPost = "DELETE FROM post WHERE postID = ?";
             $stmtPost = $this->db->prepare($queryPost);
             $stmtPost->bind_param('i', $postID);
@@ -121,7 +121,7 @@ class PlatformModel
         }
         exit();
     }
-    
+
 
 
     public function getCommentsForPost($postID)

@@ -151,9 +151,10 @@ button {
 }
 
 .post-image img {
-  max-width: 100%;
-  height: auto;
+  width: 450px;
+  height: 400px;
   border-radius: 5px;
+  margin-left: 10%;
 }
 
 .post-footer {
@@ -272,6 +273,8 @@ button[type="button"]:hover {
 .modal-content h2 {
   color: var(--white);
   margin-bottom: 40px;
+  font-family: var(--technoRace_font);
+  letter-spacing: 3px;
 }
 
 .close {
@@ -349,8 +352,6 @@ textarea {
 
 #confirmModal {
   position: fixed;
-  /* top: 0;
-  left: 0; */
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.39);

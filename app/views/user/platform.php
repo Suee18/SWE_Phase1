@@ -47,31 +47,33 @@ switch ($action) {
             echo 'Post ID is missing.';
             exit();
         }
-
-    case 'editPost':
-        if (!empty($_POST['postID']) && !empty(trim($_POST['text']))) {
-            $postID = $_POST['postID'];
-            $postText = htmlspecialchars(trim($_POST['text']), ENT_QUOTES, 'UTF-8');
-            $postImage = null;
-            $post = $platformController->fetchPostByID($postID);
-
-            if (SessionManager::getUser() && SessionManager::getUser()->id == $post->userID) {
-                if (!empty($_FILES['image']['name'])) {
-                    $postImage = $_FILES['image']['name'];
-                    move_uploaded_file($_FILES['image']['tmp_name'], "../../../public_html/media/uploads/$postImage");
+        case 'editPost':
+            if (!empty($_POST['postID']) && !empty(trim($_POST['text']))) {
+                $postID = $_POST['postID'];
+                $postText = htmlspecialchars(trim($_POST['text']), ENT_QUOTES, 'UTF-8');
+                $postImage = null;
+                $post = $platformController->fetchPostByID($postID);
+        
+                if (SessionManager::getUser() && SessionManager::getUser()->id == $post->userID) {
+                    if (!empty($_FILES['image']['name'])) {
+                        $postImage = $_FILES['image']['name'];
+                        move_uploaded_file($_FILES['image']['tmp_name'], "../../../public_html/media/uploads/$postImage");
+                    } else {
+                        $postImage = $post->postImage; 
+                    }
+        
+                    $platformController->updatePost($postID, $postText, $postImage);
+                    header("Location: platform.php");
+                    exit();
+                } else {
+                    echo 'You cannot edit a post that is not yours.';
+                    exit();
                 }
-
-                $platformController->updatePost($postID, $postText, $postImage);
-                header("Location: platform.php");
-                exit();
             } else {
-                echo 'You cannot edit a post that is not yours.';
+                echo 'Invalid data provided.';
                 exit();
-            }
-        } else {
-            echo 'Invalid data provided.';
-            exit();
         }
+        
 
     case 'addComment':
         if (!empty($_POST['postID']) && !empty($_POST['commentText'])) {
@@ -233,14 +235,15 @@ switch ($action) {
         <div id="postModal" class="modal">
             <div class="modal-content">
                 <span class="close" id="closeModal">&times;</span>
-                <form id="postForm" action="platform.php" method="POST" enctype="multipart/form-data">
+                <form id="postForm" action="platform.php" method="POST" enctype="multipart/form-data" autocomplete="off">
+
                     <h2>Create/Edit a Post</h2>
                     <div id="errorMessage" style="color: red; display: none;">Please fix the errors before submitting.
                     </div>
                     <div id="charWarning" style="color: red; display: none;">
                         Please don't exceed 300 characters.
                     </div>
-                    <textarea id="postContent" name="text" placeholder="What's on your mind?" maxlength="300"
+                    <textarea id="postContent" name="text" placeholder="What's on your mind?"
                         required><?php echo isset($post->postText) ? htmlspecialchars($post->postText, ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
                     <input type="file" id="postFile" name="image" accept="image/,video/" style="display: none;" />
                     <label for="postFile" id="fileLabel" class="custom-file-label">Choose File</label>
@@ -252,7 +255,7 @@ switch ($action) {
             </div>
         </div>
     </div>
-    
+
     <div id="confirmModal" class="popup" style="display: none;">
         <div class="popup-content">
             <p>Are you sure you want to delete this post? This action cannot be undone.</p>
