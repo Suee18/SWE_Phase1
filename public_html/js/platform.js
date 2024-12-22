@@ -183,114 +183,149 @@
 //         });
 // };
 
-
 document.addEventListener("DOMContentLoaded", function () {
-  const addPostBtn = document.getElementById("addPostBtn");
-  const postModal = document.getElementById("postModal");
-  const closeModal = document.getElementById("closeModal");
-  const postForm = document.getElementById("postForm");
-  const postContent = document.getElementById("postContent");
-  const charCount = document.getElementById("charCount");
-  const savePostBtn = document.getElementById("savePostBtn");
-  const fileLabel = document.getElementById("fileLabel");
-  const postFile = document.getElementById("postFile");
+    const addPostBtn = document.getElementById("addPostBtn");
+    const postModal = document.getElementById("postModal");
+    const closeModal = document.getElementById("closeModal");
+    const postForm = document.getElementById("postForm");
+    const postContent = document.getElementById("postContent");
+    const charCount = document.getElementById("charCount");
+    const savePostBtn = document.getElementById("savePostBtn");
+    const fileLabel = document.getElementById("fileLabel");
+    const postFile = document.getElementById("postFile");
 
-  addPostBtn.addEventListener("click", function () {
-    postModal.style.display = "block";
-  });
-
-  closeModal.addEventListener("click", function () {
-    postModal.style.display = "none";
-  });
-
-  postContent.addEventListener("input", function () {
-    const textLength = postContent.value.length;
-    charCount.textContent = `${textLength} / 300`;
-    if (textLength > 300) {
-      charCount.style.color = "red";
-      savePostBtn.disabled = true;
-      document.getElementById("charWarning").style.display = "block";
-    } else {
-      charCount.style.color = "black";
-      savePostBtn.disabled = false;
-      document.getElementById("charWarning").style.display = "none";
-    }
-  });
-
-  postFile.addEventListener("change", function () {
-    const fileName = postFile.files[0] ? postFile.files[0].name : "";
-    fileLabel.textContent = fileName ? fileName : "Choose File";
-  });
-
-  const dotsBtns = document.querySelectorAll(".dots");
-  dotsBtns.forEach(function (btn) {
-    btn.addEventListener("click", function (event) {
-      const dropdown = event.target.nextElementSibling;
-      const allDropdowns = document.querySelectorAll(".dropdown");
-
-      allDropdowns.forEach(function (menu) {
-        if (menu !== dropdown) {
-          menu.style.display = "none";
-        }
-      });
-
-      dropdown.style.display =
-        dropdown.style.display === "block" ? "none" : "block";
+    addPostBtn.addEventListener("click", function () {
+        postModal.style.display = "block";
     });
-  });
-  const deletePost = function (postID) {
-    const formData = new FormData();
-    formData.append("action", "deletePost");
-    formData.append("postID", postID);
 
-    fetch("platform.php", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.text())
-      .then((response) => {
-        console.log("Response from server: " + response);
+    closeModal.addEventListener("click", function () {
+        postModal.style.display = "none";
+    });
 
-        if (response.trim() === "Post deleted successfully") {
-          const postElement = document.getElementById("post-" + postID);
-          postElement.remove();
+    postContent.addEventListener("input", function () {
+        const textLength = postContent.value.length;
+        charCount.textContent = `${textLength} / 300`;
+        if (textLength > 300) {
+            charCount.style.color = "red";
+            savePostBtn.disabled = true;
+            document.getElementById("charWarning").style.display = "block";
         } else {
-          console.error("There was an issue deleting the post: " + response);
+            charCount.style.color = "black";
+            savePostBtn.disabled = false;
+            document.getElementById("charWarning").style.display = "none";
         }
-      })
-      .catch((error) => console.error("Error:", error));
-  };
-
-  const deleteBtns = document.querySelectorAll(".dropdown-item");
-  deleteBtns.forEach(function (btn) {
-    if (btn.textContent.trim() === "Delete Post") {
-      btn.addEventListener("click", function () {
-        const postID = btn.getAttribute("data-id");
-        deletePost(postID);
-      });
-    }
-  });
-
-  const editBtns = document.querySelectorAll(".editBtn");
-
-  editBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      const postID = btn.getAttribute("data-id");
-      let postText = btn.getAttribute("data-text") || "";
-      const postImage = btn.getAttribute("data-image") || "";
-
-      postText = postText.replace(/&#39;/g, "'").replace(/&quot;/g, '"');
-
-      document.getElementById("postContent").value = postText;
-      document.getElementById("postID").value = postID;
-      document.getElementById("formAction").value = "editPost";
-      if (postImage) {
-        document.getElementById("fileLabel").textContent = postImage;
-      }
-
-      postModal.style.display = "block";
     });
-  });
+
+    postFile.addEventListener("change", function () {
+        const fileName = postFile.files[0] ? postFile.files[0].name : "";
+        fileLabel.textContent = fileName ? fileName : "Choose File";
+    });
+
+    const dotsBtns = document.querySelectorAll(".dots");
+    dotsBtns.forEach(function (btn) {
+        btn.addEventListener("click", function (event) {
+            const dropdown = event.target.nextElementSibling;
+            const allDropdowns = document.querySelectorAll(".dropdown");
+
+            allDropdowns.forEach(function (menu) {
+                if (menu !== dropdown) {
+                    menu.style.display = "none";
+                }
+            });
+
+            dropdown.style.display =
+                dropdown.style.display === "block" ? "none" : "block";
+        });
+    });
+    const deletePost = function (postID) {
+        const formData = new FormData();
+        formData.append("action", "deletePost");
+        formData.append("postID", postID);
+
+        fetch("platform.php", {
+            method: "POST",
+            body: formData,
+        })
+            .then((response) => response.text())
+            .then((response) => {
+                console.log("Response from server: " + response);
+
+                if (response.trim() === "Post deleted successfully") {
+                    const postElement = document.getElementById(
+                        "post-" + postID
+                    );
+                    postElement.remove();
+                } else {
+                    console.error(
+                        "There was an issue deleting the post: " + response
+                    );
+                }
+            })
+            .catch((error) => console.error("Error:", error));
+    };
+
+    const deleteBtns = document.querySelectorAll(".dropdown-item");
+    deleteBtns.forEach(function (btn) {
+        if (btn.textContent.trim() === "Delete Post") {
+            btn.addEventListener("click", function () {
+                const postID = btn.getAttribute("data-id");
+                deletePost(postID);
+            });
+        }
+    });
+
+    const editBtns = document.querySelectorAll(".editBtn");
+
+    editBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            const postID = btn.getAttribute("data-id");
+            let postText = btn.getAttribute("data-text") || "";
+            const postImage = btn.getAttribute("data-image") || "";
+
+            postText = postText.replace(/&#39;/g, "'").replace(/&quot;/g, '"');
+
+            document.getElementById("postContent").value = postText;
+            document.getElementById("postID").value = postID;
+            document.getElementById("formAction").value = "editPost";
+            if (postImage) {
+                document.getElementById("fileLabel").textContent = postImage;
+            }
+
+            postModal.style.display = "block";
+        });
+    });
+
+    document.querySelectorAll(".heart").forEach((heart) => {
+        heart.addEventListener("click", function () {
+            const postID = this.getAttribute("data-id");
+
+            // AJAX request to toggle like
+            $.ajax({
+                type: "POST",
+                url: "../../views/user/platform.php",
+                data: {
+                    action: "toggleLike",
+                    postID: postID,
+                },
+                success: function (response) {
+                    console.log("Response: ", response);
+                    const data = JSON.parse(response);
+
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        // Update likes count and toggle heart style
+                        const likesCountElem = heart.nextElementSibling;
+                        heart.classList.toggle("liked", data.liked);
+                        likesCountElem.textContent = `${data.likesCount} Likes`;
+                    }
+                },
+                error: function () {
+                    alert("Failed to toggle like. Please try again.");
+                },
+            });
+        });
+    });
 });
 
 function addComment(postID) {

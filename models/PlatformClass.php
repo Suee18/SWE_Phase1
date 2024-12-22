@@ -135,16 +135,16 @@ class PlatformModel
 
         return $comments;
     }
-  
-  public function insertComment($postID, $userID, $commentText)
+
+    public function insertComment($postID, $userID, $commentText)
     {
         $query = "INSERT INTO comments (postID, userID, commentText) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param("iis", $postID, $userID, $commentText);
         $stmt->execute();
     }
-  
-  public function getPostByID($postID)
+
+    public function getPostByID($postID)
     {
         $query = "
             SELECT p.postID, p.userID, p.postText, p.postImage, p.postLikes, p.timestamp, u.username
@@ -205,5 +205,42 @@ class PlatformModel
         }
 
         return $posts;
+    }
+
+    public function insertLike($postID, $userID)
+    {
+        $query = "INSERT INTO likes (postID, userID) VALUES (?, ?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("ii", $postID, $userID);
+        $stmt->execute();
+    }
+
+    public function deleteLike($postID, $userID)
+    {
+        $query = "DELETE FROM likes WHERE postID = ? AND userID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("ii", $postID, $userID);
+        $stmt->execute();
+    }
+
+    public function checkIfLiked($postID, $userID)
+    {
+        $query = "SELECT * FROM likes WHERE postID = ? AND userID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("ii", $postID, $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0;
+    }
+
+    public function getLikesCount($postID)
+    {
+        $query = "SELECT COUNT(*) AS likesCount FROM likes WHERE postID = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("i", $postID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return $row['likesCount'];
     }
 }
