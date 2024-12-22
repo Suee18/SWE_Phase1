@@ -1,36 +1,32 @@
 <?php
-// include_once 'C:\xampp\htdocs\SWE Project\SWE_Phase1\app\config\db_config.php';
-// include 'C:\xampp\htdocs\SWE Project\SWE_Phase1\models\UsersClass.php';
-// include 'C:\xampp\htdocs\SWE Project\SWE_Phase1\models\ReviewsClass.php';
-
-// include_once 'C:\xampp\htdocs\SWE_Phase1\app\config\db_config.php';
-// include 'C:\xampp\htdocs\SWE_Phase1\models\UsersClass.php';
-// include 'C:\xampp\htdocs\SWE_Phase1\models\ReviewsClass.php';
 include_once __DIR__ . '\..\..\config\db_config.php';
-include __DIR__ . '\..\..\..\models\ReviewsClass.php';
+// include __DIR__ . '\..\..\..\models\ReviewsClass.php';
+include_once __DIR__ . '\..\..\..\controllers\ReviewController.php';
 include __DIR__ . '\..\..\..\models\UsersClass.php';
 include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
 include_once __DIR__ . '\..\..\..\models\CarsModel.php';
 include_once __DIR__ . '\..\..\..\controllers\carController.php';
+SessionManager::startSession();
 
-$reviewsSliderArray = Reviews::getLastNumberOfReviews(7);
+$reviewsSliderArray = ReviewController::getNumberOfReviews(7);
 
-if (isset($_POST['Submit'])) {
-    $reviewText = mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewText']));
-    $reviewCategory = mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewCategory']));
-    $reviewDate = date('Y-m-d H:i:s');
+$reviewController = new ReviewController(new ReviewDatabaseStrategy());
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
+    $reviewData = [
+        'reviewText' => mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewText'])),
+        'reviewCategory' => mysqli_real_escape_string($conn, htmlspecialchars($_POST['reviewCategory'])),
+        'reviewDate' => date('Y-m-d H:i:s'),
+        'reviewRating' => $_POST['starRating'] ?? NULL,
+        'userID' => SessionManager::getUser() ? SessionManager::getUser()->id : 0
+    ];
 
-    $user = SessionManager::getUser();
-    $userID = $user ? $user['ID'] : null;
+    $reviewController->addReview($reviewData);
 
-    $reviewUserName = "Anonymous";
-
-    $review = new Reviews($reviewText, $reviewCategory, $reviewDate, 5, $userID);
-    $result = $review->addReviewIntoDB($review);
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit();
 }
 
 $cars = carController::getHighlyRecommendedCars();
-
 ?>
 
 <!DOCTYPE html>
@@ -39,19 +35,18 @@ $cars = carController::getHighlyRecommendedCars();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../public_html/css/landing_page.css">
-    <link rel="stylesheet" href="../public_html/css/global_styles.css">
-    <link rel="stylesheet" href="../public_html/css/nav_bar.css">
-    <link rel="stylesheet" href="../public_html/css/car_card.css">
-    <link rel="stylesheet" href="../public_html/css/footer.css"> -->
 
     <link rel="stylesheet" href="css/landing_page.css">
     <link rel="stylesheet" href="css/global_styles.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="../public_html/css/car_card.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <title>Landing Page</title>
 </head>
@@ -81,8 +76,6 @@ $cars = carController::getHighlyRecommendedCars();
             </div>
         </div>
 
-
-
         <!-- Slide 2 -->
 
         <div class="slide" id="slide2">
@@ -98,9 +91,6 @@ $cars = carController::getHighlyRecommendedCars();
             </div>
 
         </div>
-
-
-
 
         <!-- Slide 3:  -->
         <div class="slide" id="slide3">
@@ -259,83 +249,100 @@ $cars = carController::getHighlyRecommendedCars();
                 </div>
             </div>
         </div>
-    </div>
-    <!----------------PART 3:Reviews--------------------------->
-    <div class="landingPage_part3">
-        <div class="filter_reviews">
-            <div class="partsTitles_lp">
-                <P class="reviewsTitle_lp">
-                    Reviews
-                </P>
-            </div>
-            <div class="reviews-section">
-                <h2 class="header">What our Clients say!</h2>
 
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        <?php
-                        foreach ($reviewsSliderArray as $review) {
-                            echo '<div class="swiper-slide">
-                                <div class="review-card">
-                                    <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
-                                    <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
-                                </div>
-                              </div>';
-                        }
-                        ?>
+        <!----------------PART 3:Reviews--------------------------->
+        <div class="landingPage_part3">
+            <div class="filter_reviews">
+                <div class="partsTitles_lp">
+                    <P class="reviewsTitle_lp">
+                        Reviews
+                    </P>
+                </div>
+                <div class="reviews-section">
+                    <h2 class="header">What our Clients say!</h2>
+
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <?php
+                            include_once __DIR__ . '/../../../controllers/ReviewController.php';
+
+                            $reviewsSliderArray = ReviewController::getHighRatedReviews(3);
+
+                            foreach ($reviewsSliderArray as $review) {
+                                $rating = $review->reviewRating;
+
+                                $stars = '';
+                                for ($i = 1; $i <= 5; $i++) {
+                                    $stars .= $i <= $rating
+                                        ? '<span class="rating filled">★</span>'
+                                        : '<span class="rating">★</span>';
+                                }
+
+                                echo
+                                '<div class="swiper-slide">
+                                        <div class="review-card">
+                                            <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
+                                            <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
+                                            <div class="review-rating">' . $stars . '</div>
+                                        </div>
+                                </div>';
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <button class="btn" id="openOverlay">
-                <svg xmlns="http://www.w3.org/2000/svg" class="arr-2" viewBox="0 0 24 24">
-                    <path
-                        d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
-                    </path>
-                </svg>
-                <span class="text">Add Your Own Review!</span>
-                <span class="circle"></span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="arr-1" viewBox="0 0 24 24">
-                    <path
-                        d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
-                    </path>
-                </svg>
-            </button>
-            <div class="overlay" id="reviewOverlay">
-                <form class="overlay-content" method="post">
-                    <span class="closeBtn" id="closeOverlay">&times;</span>
-                    <h2>Write your review</h2>
-                    <div class="review-buttons" id="reviewButtons">
-                        <div class="button" type="submit" name="reviewCategory" data-choice="Apex">
-                            <div class="button-wrapper">
-                                <div class="text">Apex</div>
-                                <span class="icon">
-                                    <img src=" ../public_html/media/website.png" alt="Website Icon">
-                                </span>
+                <button class="btn" id="openOverlay">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="arr-2" viewBox="0 0 24 24">
+                        <path
+                            d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+                        </path>
+                    </svg>
+                    <span class="text">Add Your Own Review!</span>
+                    <span class="circle"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="arr-1" viewBox="0 0 24 24">
+                        <path
+                            d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+                        </path>
+                    </svg>
+                </button>
+                <div class="overlay" id="reviewOverlay">
+                    <form class="overlay-content" method="post">
+                        <span class="closeBtn" id="closeOverlay">&times;</span>
+                        <h2>Write your review</h2>
+                        <div class="review-buttons" id="reviewButtons">
+                            <div class="button" type="submit" name="reviewCategory" data-choice="Apex">
+                                <div class="button-wrapper">
+                                    <div class="text">Apex</div>
+                                    <span class="icon">
+                                        <img src="../public_html/media/website.png" alt="Website Icon">
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="button" type="submit" name="reviewCategory" data-choice="Comparison">
-                            <div class="button-wrapper">
-                                <div class="text">Comparison</div>
-                                <span class="icon">
-                                    <img src=" ../public_html/media/compare.png" alt="Website Icon">
-                                </span>
+                            <div class="button" type="submit" name="reviewCategory" data-choice="Comparison">
+                                <div class="button-wrapper">
+                                    <div class="text">Comparison</div>
+                                    <span class="icon">
+                                        <img src="../public_html/media/compare.png" alt="Website Icon">
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="button" type="submit" name="reviewCategory" data-choice="Search">
-                            <div class="button-wrapper">
-                                <div class="text">Search</div>
-                                <span class="icon">
-                                    <img src=" ../public_html/media/website.png" alt="Website Icon">
-                                </span>
+                            <div class="button" type="submit" name="reviewCategory" data-choice="Search">
+                                <div class="button-wrapper">
+                                    <div class="text">Search</div>
+                                    <span class="icon">
+                                        <img src="../public_html/media/website.png" alt="Website Icon">
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="button" type="submit" name="reviewCategory" data-choice="Persona Test">
-                            <div class="button-wrapper">
-                                <div class="text">Persona Test</div>
-                                <span class="icon">
-                                    <img src=" ../public_html/media/test.png" alt="Website Icon">
-                                </span>
+                            <div class="button" type="submit" name="reviewCategory" data-choice="Persona Test">
+                                <div class="button-wrapper">
+                                    <div class="text">Persona Test</div>
+                                    <span class="icon">
+                                        <img src="../public_html/media/test.png" alt="Website Icon">
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="button" type="submit" name="reviewCategory" data-choice="Turbo">
@@ -354,12 +361,13 @@ $cars = carController::getHighlyRecommendedCars();
                                 </span>
                             </div>
                         </div>
-                    </div>
-                    <textarea id="reviewText" placeholder=" Write your review here..." name="reviewText"
-                        required></textarea>
-                    <input type="hidden" id="reviewCategory" name="reviewCategory" value="">
-                    <input class="submitBtn" type="submit" id="submitReview" name="Submit">
-                </form>
+                        <input type="hidden" id="reviewCategory" name="reviewCategory">
+                        <textarea id="reviewText" placeholder="Write your review here..." name="reviewText" required></textarea>
+                        <div id="starRatingContainer" style="display: none;"></div>
+                        <input type="hidden" id="starRating" name="starRating">
+                        <input class="submitBtn" type="submit" id="submitReview" name="Submit">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -410,7 +418,21 @@ $cars = carController::getHighlyRecommendedCars();
         </div>
     </footer>
 
-    <script src="../public_html/js/landing_page.js"></script>
+        <div id="searchModal" class="search-modal-overlay">
+            <div class="search-modal-content">
+                <!-- Close Button -->
+                <button class="search-modal-close-btn" id="closeSearchModalBtn">&times;</button>
+
+                <!-- Search Content -->
+                <h2>Search</h2>
+                <input type="text" id="searchInput" class="search-modal-input" placeholder="Type here to search..." />
+                <div id="searchResults" class="search-results-list"></div>
+                <button id="searchSubmitBtn" class="search-modal-submit-btn"><span class="material-symbols-outlined">search</span></button>
+            </div>
+        </div>
+
+
+        <script src="../public_html/js/landing_page.js"></script>
 </body>
 
 </html>

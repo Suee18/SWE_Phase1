@@ -1,15 +1,16 @@
 <?php
 
 include_once __DIR__ . '\..\..\config\db_config.php';
-
 include __DIR__ . '\..\..\..\models\ReviewsClass.php';
 include __DIR__ . '\..\..\..\models\UsersClass.php';
 include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
 include_once __DIR__ . '\..\..\..\controllers\carController.php';
 include_once __DIR__ . '\..\..\..\controllers\UserControllers.php';
 include_once __DIR__ . '\..\..\..\controllers\ReviewController.php';
+include_once __DIR__ . '\..\..\..\middleware\user_auth.php';
 
-include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
+user_auth("Admin Dashboard");
+
 
 SessionManager::startSession();
 if (!isset($_SESSION['user'])) {
