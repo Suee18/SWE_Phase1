@@ -47,12 +47,11 @@ switch ($action) {
             echo 'Post ID is missing.';
             exit();
         }
-    // break;
 
     case 'editPost':
         if (!empty($_POST['postID']) && !empty(trim($_POST['text']))) {
             $postID = $_POST['postID'];
-            $postText = htmlspecialchars_decode(trim($_POST['text']), ENT_QUOTES);
+            $postText = htmlspecialchars(trim($_POST['text']), ENT_QUOTES, 'UTF-8');
             $postImage = null;
             $post = $platformController->fetchPostByID($postID);
 
@@ -73,24 +72,19 @@ switch ($action) {
             echo 'Invalid data provided.';
             exit();
         }
-    // break;
+
     case 'addComment':
         if (!empty($_POST['postID']) && !empty($_POST['commentText'])) {
             $userID = SessionManager::getUser() ? SessionManager::getUser()->id : 0;
             $postID = $_POST['postID'];
             $commentText = $_POST['commentText'];
 
-            // Check if the comment already exists in the database
             $stmt = $conn->prepare("SELECT * FROM comments WHERE postID = ? AND userID = ? AND commentText = ?");
             $stmt->execute([$postID, $userID, $commentText]);
             $existingComment = $stmt->fetch();
 
-            // Only insert the comment if it doesn't already exist
             if (!$existingComment) {
-                // Insert the new comment into the database
                 $platformController->addComment($postID, $userID, $commentText);
-
-                // Return the newly added comment as JSON (to be appended to the DOM)
                 $newComment = [
                     'username' => SessionManager::getUser()->username,
                     'commentText' => $commentText
@@ -98,7 +92,6 @@ switch ($action) {
                 echo json_encode($newComment);
                 exit();
             } else {
-                // If the comment is a duplicate, return a message (optional)
                 echo json_encode(['error' => 'Duplicate comment detected']);
                 exit();
             }
@@ -118,10 +111,8 @@ switch ($action) {
 
             try {
                 if ($isLiked) {
-                    // Unlike the post
                     $platformController->removeLike($postID, $userID);
                 } else {
-                    // Like the post
                     $platformController->likePost($postID, $userID);
                 }
 
@@ -259,6 +250,14 @@ switch ($action) {
                     <div id="charCount">0 / 300</div>
                 </form>
             </div>
+        </div>
+    </div>
+    
+    <div id="confirmModal" class="popup" style="display: none;">
+        <div class="popup-content">
+            <p>Are you sure you want to delete this post? This action cannot be undone.</p>
+            <button id="confirmDeleteBtn">Yes, Delete</button>
+            <button id="cancelDeleteBtn">Cancel</button>
         </div>
     </div>
 
