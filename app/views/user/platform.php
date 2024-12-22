@@ -1,9 +1,9 @@
 <?php
 include_once __DIR__ . '\..\..\config\db_config.php';
 include_once __DIR__ . '\..\..\..\controllers\PlatformController.php';
-include __DIR__ . '\..\..\..\models\UsersClass.php';
+include_once __DIR__ . '\..\..\..\controllers\UserControllers.php';
 include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
-require_once __DIR__ . '/../../../middleware/user_auth.php';
+require_once __DIR__ . '\..\..\..\middleware\user_auth.php';
 user_auth("Platform");
 
 SessionManager::startSession();
@@ -47,7 +47,7 @@ switch ($action) {
             echo 'Post ID is missing.';
             exit();
         }
-        break;
+    // break;
 
     case 'editPost':
         if (!empty($_POST['postID']) && !empty(trim($_POST['text']))) {
@@ -73,7 +73,7 @@ switch ($action) {
             echo 'Invalid data provided.';
             exit();
         }
-        break;
+    // break;
     case 'addComment':
         if (!empty($_POST['postID']) && !empty($_POST['commentText'])) {
             $userID = SessionManager::getUser() ? SessionManager::getUser()->id : 0;
@@ -104,6 +104,38 @@ switch ($action) {
             }
         }
         break;
+    case 'toggleLike':
+        if (!empty($_POST['postID'])) {
+            $postID = $_POST['postID'];
+            $userID = SessionManager::getUser() ? SessionManager::getUser()->id : null;
+
+            if (!$userID) {
+                echo json_encode(['error' => 'User not logged in']);
+                exit();
+            }
+
+            $isLiked = $platformController->checkIfLiked($postID, $userID);
+
+            try {
+                if ($isLiked) {
+                    // Unlike the post
+                    $platformController->removeLike($postID, $userID);
+                } else {
+                    // Like the post
+                    $platformController->likePost($postID, $userID);
+                }
+
+                $likesCount = $platformController->getLikesCount($postID);
+                echo json_encode(['liked' => !$isLiked, 'likesCount' => $likesCount]);
+            } catch (Exception $e) {
+                echo json_encode(['error' => 'An error occurred. Please try again.']);
+            }
+            exit();
+        } else {
+            echo json_encode(['error' => 'Post ID missing']);
+            exit();
+        }
+
     default:
         break;
 }
@@ -175,13 +207,14 @@ switch ($action) {
                 }
 
                 echo "
-                    <div class='post-footer'>
-                        <span class='heart' onclick='toggleLike(this, {$post->postID})'>&#9829;</span>
-                        <span class='likes-count'>{$post->postLikes} Likes</span>
+                    <div class='post-footer'> 
+                        <span class='heart " . ($platformController->checkIfLiked($post->postID, SessionManager::getUser()->id) ? 'liked' : '') . "' data-id='" . $post->postID . "'>&#9829;</span>
+                        <span class='likes-count'>" . $platformController->getLikesCount($post->postID) . " Likes</span>
                     </div>
+
                     <div class='comments'>
                         <textarea class='commentInput' placeholder='Add a comment...'></textarea>
-                        <button type='button' onclick='addComment({$post->postID})'>&uarr;</button>
+                        <button type='button' onclick='addComment(" . $post->postID . ")'>&uarr;</button>
                     </div>
                     <h3>Comments section:</h3>";
 
@@ -216,7 +249,8 @@ switch ($action) {
                     <div id="charWarning" style="color: red; display: none;">
                         Please don't exceed 300 characters.
                     </div>
-                    <textarea id="postContent" name="text" placeholder="What's on your mind?" maxlength="300" required><?php echo isset($post->postText) ? htmlspecialchars($post->postText, ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
+                    <textarea id="postContent" name="text" placeholder="What's on your mind?" maxlength="300"
+                        required><?php echo isset($post->postText) ? htmlspecialchars($post->postText, ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
                     <input type="file" id="postFile" name="image" accept="image/,video/" style="display: none;" />
                     <label for="postFile" id="fileLabel" class="custom-file-label">Choose File</label>
                     <input type="hidden" name="action" value="addPost" id="formAction">
