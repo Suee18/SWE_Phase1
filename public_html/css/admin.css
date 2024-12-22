@@ -111,7 +111,7 @@ html {
     border-radius: 5px;
     transition: background-color 0.3s ease, filter 0.3s ease, transform 0.3s ease;
     filter: none;
-     font-family: var(--header_font);
+    font-family: var(--header_font);
     /* No blur by default */
 }
 
@@ -217,7 +217,7 @@ background-image: url('../media/admin-icon2.png');
     /* Allows items to wrap to the next line */
     justify-content: space-between;
     /* gap: 1rem; */
-    height: 100vh;
+    height: 110vh;
     max-height: 100vh;
     overflow-y: auto;
     /* Enables vertical scrolling if the content exceeds the container height */
@@ -227,7 +227,7 @@ background-image: url('../media/admin-icon2.png');
 }
 
 .stats-div {
-    flex: 1 1 calc(33.333% - 5rem);
+    /* flex: 1 1 calc(33.333% - 5rem); */
     /* Each div takes 1/3 of the row, accounting for the gap */
     border-radius: 0.3rem;
     margin: 1rem 1rem 1rem 3rem;
@@ -244,10 +244,10 @@ background-image: url('../media/admin-icon2.png');
 
 }
 
-.viewsChart,
-.plansChart,
-.usersChart,
-.personasChart {
+#reviewsChart,
+#loginsChart,
+#RecommendationChart,
+#personasChart {
     width: 60%;
     height: 60%;
 
@@ -294,7 +294,7 @@ input:disabled,
 select:disabled,
 textarea:disabled {
     background-color: #131313;
-    color:#ffffffd3 ;
+    color: #ffffffd3;
 }
 
 /*  enabled fields */
@@ -331,8 +331,10 @@ textarea:not(:disabled):hover {
     border-radius: 0.2rem;
 }
 
-.userformLabels,
-.carformLabels {
+
+
+
+.formLabels {
     display: block;
     margin-top: 0.5rem;
     margin-left: 6rem;
@@ -365,6 +367,7 @@ select {
     color: rgb(0, 0, 0);
 
 }
+
 
 /*error message validation*/
 .error {
@@ -563,17 +566,54 @@ select {
     font-size: 2px;
 }
 
-/*===========Reviews table===============*/
+
+/* ====================Car Form==================== */
+.carFormInputfields {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem 1rem;
+    /* Space between items */
+    margin: 2rem auto;
+    width: 90%;
+
+    background: linear-gradient(160deg, #000000, #333333, #000000bc);
+
+    backdrop-filter: blur(1px);
+}
+
+.formLabels {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.carInputs {
+    width: 60%;
+    height: 30%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+}
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}
 
 
-.table-container-adminReview {
+/*===========Reviews / Car tables===============*/
+
+.table-container-adminReview,
+.table-container-adminCars {
     position: relative;
     overflow: auto;
     max-height: 70vh;
 
+
 }
 
-.table-adminReview thead {
+.table-adminReview thead,
+.table-adminCars thead {
     position: sticky;
     top: 0;
     z-index: 1;
@@ -582,8 +622,16 @@ select {
 }
 
 .table-container-adminReview {
-    width: 80%;
+    width: 85%;
     margin-left: 8rem;
+    margin-top: 1rem;
+    border-collapse: collapse;
+}
+
+
+.table-container-adminCars {
+    width: 85%;
+    margin-left: 6rem;
     margin-top: 1rem;
     border-collapse: collapse;
 
@@ -596,24 +644,47 @@ select {
     border-collapse: collapse;
 }
 
-.table-adminReview th {
+.table-adminCars {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.table-adminReview th,
+.table-adminCars th {
     font-family: var(--header_font);
     font-size: 20px;
 }
 
-.table-adminReview td {
+.table-adminReview td,
+.table-adminCars td {
     font-family: var(--paragraph_font);
 }
 
 .table-adminReview th,
 .table-adminReview td {
-    padding: 2rem;
+    padding: 3rem;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
     text-align: left;
     border-bottom: 1px solid #0082aa;
     color: #cecece;
 }
 
-.table-adminReview th {
+.table-adminCars th,
+.table-adminCars td {
+    padding: 1rem;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+    text-align: left;
+    border-bottom: 1px solid #0082aa;
+    color: #cecece;
+}
+
+
+
+.table-adminReview th,
+.table-adminCars th {
     /* background-color: #f4f4f4; */
     background-color: #00000083;
     color: #c9c9c9;
@@ -622,8 +693,85 @@ select {
     justify-content: space-between;
 }
 
-.table-adminReview tr:hover {
+.table-adminReview tr:hover,
+.table-adminCars tr:hover {
     background: linear-gradient(160deg, #000000c5, #3a3a3a93, #3a3a3a93, #000000c5);
+}
+
+.Car-CRUD_bigcontainer {
+
+    margin-top: 4rem;
+    margin-left: 17rem;
+    margin-bottom: 5%;
+    padding: 0rem 0rem 0rem 0rem;
+    /* background: #000000bc; */
+    background: linear-gradient(160deg, #000000, #333333, #000000bc);
+
+    backdrop-filter: blur(1px);
+    border-radius: 0.2rem;
+    box-shadow: 9px 8px 5px rgba(14, 14, 14, 0.582);
+    width: 45%;
+    height: 30%;
+    overflow: hidden;
+}
+
+
+#addCar-btn {
+    border-radius: 50px;
+    width: 60px;
+    height: 40px;
+    background-color: #cacaca00 !important;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #edeff2;
+    font-size: 16px;
+    padding: 0;
+    margin-left: 24%;
+    border: 2px solid #3fb2b4;
+}
+
+#addCar-btn:hover,
+#editCar-btn:hover {
+    box-shadow: 0px 0px 10px rgba(141, 238, 255, 0.849);
+    background: linear-gradient(160deg, #217690d0, #37769b60, #37769b49, #217690d0);
+    transition: 0.3s ease-in-out;
+}
+
+#editCar-btn {
+    border-radius: 50px;
+    width: 60px;
+    height: 40px;
+    background-color: #cacaca00 !important;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #edeff2;
+    font-size: 16px;
+    padding: 0;
+
+    border: 2px solid #3fb2b4;
+}
+
+#deleteCar-btn {
+    border-radius: 50px;
+    width: 60px;
+    height: 40px;
+    background-color: #cacaca00 !important;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #edeff2;
+    font-size: 16px;
+    padding: 0;
+
+    border: 2px solid #bc2f2f;
 }
 
 .delete-icon-adminReview {
@@ -673,13 +821,15 @@ text-shadow: 5px 5px 15px rgb(133, 15, 15);
     font-size: 16px;
     padding: 0;
     margin-left: 14%;
-    border:2px solid #bc2f2f;
+    border: 2px solid #bc2f2f;
 }
 
-#deleteReview-btn:hover {
-    background-color: rgb(249, 38, 38) !important;
-    box-shadow: 0 0 10px #a01010;
-    border: none;
+#deleteReview-btn:hover,
+#deleteCar-btn:hover {
+
+    box-shadow: 0px 0px 10px rgba(243, 67, 67, 0.849);
+    background: linear-gradient(160deg, #902121d0, #9b373760, #9b373760, #902121d0);
+    transition: 0.3s ease-in-out;
 }
 
 
@@ -713,25 +863,32 @@ text-shadow: 5px 5px 15px rgb(133, 15, 15);
 }
 
 .yes-btn {
+    display: inline-block;
+    text-align: center;
     border-radius: 50px;
     width: 130px;
     height: 45px;
     margin-left: 27%;
     background-color: #4194bb;
+    text-decoration: none;
     color: #c9c9c9;
     font-size: 1rem;
     border: 0px transparent;
     cursor: pointer;
+    padding-top: 1%;
+
 
 }
 
 .yes-btn:hover {
     box-shadow: 0px 0px 10px rgba(141, 238, 255, 0.849);
-        background: linear-gradient(160deg, #217690d0, #37769b60, #37769b49, #217690d0);
-    transition:  0.3s ease-in-out;
+    background: linear-gradient(160deg, #217690d0, #37769b60, #37769b49, #217690d0);
+    transition: 0.3s ease-in-out;
 }
 
 .no-btn {
+    display: inline-block;
+    text-align: center;
     border-radius: 50px;
     width: 130px;
     height: 45px;
@@ -739,14 +896,16 @@ text-shadow: 5px 5px 15px rgb(133, 15, 15);
     background-color: #4194bb;
     color: #c9c9c9;
     border: 0px transparent;
+    text-decoration: none;
     cursor: pointer;
+    padding-top: 1%;
 
 }
 
 .no-btn:hover {
     background-color: #226381;
     opacity: 0.7;
-    transition:  0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 /*
@@ -890,7 +1049,7 @@ text-shadow: 5px 5px 15px rgb(133, 15, 15);
         padding: 10px;
     }
 
-    .userformLabels,
+    .formLabels,
     .carformLabels {
         font-family: var(--header_font);
         font-size: 1.1rem;

@@ -166,7 +166,7 @@ class Users
     }
 
     // Fetch all users from the database
-    static function getAllUsers()
+    public static function getAllUsers()
     {
         global $conn;
         $sql = "SELECT * FROM User";
@@ -174,7 +174,18 @@ class Users
         $users = [];
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                $user = new Users($row["userName"], $row["birthdate"], $row["gender"], $row["password"], $row["email"], $row["userTypeID"], $row["loginMethod"], $row["personaID"], $row["loginCounter"], $row["Timestamp"]);
+                $user = new Users(
+                    $row["userName"],
+                    $row["birthdate"],
+                    $row["gender"],
+                    $row["password"],
+                    $row["email"],
+                    $row["userTypeID"],
+                    $row["loginMethod"],
+                    $row["personaID"],
+                    $row["loginCounter"],
+                    $row["Timestamp"]
+                );
                 $user->id = $row["ID"];
                 array_push($users, $user);
             }
@@ -195,6 +206,28 @@ class Users
             $user->id = $row["ID"];
         }
         return $user;
+    }
+
+    public static function viewAllUsers()
+    {
+        global $conn;  // Ensure the global $conn variable is accessible
+
+        // SQL query to fetch all users
+        $sql = "SELECT * FROM user";
+        $result = mysqli_query($conn, $sql);  // Execute the query
+
+        if (!$result) {
+            // Return an error message if the query fails
+            die("Error fetching users: " . mysqli_error($conn));
+        }
+
+        // Store the results in an array
+        $users = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $users[] = $row;  // Add each user to the $users array
+        }
+
+        return $users;  // Return the array of users
     }
 
     // Add a new user with userTypeID validation and associate valid pages
@@ -239,8 +272,31 @@ class Users
         return false;
     }
 
-    // Update user (prevent updating userTypeID)
-    public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email)
+
+    //Method for admin to add users
+    public static function addUserByAdmin($username, $password, $birthdate, $userType, $email, $gender)
+    {
+        global $conn;
+
+        $username = mysqli_real_escape_string($conn, $username);
+        $password = mysqli_real_escape_string($conn, $password);
+        $birthdate = mysqli_real_escape_string($conn, $birthdate);
+        $email = mysqli_real_escape_string($conn, $email);
+        $gender = mysqli_real_escape_string($conn, $gender);
+
+        $userTypeID = ($userType === 'admin') ? 2 : 1;  //  'admin' = 2 and 'user' = 1
+
+        $sql = "INSERT INTO `user` (`userName`, `birthdate`, `gender`, `password`, `email`, `userTypeID`)
+                VALUES ('$username', '$birthdate', '$gender', '$password', '$email', $userTypeID)";
+
+        $result = mysqli_query($conn, $sql);
+
+        return $result;
+    }
+
+
+    // Update user
+    public static function updateUser($user_id, $username, $birthdate, $gender, $password, $email, $userType)
     {
         global $conn;
 
@@ -251,10 +307,13 @@ class Users
         $password = mysqli_real_escape_string($conn, htmlspecialchars($password));
         $email = mysqli_real_escape_string($conn, htmlspecialchars($email));
         $gender = mysqli_real_escape_string($conn, htmlspecialchars($gender));
+        $userType = mysqli_real_escape_string($conn, htmlspecialchars($userType));
 
-        // Update user data in the database (without modifying userTypeID)
+
+        $userTypeID = ($userType === 'admin') ? 2 : 1;
+        // Update user data in the database 
         $sql = "UPDATE User 
-                SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email' 
+                SET userName='$username', birthdate='$birthdate', gender='$gender', password='$password', email='$email' , userTypeID='$userTypeID' 
                 WHERE ID='$user_id'";
         return mysqli_query($conn, $sql);
     }
@@ -269,6 +328,8 @@ class Users
         $sql = "DELETE FROM User WHERE ID='$user_id'";
         return mysqli_query($conn, $sql);
     }
+
+
 
     // Login user
     static function loginUser($username, $password)
@@ -462,4 +523,245 @@ class Users
         }
     }
 
+
+
+
+    // public static function getLoginStatistics() {
+    //     global $conn;  // Assuming a global database connection
+
+    //     $sql = "SELECT userName, loginCounter FROM user";  // Adjust table/column names as needed
+    //     $result = $conn->query($sql);
+
+    //     // Initialize arrays to store the data
+    //     $userNames = [];
+    //     $loginCounters = [];
+
+    //     if ($result->num_rows > 0) {
+    //         while ($row = $result->fetch_assoc()) {
+    //             $userNames[] = $row['userName'];  // Fetch the user name
+    //             $loginCounters[] = $row['loginCounter'];  // Fetch the login counter value
+    //         }
+    //     } else {
+    //         echo "No login statistics found";
+    //     }
+
+    //     // Return the data as an associative array
+    //     return ['userNames' => $userNames, 'loginCounters' => $loginCounters];
+    // }
+
+    //Persona Statistics
+    public static function getPersonas()
+    {
+        global $conn;
+        $sql = "SELECT personaName, personaCounter FROM persona";
+        $result = $conn->query($sql);
+        $personaNames = [];
+        $personaCounters = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $personaNames[] = $row['personaName'];
+                $personaCounters[] = $row['personaCounter'];
+            }
+        } else {
+            echo "No data found";
+        }
+
+        return ['personaNames' => $personaNames, 'personaCounters' => $personaCounters];
+    }
+
+
+    //Login Statistics
+    public static function getLoginStatistics()
+    {
+        global $conn;
+
+        // Query to calculate login statistics grouped by month and year
+        $query = "
+                SELECT 
+                    DATE_FORMAT(Timestamp, '%b %Y') AS formattedMonth, -- Abbreviated month name (e.g., Jan 2024)
+                    SUM(loginCounter) AS totalLogins                  -- Sum of loginCounter for each month
+                FROM 
+                    user                                              -- Replace with your actual table name
+                GROUP BY 
+                    YEAR(Timestamp), MONTH(Timestamp)                 -- Group by year and month
+                ORDER BY 
+                    MIN(Timestamp) ASC                                -- Sort by earliest date in each group
+            ";
+
+        // Execute the query
+        $queryResult = $conn->query($query);
+
+        // Initialize arrays to store formatted months and login counts
+        $formattedMonths = [];
+        $totalLoginCounts = [];
+
+        if ($queryResult) { // Check if query execution was successful
+            if ($queryResult->num_rows > 0) {
+                while ($dataRow = $queryResult->fetch_assoc()) {
+                    $formattedMonths[] = $dataRow['formattedMonth'];      // Add formatted month to the array
+                    $totalLoginCounts[] = $dataRow['totalLogins'];        // Add total logins to the array
+                }
+            } else {
+                // No data found, return empty arrays
+                return ['formattedMonths' => [], 'totalLoginCounts' => []];
+            }
+        } else {
+            // If the query fails, log or handle the error (optional)
+            error_log("SQL Error: " . $conn->error);
+            return ['formattedMonths' => [], 'totalLoginCounts' => []];
+        }
+
+        // Return the arrays with formatted months and total login counts
+        return ['formattedMonths' => $formattedMonths, 'totalLoginCounts' => $totalLoginCounts];
+    }
+
+
+    //Favourites Statistics
+    public static function getFavoriteStatistics()
+    {
+        global $conn;
+
+        $sql = "
+                    SELECT 
+                        marketCategory,                    
+                        SUM(FavoritedCount) AS totalFavorites
+                    FROM 
+                        cars                              
+                    GROUP BY 
+                        marketCategory                          
+                    ORDER BY 
+                        marketCategory ASC";
+
+        $result = $conn->query($sql);
+        $categories = [];
+        $favorites = [];
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $categories[] = $row['marketCategory'];
+                $favorites[] = $row['totalFavorites'];
+            }
+        } else {
+
+            return ['categories' => [], 'favorites' => []];
+        }
+
+        return ['categories' => $categories, 'favorites' => $favorites];
+    }
+
+
+    //Posts Statstics
+    public static function getPostsCountByMonth()
+    {
+
+        global $conn;
+
+        $sql = "
+                    SELECT 
+                        DATE_FORMAT(Timestamp, '%b %Y') AS month, 
+                        COUNT(*) AS postCount 
+                    FROM 
+                        post  
+                    GROUP BY 
+                        month  
+                    ORDER BY 
+                        MIN(Timestamp) ASC";
+
+
+        $result = $conn->query($sql);
+
+
+        $months = [];
+        $postCounts = [];
+
+        if ($result && $result->num_rows > 0) {
+
+            while ($row = $result->fetch_assoc()) {
+                $months[] = $row['month'];
+                $postCounts[] = $row['postCount'];
+            }
+        } else {
+
+            echo "No data found.";
+        }
+
+
+        return [
+            'months' => $months,
+            'postCounts' => $postCounts,
+        ];
+    }
+
+    // Recommendation Statistics
+    public static function getRecommendationStatistics()
+    {
+        global $conn;
+
+        // SQL query to get the market categories and their respective recommendation counts
+        $sql = "
+        SELECT 
+            marketCategory,                    
+            SUM(RecommendationCount) AS totalRecommendations
+        FROM 
+            cars                              
+        GROUP BY 
+            marketCategory                           
+        ORDER BY 
+            marketCategory ASC";
+
+        $result = $conn->query($sql);
+
+        // Arrays to store categories and their total recommendations
+        $categories = [];
+        $recommendations = [];
+
+        // Check if there are any results, then store them in the arrays
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $categories[] = $row['marketCategory'];
+                $recommendations[] = $row['totalRecommendations'];
+            }
+        } else {
+            // If no results, return empty arrays
+            return ['categories' => [], 'recommendations' => []];
+        }
+
+        // Return categories and their recommendation counts
+        return ['categories' => $categories, 'recommendations' => $recommendations];
+    }
+
+
+    //Reviews Statistics
+    public static function getReviewsStatistics()
+    {
+        global $conn;
+
+        $sql = "
+            SELECT 
+                reviewCategory, 
+                COUNT(*) AS reviewCount 
+            FROM 
+                reviews 
+            GROUP BY 
+                reviewCategory 
+            ORDER BY 
+                reviewCategory ASC
+        ";
+
+        $result = $conn->query($sql);
+
+        $reviewCategories = [];
+        $reviewCategoryCounts = [];
+
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                // Use the correct column name from the SQL query
+                $reviewCategories[] = $row['reviewCategory'];
+                $reviewCategoryCounts[] = $row['reviewCount'];
+            }
+        }
+
+        return ['reviewCategories' => $reviewCategories, 'reviewCategoryCounts' => $reviewCategoryCounts];
+    }
 }

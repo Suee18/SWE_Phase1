@@ -1,5 +1,4 @@
 <?php
-include_once __DIR__ . '/../models/ReviewsClass.php';
 
 interface ReviewStrategyInterface
 {
@@ -26,6 +25,7 @@ class ReviewDatabaseStrategy implements ReviewStrategyInterface
     {
         return Reviews::deleteReviewFromDB($reviewID);
     }
+  
     public function getCategories()
     {
         return Reviews::getAllCategoriesFromDB();

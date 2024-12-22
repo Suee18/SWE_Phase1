@@ -17,6 +17,30 @@ if ($user) {
   echo "User not logged in or session expired.";
 }
 
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+  $user_id = $_SESSION['user']->id;
+  $username = !empty($_POST['fullName']) ? $_POST['fullName'] : $_SESSION['user']->username;
+  $email = !empty($_POST['email']) ? $_POST['email'] : $_SESSION['user']->email;
+  $password = !empty($_POST['password']) ? $_POST['password'] : $_SESSION['user']->password;
+  $birthdate = $_SESSION['user']->birthdate;
+  $gender = $_SESSION['user']->gender;
+  $userType = $_SESSION['user']->userTypeID;
+
+  $updateSuccess = Users::updateUser($user_id, $username, $birthdate, $gender, $password, $email, $userType);
+
+  //Updating session with new data
+  if ($updateSuccess) {
+    $updatedUser = Users::getUserById($user_id);
+    if ($updatedUser) {
+        $_SESSION['user'] = $updatedUser; 
+    }
+}
+
+  header('Location: profile.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,26 +62,45 @@ if ($user) {
   <span id="profile-pic" class="material-symbols-outlined">account_circle</span>
 
   <div class="user-profile">
-    <div class="user-info">
+    <!-- <div class="user-info"> -->
+    <form action="../user/profile.php" method="POST">
 
       <div class="info-section">
         <h2 class="info-title">Full Name:</h2>
-        <div class="info-content editable" contenteditable="false">John Doe</div>
+        <!-- <div class="info-content editable" contenteditable="false">John Doe</div> -->
+        <input type="text" name="fullName" value="<?php echo htmlspecialchars($_SESSION['user']->username); ?>" class="info-content" readonly disbaled>
         <span class="material-symbols-outlined edit-icon" onclick="editInfo(this)">edit</span>
       </div>
-
       <div class="info-section">
         <h2 class="info-title">Email:</h2>
-        <div class="info-content editable" contenteditable="false">john.doe@example.com</div>
+        <!-- <div class="info-content editable" contenteditable="false">john.doe@example.com</div> -->
+        <input type="email" name="email" value="<?php echo htmlspecialchars($_SESSION['user']->email); ?>" class="info-content" readonly disbaled>
         <span class="material-symbols-outlined edit-icon" onclick="editInfo(this)">edit</span>
       </div>
 
       <div class="info-section">
         <h2 class="info-title">Password:</h2>
-        <div class="info-content editable" contenteditable="false">********</div>
+        <!-- <div class="info-content editable" contenteditable="false">********</div> -->
+        <input type="password" name="password" value="<?php echo htmlspecialchars($_SESSION['user']->password); ?>" class="info-content" readonly disbaled>
         <span class="material-symbols-outlined edit-icon" onclick="editInfo(this)">edit</span>
       </div>
 
+
+      <!-- 
+      <div class="save-btn">
+    The save button will not be necessary since the form is submitted by clicking the "check" icon 
+        <button type="submit" style="display: none;">Save</button>
+      </div> -->
+
+    </form>
+
+
+
+    <!-- </div> -->
+
+
+    <div class="news-header">
+      <h2>Check The Latest News!</h2>
     </div>
   </div>
 
@@ -79,7 +122,6 @@ if ($user) {
         <?php endforeach; ?>
       </div>
     </div>
-  </div>
 </body>
 
 </html>
