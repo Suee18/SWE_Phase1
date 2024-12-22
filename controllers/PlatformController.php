@@ -42,4 +42,9 @@ class PlatformController
     {
         return $this->model->getPostByID($postID);
     }
+
+    public function fetchPostsByUserID($userID)
+    {
+        return $this->model->getUserPosts($userID);
+    }
 }

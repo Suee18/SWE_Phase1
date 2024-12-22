@@ -1,6 +1,22 @@
 <?php
+include_once  __DIR__ . '/../../../models/UsersClass.php';
 require_once __DIR__ . '/../../../middleware/user_auth.php';
+include_once __DIR__ . '/../../config/db_config.php';
+include_once __DIR__ . '/../../../controllers/PlatformController.php';
+include_once __DIR__ . '/../../../controllers/SessionManager.php';
+
 user_auth("User Profile");
+SessionManager::startSession();
+
+$ctrl = new PlatformController($conn);
+$user = SessionManager::getUser();
+if ($user) {
+  $userPosts = $ctrl->fetchPostsByUserID($user->id);
+
+} else {
+  echo "User not logged in or session expired.";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -47,44 +63,20 @@ user_auth("User Profile");
 
 
   <div class="news-header">
-    <h2>Check The Latest News!</h2>
+    <h2>Check Out Your Posts!</h2>
   </div>
   <div class="rightSidebar">
     <div class="news-slider">
       <div class="news-container">
-        <div class="news-card">
-          <div class="header">
-            <img src="https://avatar.vercel.sh/jack" alt="Jack" class="avatar">
-            <div class="info">
-              <p class="name">Jack</p>
-              <p class="username">@jack</p>
-            </div>
-          </div>
-          <p class="news">I've never seen anything like this before. It's amazing. I love it.</p>
-        </div>
-        <div class="news-card">
-          <div class="header">
+        <?php foreach ($userPosts as $post): ?>
+          <div class="news-card">
+            <div class="header">
             <img src="https://avatar.vercel.sh/jill" alt="Jill" class="avatar">
-            <div class="info">
-              <p class="name">Jill</p>
-              <p class="username">@jill</p>
+              <p class="name"><?= $post->username ?></p>
             </div>
+            <p class="news"><?= $post->postText ?></p>
           </div>
-          <p class="news">I don't know what to say. I'm speechless. This is amazing.</p>
-        </div>
-
-        <div class="news-card">
-          <div class="header">
-            <img src="https://avatar.vercel.sh/john" alt="John" class="avatar">
-            <div class="info">
-              <p class="name">John</p>
-              <p class="username">@john</p>
-            </div>
-          </div>
-          <p class="news">I'm at a loss for words. This is amazing. I love it.</p>
-        </div>
-
-
+        <?php endforeach; ?>
       </div>
     </div>
   </div>
