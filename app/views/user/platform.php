@@ -74,7 +74,36 @@ switch ($action) {
             exit();
         }
         break;
+    case 'addComment':
+        if (!empty($_POST['postID']) && !empty($_POST['commentText'])) {
+            $userID = SessionManager::getUser() ? SessionManager::getUser()->id : 0;
+            $postID = $_POST['postID'];
+            $commentText = $_POST['commentText'];
 
+            // Check if the comment already exists in the database
+            $stmt = $conn->prepare("SELECT * FROM comments WHERE postID = ? AND userID = ? AND commentText = ?");
+            $stmt->execute([$postID, $userID, $commentText]);
+            $existingComment = $stmt->fetch();
+
+            // Only insert the comment if it doesn't already exist
+            if (!$existingComment) {
+                // Insert the new comment into the database
+                $platformController->addComment($postID, $userID, $commentText);
+
+                // Return the newly added comment as JSON (to be appended to the DOM)
+                $newComment = [
+                    'username' => SessionManager::getUser()->username,
+                    'commentText' => $commentText
+                ];
+                echo json_encode($newComment);
+                exit();
+            } else {
+                // If the comment is a duplicate, return a message (optional)
+                echo json_encode(['error' => 'Duplicate comment detected']);
+                exit();
+            }
+        }
+        break;
     default:
         break;
 }
@@ -89,6 +118,10 @@ switch ($action) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../../public_html/css/platform.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="../../../public_html/js/platform.js" defer></script>
     <title>ApexConnect</title>
@@ -153,11 +186,14 @@ switch ($action) {
                     <h3>Comments section:</h3>";
 
                 if (empty($comments)) {
-                    echo "<p>No comments yet. Be the first to comment!</p>";
+                    echo "<div class='commentList'>
+                    <p>No comments yet. Be the first to comment!</p>
+                    </div>";
+                    echo "";
                 } else {
                     echo "<div class='commentList'>";
                     foreach ($comments as $comment) {
-                        echo "<div class='comment'>@user{$comment['userID']}: {$comment['commentText']}</div><hr>";
+                        echo "<div class='comment'>@{$comment['username']}: {$comment['commentText']}</div><hr>";
                     }
                     echo "</div>";
                 }

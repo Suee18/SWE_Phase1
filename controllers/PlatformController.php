@@ -47,4 +47,8 @@ class PlatformController
     {
         return $this->model->getUserPosts($userID);
     }
+    public function addComment($postID, $userID, $commentText)
+    {
+        $this->model->insertComment($postID, $userID, $commentText);
+    }
 }
