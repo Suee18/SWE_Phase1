@@ -95,23 +95,33 @@ class PlatformModel
 
     public function deletePost($postID)
     {
-        $query = "DELETE FROM post WHERE postID = ?";
-        $stmt = $this->db->prepare($query);
+        $this->db->begin_transaction();
 
-        if ($stmt) {
-            $stmt->bind_param('i', $postID);
-            if ($stmt->execute()) {
-                echo "Post deleted successfully";
-                exit();
-            } else {
-                echo "Error deleting post: " . $stmt->error;
-                exit();
-            }
-        } else {
-            echo "Error preparing statement: " . $this->db->error;
-            exit();
+        try {
+            $queryComments = "DELETE FROM comments WHERE postID = ?";
+            $stmtComments = $this->db->prepare($queryComments);
+            $stmtComments->bind_param('i', $postID);
+            $stmtComments->execute();
+
+            $queryLikes = "DELETE FROM likes WHERE postID = ?";
+            $stmtLikes = $this->db->prepare($queryLikes);
+            $stmtLikes->bind_param('i', $postID);
+            $stmtLikes->execute();
+
+            $queryPost = "DELETE FROM post WHERE postID = ?";
+            $stmtPost = $this->db->prepare($queryPost);
+            $stmtPost->bind_param('i', $postID);
+            $stmtPost->execute();
+
+            $this->db->commit();
+            echo "Post and associated data deleted successfully";
+        } catch (Exception $e) {
+            $this->db->rollback();
+            echo "Error deleting post and associated data: " . $e->getMessage();
         }
+        exit();
     }
+
 
 
     public function getCommentsForPost($postID)
