@@ -15,7 +15,7 @@ SessionManager::startSession();
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
-} 
+}
 
 //Statistics Generation part
 //Generating Personas Statistics
@@ -84,9 +84,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $user_id = $_POST['user_id'];
             UserController::deleteUserCtrl($user_id);
             break;
+
+            //CAR CRUDS
+        case 'add-car':
+
+            $image = $_FILES['image']['name'] ?? '';
+            $make = $_POST['make'] ?? '';
+            $model = $_POST['model'] ?? '';
+            $year = $_POST['year'] ?? '';
+            $price = $_POST['price'] ?? '';
+            $type = $_POST['type'] ?? '';
+            $persona = $_POST['persona'] ?? '';
+            $engine = $_POST['Engine'] ?? '';
+            $horsePower = $_POST['horsePower'] ?? '';
+            $doors = $_POST['Doors'] ?? '';
+            $torque = $_POST['Torque'] ?? '';
+            $topSpeed = $_POST['topSpeed'] ?? '';
+            $acceleration = $_POST['acceleration'] ?? '';
+            $fuelEfficiency = $_POST['fuelEfficiency'] ?? '';
+            $fuelType = $_POST['fuelType'] ?? '';
+            $cylinders = $_POST['cylinders'] ?? '';
+            $transmission = $_POST['transmission'] ?? '';
+            $drivenWheels = $_POST['drivenWheels'] ?? '';
+            $marketCategory = $_POST['marketCategory'] ?? '';
+            $description = $_POST['description'] ?? '';
+            $personaDescription = $_POST['personaDescription'] ?? '';
+
+            CarController::addCar(
+                $image,
+                $make,
+                $model,
+                $year,
+                $price,
+                $type,
+                $persona,
+                $engine,
+                $horsePower,
+                $doors,
+                $torque,
+                $topSpeed,
+                $acceleration,
+                $fuelEfficiency,
+                $fuelType,
+                $cylinders,
+                $transmission,
+                $drivenWheels,
+                $marketCategory,
+                $description,
+                $personaDescription
+            );
+            break;
     }
     header('Location: admin.php');
 }
+
+
+
+
 
 
 
@@ -353,6 +407,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                     <form id="userForm" method="POST" action="admin.php" onsubmit="return validate(this)">
 
                         <div class="formInputfields">
+                            <input type="hidden" name="form_type" value="user">
                             <div>
                                 <label class="formLabels" for="userSelect">Select User:</label>
                                 <select id="userSelect" name="user_id" onchange="populateForm()">
@@ -554,7 +609,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                 <div class="CRUDcontainer">
                                     <!-- add -->
                                     <button class="button" name="addUser" type="button" id="adduserButton"
-                                        onclick="enableFormFields(); switchAddButtons(); toggleDivs('div5','div7');"    >
+                                        onclick="enableFormFields(); switchAddButtons(); toggleDivs('div5','div7');">
                                         <span class="button__text">Add Car</span>
                                         <span class="button__icon">
                                             <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
@@ -569,7 +624,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                         </span>
                                     </button>
 
-                                    
+
                                 </div>
                             </div>
 
@@ -588,13 +643,14 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
             <div class="small-container">
 
                 <div class="formContainer">
-                    <form id="userForm" method="POST" action="admin.php" onsubmit="return validate(this)">
+                    <form id="carForm" method="POST" action="admin.php">
 
                         <div class="carFormInputfields">
 
                             <!-- Hidden Input -->
-                            <input type="hidden" name="car_id" id="car_id" value="">
 
+                            <input type="hidden" name="action" value="add-car">
+                            <input type="hidden" name="car_id" id="car_id" value="">
 
                             <!-- Image -->
                             <div>
@@ -623,10 +679,8 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                 <select class="carInputs" name="year" id="year">
                                     <option value="">Select Year</option>
                                     <?php
-
                                     $currentYear = date("Y");
                                     $startYear = 2018;
-
                                     for ($year = $startYear; $year <= $currentYear; $year++) {
                                         echo "<option value='$year'>$year</option>";
                                     }
@@ -653,20 +707,52 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                             <div>
                                 <label class="formLabels" for="persona">Persona :</label>
                                 <select class="carInputs" name="persona" id="persona">
-                                    <option value="">Select Persona</option>
-                                    <option value="Tech Geek">Tech Geek</option>
-                                    <option value="Performance Enthusiast">Performance Enthusiast</option>
-                                    <option value="Classic Car Lover">Classic Car Lover</option>
-                                    <option value="Family First">Family First</option>
-                                    <option value="Luxury Seeker">Luxury Seeker</option>
-                                    <option value="Budget Conscious">Budget Conscious</option>
-
-
-
+                                    <option value="" disabled>Select Persona</option>
+                                    <option value="1">Eco-Warrior</option>
+                                    <option value="2">Tech Geek</option>
+                                    <option value="3">Performance Enthusiast</option>
+                                    <option value="4">Classic Car Lover</option>
+                                    <option value="5">Family First</option>
+                                    <option value="6">Luxury Seeker</option>
+                                    <option value="7">Budget Conscious</option>
                                 </select>
                                 <span id="personaERR" class="error"></span>
                             </div>
 
+                            <!-- Persona Description -->
+                            <div>
+                                <label class="formLabels" for="personaDescription">Persona Description :</label>
+                                <textarea class="carInputs" name="personaDescription" id="personaDescription"></textarea>
+                                <span id="personaDescriptionERR" class="error"></span>
+                            </div>
+
+                            <!-- Top Speed -->
+                            <div>
+                                <label for="topSpeed">Top Speed (km/h):</label>
+                                <input type="number" id="topSpeed" name="topSpeed" required><br><br>
+                                <span id="topSpeedERR" class="error"></span>
+                            </div>
+
+                            <!-- Acceleration -->
+                            <div>
+                                <label for="acceleration">Acceleration (0-100 km/h):</label>
+                                <input type="number" id="acceleration" name="acceleration" required><br><br>
+
+                                <span id="accelerationERR" class="error"></span>
+                            </div>
+
+                            <!-- Market Category -->
+                            <div>
+                                <label class="formLabels" for="marketCategory">Market Category:</label>
+                                <select class="carInputs" name="marketCategory" id="marketCategory">
+                                    <option value="">Select Market Category</option>
+                                    <option value="luxury">Luxury</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="family">Family</option>
+                                    <option value="economy">Economy</option>
+                                </select>
+                                <span id="marketCategoryERR" class="error"></span>
+                            </div>
 
                             <!-- Horsepower -->
                             <div>
@@ -678,7 +764,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                             <!-- Doors (Select) -->
                             <div>
                                 <label class="formLabels" for="doors">Doors :</label>
-                                <select class="carInputs" name="doors" id="doors">
+                                <select class="carInputs" name="Doors" id="doors">
                                     <option value="">Select Doors</option>
                                     <option value="2">2</option>
                                     <option value="4">4</option>
@@ -690,7 +776,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                             <!-- Engine -->
                             <div>
                                 <label class="formLabels" for="engine">Engine :</label>
-                                <input class="carInputs" type="text" name="engine" id="engine">
+                                <input class="carInputs" type="text" name="Engine" id="engine">
                                 <span id="engineERR" class="error"></span>
                             </div>
 
@@ -699,11 +785,10 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                 <label class="formLabels" for="cylinders">Cylinders:</label>
                                 <select class="carInputs" id="cylinders" name="cylinders" required>
                                     <option value="" disabled selected>Select Cylinders</option>
-                                    <option value="0">0 Cylinders</option>
-                                    <option value="4">4 Cylinders</option>
-                                    <option value="6">6 Cylinders</option>
-                                    <option value="8">8 Cylinders</option>
-                                    <option value="10">10 Cylinders</option>
+                                    <option value="4">4</option>
+                                    <option value="6">6</option>
+                                    <option value="8">8</option>
+                                    <option value="10">10</option>
                                 </select>
                                 <span id="cylindersERR" class="error"></span>
                             </div>
@@ -711,19 +796,15 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                             <!-- Torque -->
                             <div>
                                 <label class="formLabels" for="torque">Torque :</label>
-                                <input class="carInputs" type="number" name="torque" id="torque">
+                                <input class="carInputs" type="number" name="Torque" id="torque">
                                 <span id="torqueERR" class="error"></span>
                             </div>
 
                             <div>
                                 <label class="formLabels" for="fuelEfficiency">Fuel Efficiency :</label>
-
                                 <input class="carInputs" type="number" name="fuelEfficiency" id="fuelEfficiency" value="50" step="0.1" min="0" required>
-
                                 <span id="fuelEfficiencyERR" class="error"></span>
                             </div>
-
-
 
                             <!-- Fuel Type -->
                             <div>
@@ -749,26 +830,30 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                 <span id="transmissionERR" class="error"></span>
                             </div>
 
-
                             <!-- Driven Wheels -->
                             <div>
-                                <label class="formLabels" for="drivenWheels">Driven Wheels:</label>
-                                <select class="carInputs" id="drivenWheels" name="drivenWheels" required>
-                                    <option value="" disabled selected>Select Driven Wheels</option>
-                                    <option value="front">Front-Wheel Drive (FWD)</option>
-                                    <option value="rear">Rear-Wheel Drive (RWD)</option>
-                                    <option value="all">All-Wheel Drive (AWD)</option>
-                                    <option value="four">Four-Wheel Drive (4WD)</option>
+                                <label for="drivenWheels">Driven Wheels:</label>
+                                <select id="drivenWheels" name="drivenWheels" required>
+                                    <option value="FWD">FWD</option>
+                                    <option value="AWD">Rear</option>
+                                    <option value="all">All</option>
                                 </select>
                                 <span id="drivenWheelsERR" class="error"></span>
                             </div>
+
                             <!-- Description -->
                             <div>
                                 <label class="formLabels" for="description">Description :</label>
                                 <textarea class="carInputs" name="description" id="description"></textarea>
                                 <span id="descriptionERR" class="error"></span>
                             </div>
-                            <button type="submit">Save Car</button>
+
+
+
+                            <div>
+                                <input class="formSubmit" type="submit" value="Submit">
+                            </div>
+
                         </div>
 
                     </form>

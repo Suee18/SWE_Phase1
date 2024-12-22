@@ -9,48 +9,95 @@ include_once __DIR__ . '../../models/CarsModel.php';
 $carModel = new CarsModel($conn);
 
 // Handle the request based on the POST action (add, update, delete)
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // Check if the action is 'add', 'update', or 'delete'
-    switch ($_POST['action']) {
-        case 'add':
-            carController::addCar($carModel);
-            break;
-        case 'update':
-            carController::updateCar($carModel);
-            break;
-        case 'delete':
-            carController::deleteCar($carModel);
-            break;
-        default:
-            echo "Invalid action.";
-            break;
-    }
-}
+//     // Check if the action is 'add', 'update', or 'delete'
+//     switch ($_POST['action']) {
+//         case 'add':
+//             carController::addCar();
+//             break;
+//         case 'update':
+//             carController::updateCar($carModel);
+//             break;
+//         case 'delete':
+//             carController::deleteCar($carModel);
+//             break;
+//         default:
+//             echo "Invalid action.";
+//             break;
+//     }
+// }
 // else {
 //     echo "Invalid request.";
 // }
 
 class carController
 {
-    // Function to add a car
-    public static function addCar($carModel)
-    {
-        $carData = validateCarData($_POST);
+    // // Function to add a car
+    // public static function addCar($carModel)
+    // {
+    //     $carData = validateCarData($_POST);
 
-        // Check if validation was successful
-        if ($carData === false) {
-            echo "Invalid car data.";
-            return;
-        }
+    //     // Check if validation was successful
+    //     if ($carData === false) {
+    //         echo "Invalid car data.";
+    //         return;
+    //     }
 
-        // Call the createCar method to add the car to the database
-        // if 
-        $carModel->createCar($carData);
-        //     echo "Car added successfully!";
-        // } else {
-        //     echo "Failed to add car.";
-        // }
+    //     // Call the createCar method to add the car to the database
+    //     // if 
+    //     $carModel->createCar($carData);
+    //     //     echo "Car added successfully!";
+    //     // } else {
+    //     //     echo "Failed to add car.";
+    //     // }
+    // }
+
+
+    public static function addCar(
+        $image,
+        $make,
+        $model,
+        $year,
+        $price,
+        $type,
+        $persona,
+        $engine,
+        $horsePower,
+        $doors,
+        $torque,
+        $topSpeed,
+        $acceleration,
+        $fuelEfficiency,
+        $fuelType,
+        $cylinders,
+        $transmission,
+        $drivenWheels,
+        $marketCategory,
+        $description,
+        $personaDescription
+    ) {
+        CarsModel::createCar(       $image,
+        $make,
+        $model,
+        $year,
+        $price,
+        $type,
+        $persona,
+        $engine,
+        $horsePower,
+        $doors,
+        $torque,
+        $topSpeed,
+        $acceleration,
+        $fuelEfficiency,
+        $fuelType,
+        $cylinders,
+        $transmission,
+        $drivenWheels,
+        $marketCategory,
+        $description,
+        $personaDescription);
     }
 
     public static function viewAllCars()

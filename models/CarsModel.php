@@ -13,37 +13,103 @@
         }
 
         // Create a new car entry
-        public function createCar($carData)
-        {
-            $query = "INSERT INTO cars (image, make, model, year, price, type, persona, Engine, horsePower, Doors, Torque, topSpeed, acceleration, fuelEfficiency, fuelType, cylinders, transmission, drivenWheels, marketCategory, description) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $this->db->prepare($query);
+        // public function createCar($carData)
+        // {
+        //     $query = "INSERT INTO cars (image, make, model, year, price, type, persona, Engine, horsePower, Doors, Torque, topSpeed, acceleration, fuelEfficiency, fuelType, cylinders, transmission, drivenWheels, marketCategory, description) 
+        //           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        //     $stmt = $this->db->prepare($query);
 
-            $stmt->bind_param(
-                "ssssdsdssddsdsdssdss",
-                $carData['image'],
-                $carData['make'],
-                $carData['model'],
-                $carData['year'],
-                $carData['price'],
-                $carData['type'],
-                $carData['persona'],
-                $carData['Engine'],
-                $carData['horsePower'],
-                $carData['Doors'],
-                $carData['Torque'],
-                $carData['topSpeed'],
-                $carData['acceleration'],
-                $carData['fuelEfficiency'],
-                $carData['fuelType'],
-                $carData['cylinders'],
-                $carData['transmission'],
-                $carData['drivenWheels'],
-                $carData['marketCategory'],
-                $carData['description'],
-            );
+        //     $stmt->bind_param(
+        //         "ssssdsdssddsdsdssdss",
+        //         $carData['image'],
+        //         $carData['make'],
+        //         $carData['model'],
+        //         $carData['year'],
+        //         $carData['price'],
+        //         $carData['type'],
+        //         $carData['persona'],
+        //         $carData['Engine'],
+        //         $carData['horsePower'],
+        //         $carData['Doors'],
+        //         $carData['Torque'],
+        //         $carData['topSpeed'],
+        //         $carData['acceleration'],
+        //         $carData['fuelEfficiency'],
+        //         $carData['fuelType'],
+        //         $carData['cylinders'],
+        //         $carData['transmission'],
+        //         $carData['drivenWheels'],
+        //         $carData['marketCategory'],
+        //         $carData['description'],
+        //     );
 
-            return $stmt->execute();
+        //     return $stmt->execute();
+        // }
+
+        public static function createCar(
+            $image,
+            $make,
+            $model,
+            $year,
+            $price,
+            $type,
+            $persona,
+            $engine,
+            $horsePower,
+            $doors,
+            $torque,
+            $topSpeed,
+            $acceleration,
+            $fuelEfficiency,
+            $fuelType,
+            $cylinders,
+            $transmission,
+            $drivenWheels,
+            $marketCategory,
+            $description,
+            $personaDescription
+        ) {
+            global $conn;
+    
+            // Escape input values to prevent SQL injection
+            $image = mysqli_real_escape_string($conn, $image);
+            $make = mysqli_real_escape_string($conn, $make);
+            $model = mysqli_real_escape_string($conn, $model);
+            $year = mysqli_real_escape_string($conn, $year);
+            $price = mysqli_real_escape_string($conn, $price);
+            $type = mysqli_real_escape_string($conn, $type);
+            $persona = mysqli_real_escape_string($conn, $persona);
+            $engine = mysqli_real_escape_string($conn, $engine);
+            $horsePower = mysqli_real_escape_string($conn, $horsePower);
+            $doors = mysqli_real_escape_string($conn, $doors);
+            $torque = mysqli_real_escape_string($conn, $torque);
+            $topSpeed = mysqli_real_escape_string($conn, $topSpeed);
+            $acceleration = mysqli_real_escape_string($conn, $acceleration);
+            $fuelEfficiency = mysqli_real_escape_string($conn, $fuelEfficiency);
+            $fuelType = mysqli_real_escape_string($conn, $fuelType);
+            $cylinders = mysqli_real_escape_string($conn, $cylinders);
+            $transmission = mysqli_real_escape_string($conn, $transmission);
+            $drivenWheels = mysqli_real_escape_string($conn, $drivenWheels);
+            $marketCategory = mysqli_real_escape_string($conn, $marketCategory);
+            $description = mysqli_real_escape_string($conn, $description);
+            $personaDescription = mysqli_real_escape_string($conn, $personaDescription);
+    
+            // Insert query to add the car to the database
+            $sql = "INSERT INTO `cars` (`image`, `make`, `model`, `year`, `price`, `type`, `persona`, 
+                                    `engine`, `horsePower`, `doors`, `torque`, `topSpeed`, `acceleration`, 
+                                    `fuelEfficiency`, `fuelType`, `cylinders`, `transmission`, `drivenWheels`, 
+                                    `marketCategory`, `description`, 
+                                    `personaDescription`)
+                VALUES ('$image', '$make', '$model', '$year', '$price', '$type', '$persona', 
+                        '$engine', '$horsePower', '$doors', '$torque', '$topSpeed', '$acceleration', 
+                        '$fuelEfficiency', '$fuelType', '$cylinders', '$transmission', '$drivenWheels', 
+                        '$marketCategory', '$description',  
+                        '$personaDescription')";
+    
+            // Execute the query and return the result
+            $result = mysqli_query($conn, $sql);
+    
+            return $result;
         }
 
         // Read car data (single or all cars)
