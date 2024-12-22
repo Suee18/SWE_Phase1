@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__ . '/../core/cars_database.php');
+include_once __DIR__ . '/../config/db.php';
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -50,7 +51,8 @@ if (isset($_GET['action'])) {
     echo json_encode(['error' => 'No action specified']);
 }
 
-function fetchMakes($db) {
+function fetchMakes($db)
+{
     $query = "SELECT DISTINCT make FROM cars";
     $stmt = $db->query($query);
     $makes = [];
@@ -60,7 +62,8 @@ function fetchMakes($db) {
     echo json_encode($makes);
 }
 
-function fetchModels($db, $make) {
+function fetchModels($db, $make)
+{
     try {
         $query = "SELECT DISTINCT model FROM cars WHERE make = :make"; // Use a named placeholder
         $stmt = $db->prepare($query); // Prepare the query
@@ -74,7 +77,8 @@ function fetchModels($db, $make) {
     }
 }
 
-function fetchYears($db, $make, $model) {
+function fetchYears($db, $make, $model)
+{
     $query = "SELECT DISTINCT year FROM cars WHERE make = :make AND model = :model ORDER BY year DESC";
     $stmt = $db->prepare($query);
     $stmt->bindValue(':make', $make, PDO::PARAM_STR);
@@ -88,19 +92,20 @@ function fetchYears($db, $make, $model) {
     echo json_encode($years);
 }
 
-function fetchCarDetails($db, $make, $model, $year) {
+function fetchCarDetails($db, $make, $model, $year)
+{
     $query = "SELECT * FROM cars WHERE make = :make AND model = :model AND year = :year";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':make', $make, PDO::PARAM_STR);
     $stmt->bindParam(':model', $model, PDO::PARAM_STR);
     $stmt->bindParam(':year', $year, PDO::PARAM_STR);
     $stmt->execute();
-  
+
     $carData = $stmt->fetch(PDO::FETCH_ASSOC);
     echo json_encode($carData);
-  }
-  
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     $action = $input['action'];
 
@@ -121,32 +126,32 @@ function fetchCarDetails($db, $make, $model, $year) {
         exit;
     }
     if (isset($_GET['make'], $_GET['model'], $_GET['year'])) {
-    $make = $_GET['make'];
-    $model = $_GET['model'];
-    $year = $_GET['year'];
+        $make = $_GET['make'];
+        $model = $_GET['model'];
+        $year = $_GET['year'];
 
-    // Connect to your database
-    $conn = new mysqli("localhost", "username", "password", "database");
+        // Connect to your database
+        $conn = new mysqli("localhost", "username", "password", "database");
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Fetch car details for the selected make, model, and year
+        $query = $conn->prepare("SELECT * FROM cars WHERE make = ? AND model = ? AND year = ?");
+        $query->bind_param("sss", $make, $model, $year);
+        $query->execute();
+        $result = $query->get_result();
+
+        if ($result->num_rows > 0) {
+            $car = $result->fetch_assoc();
+            echo json_encode($car);
+        } else {
+            echo json_encode(["error" => "No car found matching the selected criteria."]);
+        }
+
+        $conn->close();
     }
-
-    // Fetch car details for the selected make, model, and year
-    $query = $conn->prepare("SELECT * FROM cars WHERE make = ? AND model = ? AND year = ?");
-    $query->bind_param("sss", $make, $model, $year);
-    $query->execute();
-    $result = $query->get_result();
-
-    if ($result->num_rows > 0) {
-        $car = $result->fetch_assoc();
-        echo json_encode($car);
-    } else {
-        echo json_encode(["error" => "No car found matching the selected criteria."]);
-    }
-
-    $conn->close();
-}
 
 
 }

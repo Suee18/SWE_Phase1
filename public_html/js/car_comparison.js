@@ -8,9 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Get the <span> element that closes the modal
     const closeButton = modal.querySelector(".close-button");
 
-
     // When the user clicks the button, open the modal
-   openModalButton.addEventListener("click", () => {
+    openModalButton.addEventListener("click", () => {
         modal.style.display = "flex";
     });
 
@@ -25,13 +24,13 @@ document.addEventListener("DOMContentLoaded", () => {
             modal.style.display = "none";
         }
     });
-      // Optional: Toggle modal with a close button click (if you want this functionality)
-      closeModalButton.addEventListener("click", () => {
+    // Optional: Toggle modal with a close button click (if you want this functionality)
+    closeButton.addEventListener("click", () => {
         modal.style.display = "none";
     });
     function toggleModal() {
-    const modal = document.getElementById("comparisonModal");
-    modal.style.display = modal.style.display === "flex" ? "none" : "flex";
+        const modal = document.getElementById("comparisonModal");
+        modal.style.display = modal.style.display === "flex" ? "none" : "flex";
     }
 });
 document.addEventListener("DOMContentLoaded", () => {
@@ -48,8 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Utility function to populate dropdowns
     function populateDropdown(element, items) {
         element.innerHTML = '<option value="">Choose an option</option>';
-        items.forEach(item => {
-            const option = document.createElement('option');
+        items.forEach((item) => {
+            const option = document.createElement("option");
             option.value = item;
             option.textContent = item;
             element.appendChild(option);
@@ -58,17 +57,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Fetch Makes and populate both 'make1' and 'make2' dropdowns
     function fetchMakes() {
-        fetch('/../../../controllers/comparison_fetches.php?action=fetch_makes')
-            .then(response => response.json())
-            .then(data => {
+        fetch("../../../controllers/comparison_fetches.php?action=fetch_makes")
+            .then((response) => response.json())
+            .then((data) => {
                 if (data && data.length) {
                     populateDropdown(makeSelect1, data);
                     populateDropdown(makeSelect2, data);
                 } else {
-                    alert('No makes available.');
+                    alert("No makes available.");
                 }
             })
-            .catch(() => alert('Error fetching makes'));
+            .catch(() => alert("Error fetching makes"));
     }
 
     fetchMakes(); // Fetch makes on page load
@@ -76,24 +75,29 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fetch Models and populate 'model' dropdown, reset 'year' dropdown
     function fetchModels(make, modelSelect, yearSelect) {
         if (make) {
-            fetch(`/project/SWE_Phase1/SWE_Phase1/controllers/comparison_fetches.php?action=fetch_models&make=${encodeURIComponent(make)}`)
-                .then(response => response.json())
-                .then(data => {
+            fetch(
+                `../../../controllers/comparison_fetches.php?action=fetch_models&make=${encodeURIComponent(
+                    make
+                )}`
+            )
+                .then((response) => response.json())
+                .then((data) => {
                     if (data && data.length) {
                         populateDropdown(modelSelect, data);
                         modelSelect.disabled = false;
                     } else {
-                        modelSelect.innerHTML = '<option>Choose a Model</option>';
+                        modelSelect.innerHTML =
+                            "<option>Choose a Model</option>";
                         modelSelect.disabled = true;
                     }
-                    yearSelect.innerHTML = '<option>Choose a Year</option>';
+                    yearSelect.innerHTML = "<option>Choose a Year</option>";
                     yearSelect.disabled = true;
                 })
-                .catch(() => alert('Error fetching models'));
+                .catch(() => alert("Error fetching models"));
         } else {
-            modelSelect.innerHTML = '<option>Choose a Model</option>';
+            modelSelect.innerHTML = "<option>Choose a Model</option>";
             modelSelect.disabled = true;
-            yearSelect.innerHTML = '<option>Choose a Year</option>';
+            yearSelect.innerHTML = "<option>Choose a Year</option>";
             yearSelect.disabled = true;
         }
     }
@@ -101,20 +105,24 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fetch Years and populate 'year' dropdown
     function fetchYears(make, model, yearSelect) {
         if (make && model) {
-            fetch(`/project/SWE_Phase1/SWE_Phase1/controllers/comparison_fetches.php?action=fetch_years&make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}`)
-                .then(response => response.json())
-                .then(data => {
+            fetch(
+                `../../../controllers/comparison_fetches.php?action=fetch_years&make=${encodeURIComponent(
+                    make
+                )}&model=${encodeURIComponent(model)}`
+            )
+                .then((response) => response.json())
+                .then((data) => {
                     if (data && data.length) {
                         populateDropdown(yearSelect, data);
                         yearSelect.disabled = false;
                     } else {
-                        yearSelect.innerHTML = '<option>Choose a Year</option>';
+                        yearSelect.innerHTML = "<option>Choose a Year</option>";
                         yearSelect.disabled = true;
                     }
                 })
-                .catch(() => alert('Error fetching years'));
+                .catch(() => alert("Error fetching years"));
         } else {
-            yearSelect.innerHTML = '<option>Choose a Year</option>';
+            yearSelect.innerHTML = "<option>Choose a Year</option>";
             yearSelect.disabled = true;
         }
     }
@@ -164,16 +172,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fetch and display car details
     function fetchCarDetails(make, model, year, containerId) {
         if (make && model && year) {
-            fetch(`/project/SWE_Phase1/SWE_Phase1/controllers/comparison_fetches.php?action=fetch_car_details&make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}&year=${encodeURIComponent(year)}`)
-                .then(response => response.json())
-                .then(data => {
+            fetch(
+                `../../../controllers/comparison_fetches.php?action=fetch_car_details&make=${encodeURIComponent(
+                    make
+                )}&model=${encodeURIComponent(model)}&year=${encodeURIComponent(
+                    year
+                )}`
+            )
+                .then((response) => response.json())
+                .then((data) => {
                     if (data) {
                         populateCarDetails(containerId, data);
                     } else {
                         alert("Car details not found.");
                     }
                 })
-                .catch(() => alert('Error fetching car details'));
+                .catch(() => alert("Error fetching car details"));
         }
     }
 
@@ -225,14 +239,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
- 
-  
-  // Populate car details
-  function populateCarDetails(carId, carData) {
-    const carColumn = document.querySelector(`#${carId}-column`);
-    if (!carColumn) return;
+    // Populate car details
+    function populateCarDetails(carId, carData) {
+        const carColumn = document.querySelector(`#${carId}-column`);
+        if (!carColumn) return;
 
-    carColumn.innerHTML = `
+        carColumn.innerHTML = `
       <h3>${carData.make} ${carData.model} ${carData.year}</h3>
       <p class="fuelType">Fuel Type: ${carData.fuelType}</p>
       <p class="horsePower">Horsepower: ${carData.horsePower} HP</p>
@@ -247,102 +259,112 @@ document.addEventListener("DOMContentLoaded", () => {
       <p class="fuelEfficiency">Fuel Efficiency: ${carData.fuelEfficiency} mpg</p>
       <p class="price">Price: $${carData.price}</p>
     `;
-}
+    }
 
-  // Add console logs for verification
-// Fetch car details based on make, model, and year
-async function fetchCarDetails(make, model, year) {
-    try {
-        console.log('Fetching car details...');
-        const response = await fetch(`/project/SWE_Phase1/SWE_Phase1/controllers/comparison_fetches.php?action=fetch_car_details&make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}&year=${encodeURIComponent(year)}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+    // Add console logs for verification
+    // Fetch car details based on make, model, and year
+    async function fetchCarDetails(make, model, year) {
+        try {
+            console.log("Fetching car details...");
+            const response = await fetch(
+                `../../../controllers/comparison_fetches.php?action=fetch_car_details&make=${encodeURIComponent(
+                    make
+                )}&model=${encodeURIComponent(model)}&year=${encodeURIComponent(
+                    year
+                )}`
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log("Received car data:", data);
+            return data;
+        } catch (error) {
+            console.error("Error fetching car details:", error);
+            return null;
         }
-        const data = await response.json();
-        console.log('Received car data:', data);
-        return data;
-    } catch (error) {
-        console.error('Error fetching car details:', error);
-        return null;
-    }
-}
-
-// Handle "Compare" button click
-document.addEventListener("DOMContentLoaded", () => {
-async function handleCompare() {
-    const make = document.querySelector("#make-dropdown").value;
-    const model = document.querySelector("#model-dropdown").value;
-    const year = document.querySelector("#year-dropdown").value;
-
-    // Validate selections
-    if (!make || !model || !year) {
-        alert("Please select Make, Model, and Year to compare!");
-        return;
     }
 
-    const carDetails = await fetchCarDetails(make, model, year);
-    if (carDetails) {
-        updateComparisonGrid(carDetails[0], carDetails[1]);
-        document.getElementById("comparisonModal").style.display = "flex"; // Show modal
-    } else {
-        alert("Failed to fetch car details for comparison.");
-    }
-}});
-// Fetch car data for comparison grid
-async function fetchCarData() {
-    try {
-        console.log("Fetching car data...");
-        const response = await fetch('/project/SWE_Phase1/SWE_Phase1/controllers/comparison_fetches.php/getCarData');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+    // Handle "Compare" button click
+    document.addEventListener("DOMContentLoaded", () => {
+        async function handleCompare() {
+            const make = document.querySelector("#make-dropdown").value;
+            const model = document.querySelector("#model-dropdown").value;
+            const year = document.querySelector("#year-dropdown").value;
+
+            // Validate selections
+            if (!make || !model || !year) {
+                alert("Please select Make, Model, and Year to compare!");
+                return;
+            }
+
+            const carDetails = await fetchCarDetails(make, model, year);
+            if (carDetails) {
+                updateComparisonGrid(carDetails[0], carDetails[1]);
+                document.getElementById("comparisonModal").style.display =
+                    "flex"; // Show modal
+            } else {
+                alert("Failed to fetch car details for comparison.");
+            }
         }
-        const carData = await response.json();
-        console.log("Received car data:", carData);
-        return carData.length >= 2 ? carData : null;
-    } catch (error) {
-        console.error("Error fetching car data:", error);
-        return null;
+    });
+    // Fetch car data for comparison grid
+    async function fetchCarData() {
+        try {
+            console.log("Fetching car data...");
+            const response = await fetch(
+                "../../../controllers/comparison_fetches.php/getCarData"
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const carData = await response.json();
+            console.log("Received car data:", carData);
+            return carData.length >= 2 ? carData : null;
+        } catch (error) {
+            console.error("Error fetching car data:", error);
+            return null;
+        }
     }
-}
 
-// Update the comparison grid dynamically
-function updateComparisonGrid(car1, car2) {
-    const features = [
-        { title: "Make", key: "make" },
-        { title: "Model", key: "model" },
-        { title: "Year", key: "year" },
-        { title: "Price", key: "price" },
-        { title: "Type", key: "type" },
-        { title: "Horsepower", key: "horsePower" },
-        { title: "Fuel Type", key: "fuelType" },
-        { title: "Cylinders", key: "cylinders" },
-        { title: "Transmission", key: "transmission" },
-        { title: "Driven Wheels", key: "drivenWheels" },
-        { title: "Market Category", key: "marketCategory" },
-        { title: "Description", key: "description" },
-    ];
+    // Update the comparison grid dynamically
+    function updateComparisonGrid(car1, car2) {
+        const features = [
+            { title: "Make", key: "make" },
+            { title: "Model", key: "model" },
+            { title: "Year", key: "year" },
+            { title: "Price", key: "price" },
+            { title: "Type", key: "type" },
+            { title: "Horsepower", key: "horsePower" },
+            { title: "Fuel Type", key: "fuelType" },
+            { title: "Cylinders", key: "cylinders" },
+            { title: "Transmission", key: "transmission" },
+            { title: "Driven Wheels", key: "drivenWheels" },
+            { title: "Market Category", key: "marketCategory" },
+            { title: "Description", key: "description" },
+        ];
 
-    const comparisonGrid = document.querySelector(".comparison-grid");
-    comparisonGrid.innerHTML = `
+        const comparisonGrid = document.querySelector(".comparison-grid");
+        comparisonGrid.innerHTML = `
         <div class="feature-item"></div>
         <div class="car-column"><h3>${car1.make} ${car1.model}</h3></div>
         <div class="car-column"><h3>${car2.make} ${car2.model}</h3></div>
     `;
 
-    features.forEach(feature => {
-        comparisonGrid.innerHTML += `
+        features.forEach((feature) => {
+            comparisonGrid.innerHTML += `
             <div class="feature-item">
                 <p>${feature.title}</p>
             </div>
             <div class="car-column"><p>${car1[feature.key] || "N/A"}</p></div>
             <div class="car-column"><p>${car2[feature.key] || "N/A"}</p></div>
         `;
-    });
-}
+        });
+    }
 
-// Toggle modal visibility
-function toggleModal() {
-    const modal = document.getElementById("comparisonModal");
-    modal.style.display = modal.style.display === "flex" ? "none" : "flex";
-}
+    // Toggle modal visibility
+    function toggleModal() {
+        const modal = document.getElementById("comparisonModal");
+        modal.style.display = modal.style.display === "flex" ? "none" : "flex";
+    }
 });
