@@ -43,7 +43,28 @@ class PlatformController
         return $this->model->getPostByID($postID);
     }
 
-  public function addComment($postID, $userID, $commentText) {
+    public function addComment($postID, $userID, $commentText)
+    {
         $this->model->insertComment($postID, $userID, $commentText);
-    }    
+    }
+
+    public function likePost($postID, $userID)
+    {
+        $this->model->insertLike($postID, $userID);
+    }
+
+    public function removeLike($postID, $userID)
+    {
+        $this->model->deleteLike($postID, $userID);
+    }
+
+    public function checkIfLiked($postID, $userID)
+    {
+        return $this->model->checkIfLiked($postID, $userID);
+    }
+
+    public function getLikesCount($postID)
+    {
+        return $this->model->getLikesCount($postID);
+    }
 }
