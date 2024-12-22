@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . "/../app/config/db_config.php";
+include_once __DIR__ . '/../models/ReviewsClass.php';
 
 interface ReviewStrategyInterface
 {
@@ -25,7 +27,7 @@ class ReviewDatabaseStrategy implements ReviewStrategyInterface
     {
         return Reviews::deleteReviewFromDB($reviewID);
     }
-  
+
     public function getCategories()
     {
         return Reviews::getAllCategoriesFromDB();
@@ -65,5 +67,10 @@ class ReviewController
     public static function getNumberOfReviews($numberOfReviews)
     {
         return Reviews::getLastNumberOfReviews($numberOfReviews);
+    }
+
+    public static function getAllReviews()
+    {
+        return  Reviews::getAllReviews();
     }
 }
