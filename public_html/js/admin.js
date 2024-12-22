@@ -591,3 +591,181 @@ function setActionCarForm() {
     }
 }
 
+// Function to validate form
+function validateCarForm(event) {
+    let isValid = true;
+
+    // Clear all previous error messages
+    clearErrorMessages();
+
+    // Validate Image
+    const image = document.getElementById('image');
+    if (!image.value) {
+        showError("imageERR", "Image is required.");
+        isValid = false;
+    }
+
+    // Validate Make
+    const make = document.getElementById('make');
+    if (!make.value.trim()) {
+        showError("makeERR", "Make is required.");
+        isValid = false;
+    }
+
+    // Validate Model
+    const model = document.getElementById('model');
+    if (!model.value.trim()) {
+        showError("modelERR", "Model is required.");
+        isValid = false;
+    }
+
+    // Validate Year
+    const year = document.getElementById('year');
+    if (!year.value) {
+        showError("yearERR", "Please select a year.");
+        isValid = false;
+    }
+
+    // Validate Price
+    const price = document.getElementById('price');
+    if (!price.value || price.value <= 0) {
+        showError("priceERR", "Price must be a positive number.");
+        isValid = false;
+    }
+
+    // Validate Type
+    const type = document.getElementById('type');
+    if (!type.value.trim()) {
+        showError("typeERR", "Type is required.");
+        isValid = false;
+    }
+
+    // Validate Persona
+    const persona = document.getElementById('persona');
+    if (!persona.value) {
+        showError("personaERR", "Please select a persona.");
+        isValid = false;
+    }
+
+    // Validate Persona Description
+    const personaDescription = document.getElementById('personaDescription');
+    if (!personaDescription.value.trim()) {
+        showError("personaDescriptionERR", "Persona Description is required.");
+        isValid = false;
+    }
+
+    // Validate Top Speed
+    const topSpeed = document.getElementById('topSpeed');
+    if (!topSpeed.value || topSpeed.value <= 0) {
+        showError("topSpeedERR", "Top Speed must be a positive number.");
+        isValid = false;
+    }
+
+    // Validate Acceleration
+    const acceleration = document.getElementById('acceleration');
+    if (!acceleration.value || acceleration.value <= 0) {
+        showError("accelerationERR", "Acceleration must be a positive number.");
+        isValid = false;
+    }
+
+    // Validate Market Category
+    const marketCategory = document.getElementById('marketCategory');
+    if (!marketCategory.value) {
+        showError("marketCategoryERR", "Please select a market category.");
+        isValid = false;
+    }
+
+    // Validate Horsepower
+    const horsepower = document.getElementById('horsePower');
+    if (!horsepower.value || horsepower.value <= 0) {
+        showError("horsePowerERR", "Horsepower must be a positive number.");
+        isValid = false;
+    }
+
+    // Validate Doors
+    const doors = document.getElementById('doors');
+    if (!doors.value) {
+        showError("doorsERR", "Please select the number of doors.");
+        isValid = false;
+    }
+
+    // Validate Engine
+    const engine = document.getElementById('engine');
+    if (!engine.value.trim()) {
+        showError("engineERR", "Engine is required.");
+        isValid = false;
+    }
+
+    // Validate Cylinders
+    const cylinders = document.getElementById('cylinders');
+    if (!cylinders.value) {
+        showError("cylindersERR", "Please select the number of cylinders.");
+        isValid = false;
+    }
+
+    // Validate Torque
+    const torque = document.getElementById('torque');
+    if (!torque.value || torque.value <= 0) {
+        showError("torqueERR", "Torque must be a positive number.");
+        isValid = false;
+    }
+
+    // Validate Fuel Efficiency
+    const fuelEfficiency = document.getElementById('fuelEfficiency');
+    if (!fuelEfficiency.value || fuelEfficiency.value <= 0) {
+        showError("fuelEfficiencyERR", "Fuel Efficiency must be a positive number.");
+        isValid = false;
+    }
+
+    // Validate Fuel Type
+    const fuelType = document.getElementById('fuelType');
+    if (!fuelType.value) {
+        showError("fuelTypeERR", "Please select a fuel type.");
+        isValid = false;
+    }
+
+    // Validate Transmission
+    const transmission = document.getElementById('transmission');
+    if (!transmission.value) {
+        showError("transmissionERR", "Please select a transmission.");
+        isValid = false;
+    }
+
+    // Validate Driven Wheels
+    const drivenWheels = document.getElementById('drivenWheels');
+    if (!drivenWheels.value) {
+        showError("drivenWheelsERR", "Please select the driven wheels.");
+        isValid = false;
+    }
+
+    // Validate Description
+    const description = document.getElementById('description');
+    if (!description.value.trim()) {
+        showError("descriptionERR", "Description is required.");
+        isValid = false;
+    }
+
+    // If form is not valid, prevent submission
+    if (!isValid) {
+        event.preventDefault();
+    }
+}
+
+// Function to display error message
+function showError(fieldId, message) {
+    const errorSpan = document.getElementById(fieldId);
+    errorSpan.textContent = message;
+}
+
+// Function to clear error messages
+function clearErrorMessages() {
+    const errorMessages = document.querySelectorAll('.error');
+    errorMessages.forEach(error => {
+        error.textContent = '';
+    });
+}
+
+// Attach validate function to form submission
+const carForm = document.getElementById('carForm');
+carForm.addEventListener('submit', validateCarForm);
+    

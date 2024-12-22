@@ -31,29 +31,125 @@ $carModel = new CarsModel($conn);
 //     echo "Invalid request.";
 // }
 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $action = $_POST['action'] ?? 'read';
+
+    switch ($action) {
+
+
+            //CAR CRUDS
+        case 'add-car':
+
+            $image = $_POST['image']?? '';
+            $make = $_POST['make'] ?? '';
+            $model = $_POST['model'] ?? '';
+            $year = $_POST['year'] ?? '';
+            $price = $_POST['price'] ?? '';
+            $type = $_POST['type'] ?? '';
+            $persona = $_POST['persona'] ?? '';
+            $engine = $_POST['Engine'] ?? '';
+            $horsePower = $_POST['horsePower'] ?? '';
+            $doors = $_POST['Doors'] ?? '';
+            $torque = $_POST['Torque'] ?? '';
+            $topSpeed = $_POST['topSpeed'] ?? '';
+            $acceleration = $_POST['acceleration'] ?? '';
+            $fuelEfficiency = $_POST['fuelEfficiency'] ?? '';
+            $fuelType = $_POST['fuelType'] ?? '';
+            $cylinders = $_POST['cylinders'] ?? '';
+            $transmission = $_POST['transmission'] ?? '';
+            $drivenWheels = $_POST['drivenWheels'] ?? '';
+            $marketCategory = $_POST['marketCategory'] ?? '';
+            $description = $_POST['description'] ?? '';
+            $personaDescription = $_POST['personaDescription'] ?? '';
+
+            CarController::addCar(
+                $image,
+                $make,
+                $model,
+                $year,
+                $price,
+                $type,
+                $persona,
+                $engine,
+                $horsePower,
+                $doors,
+                $torque,
+                $topSpeed,
+                $acceleration,
+                $fuelEfficiency,
+                $fuelType,
+                $cylinders,
+                $transmission,
+                $drivenWheels,
+                $marketCategory,
+                $description,
+                $personaDescription
+            );
+            break;
+
+        case 'update-car':
+            $car_id = $_POST['car_id'] ?? '';
+            $image = $_POST['image'];
+            $make = $_POST['make'] ?? '';
+            $model = $_POST['model'] ?? '';
+            $year = $_POST['year'] ?? '';
+            $price = $_POST['price'] ?? '';
+            $type = $_POST['type'] ?? '';
+            $persona = $_POST['persona'] ?? '';
+            $engine = $_POST['Engine'] ?? '';
+            $horsePower = $_POST['horsePower'] ?? '';
+            $doors = $_POST['Doors'] ?? '';
+            $torque = $_POST['Torque'] ?? '';
+            $topSpeed = $_POST['topSpeed'] ?? '';
+            $acceleration = $_POST['acceleration'] ?? '';
+            $fuelEfficiency = $_POST['fuelEfficiency'] ?? '';
+            $fuelType = $_POST['fuelType'] ?? '';
+            $cylinders = $_POST['cylinders'] ?? '';
+            $transmission = $_POST['transmission'] ?? '';
+            $drivenWheels = $_POST['drivenWheels'] ?? '';
+            $marketCategory = $_POST['marketCategory'] ?? '';
+            $description = $_POST['description'] ?? '';
+            $personaDescription = $_POST['personaDescription'] ?? '';
+
+            carController::updateCar(
+                $car_id,
+                $image,
+                $make,
+                $model,
+                $year,
+                $price,
+                $type,
+                $persona,
+                $engine,
+                $horsePower,
+                $doors,
+                $torque,
+                $topSpeed,
+                $acceleration,
+                $fuelEfficiency,
+                $fuelType,
+                $cylinders,
+                $transmission,
+                $drivenWheels,
+                $marketCategory,
+                $description,
+                $personaDescription
+            );
+            break;
+        case 'delete-car':
+            $carID = $_POST['carID'];
+            carController::deleteCar($carID);
+            break;
+    }
+    header('Location: admin.php');
+}
+
 class carController
 {
-    // // Function to add a car
-    // public static function addCar($carModel)
-    // {
-    //     $carData = validateCarData($_POST);
-
-    //     // Check if validation was successful
-    //     if ($carData === false) {
-    //         echo "Invalid car data.";
-    //         return;
-    //     }
-
-    //     // Call the createCar method to add the car to the database
-    //     // if 
-    //     $carModel->createCar($carData);
-    //     //     echo "Car added successfully!";
-    //     // } else {
-    //     //     echo "Failed to add car.";
-    //     // }
-    // }
 
 
+    //ADD CAR
     public static function addCar(
         $image,
         $make,
@@ -77,152 +173,362 @@ class carController
         $description,
         $personaDescription
     ) {
+        // Prepare postData for validation
+        $postData = [
+            'image' => $image,
+            'make' => $make,
+            'model' => $model,
+            'year' => $year,
+            'price' => $price,
+            'type' => $type,
+            'persona' => $persona,
+            'Engine' => $engine,
+            'horsePower' => $horsePower,
+            'Doors' => $doors,
+            'Torque' => $torque,
+            'topSpeed' => $topSpeed,
+            'acceleration' => $acceleration,
+            'fuelEfficiency' => $fuelEfficiency,
+            'fuelType' => $fuelType,
+            'cylinders' => $cylinders,
+            'transmission' => $transmission,
+            'drivenWheels' => $drivenWheels,
+            'marketCategory' => $marketCategory,
+            'description' => $description,
+            'personaDescription' => $personaDescription
+        ];
+
+        // Validate the car data using the validation function
+        $carData = validateCarData($postData);
+
+        // If validation fails, stop further execution (optional: return error)
+        if ($carData === false) {
+            return;
+        }
+
+        // Proceed to create the car if validation is successful
         CarsModel::createCar(
-            $image,
-            $make,
-            $model,
-            $year,
-            $price,
-            $type,
-            $persona,
-            $engine,
-            $horsePower,
-            $doors,
-            $torque,
-            $topSpeed,
-            $acceleration,
-            $fuelEfficiency,
-            $fuelType,
-            $cylinders,
-            $transmission,
-            $drivenWheels,
-            $marketCategory,
-            $description,
-            $personaDescription
+            $carData['image'],
+            $carData['make'],
+            $carData['model'],
+            $carData['year'],
+            $carData['price'],
+            $carData['type'],
+            $carData['persona'],
+            $carData['Engine'],
+            $carData['horsePower'],
+            $carData['Doors'],
+            $carData['Torque'],
+            $carData['topSpeed'],
+            $carData['acceleration'],
+            $carData['fuelEfficiency'],
+            $carData['fuelType'],
+            $carData['cylinders'],
+            $carData['transmission'],
+            $carData['drivenWheels'],
+            $carData['marketCategory'],
+            $carData['description'],
+            $carData['personaDescription'] 
         );
     }
 
+
+
+
+
+    //UPDATE CAR
+
+    public static function updateCar(
+        $car_id,
+        $image,
+        $make,
+        $model,
+        $year,
+        $price,
+        $type,
+        $persona,
+        $engine,
+        $horsePower,
+        $doors,
+        $torque,
+        $topSpeed,
+        $acceleration,
+        $fuelEfficiency,
+        $fuelType,
+        $cylinders,
+        $transmission,
+        $drivenWheels,
+        $marketCategory,
+        $description,
+        $personaDescription
+    ) {
+        // Prepare postData for validation
+        $postData = [
+            'image' => $image,
+            'make' => $make,
+            'model' => $model,
+            'year' => $year,
+            'price' => $price,
+            'type' => $type,
+            'persona' => $persona,
+            'Engine' => $engine,
+            'horsePower' => $horsePower,
+            'Doors' => $doors,
+            'Torque' => $torque,
+            'topSpeed' => $topSpeed,
+            'acceleration' => $acceleration,
+            'fuelEfficiency' => $fuelEfficiency,
+            'fuelType' => $fuelType,
+            'cylinders' => $cylinders,
+            'transmission' => $transmission,
+            'drivenWheels' => $drivenWheels,
+            'marketCategory' => $marketCategory,
+            'description' => $description,
+            'personaDescription' => $personaDescription
+        ];
+
+
+        $carData = validateCarData($postData);
+
+
+        if ($carData === false) {
+            return;
+        }
+
+        // Proceed to update the car if validation is successful
+        carsModel::updateCar(
+            $car_id,
+            $carData['image'],
+            $carData['make'],
+            $carData['model'],
+            $carData['year'],
+            $carData['price'],
+            $carData['type'],
+            $carData['persona'],
+            $carData['Engine'],
+            $carData['horsePower'],
+            $carData['Doors'],
+            $carData['Torque'],
+            $carData['topSpeed'],
+            $carData['acceleration'],
+            $carData['fuelEfficiency'],
+            $carData['fuelType'],
+            $carData['cylinders'],
+            $carData['transmission'],
+            $carData['drivenWheels'],
+            $carData['marketCategory'],
+            $carData['description'],
+            $carData['personaDescription']
+        );
+    }
+
+
+    //DELETE CAR
+    public static function deleteCar($ID)
+    {
+        carsModel::deleteCar($ID);
+    }
+
+    //View All Cars
     public static function viewAllCars()
     {
         return CarsModel::viewAllCars();
     }
 
-    
-    public static function updateCar($car_id,
-    $image,
-    $make,
-    $model,
-    $year,
-    $price,
-    $type,
-    $persona,
-    $engine,
-    $horsePower,
-    $doors,
-    $torque,
-    $topSpeed,
-    $acceleration,
-    $fuelEfficiency,
-    $fuelType,
-    $cylinders,
-    $transmission,
-    $drivenWheels,
-    $marketCategory,
-    $description,
-    $personaDescription)
-{
-    if (empty($make)) {
-        echo "Car make is required.";
-        return false;
+
+    //Get Highly Recommended Cars
+    public static function getHighlyRecommendedCars()
+    {
+        return  CarsModel::getHighestRecommendedCars();
     }
 
-    if ($persona < 1 || $persona > 7) {
-        echo "Persona must be between 1 and 7.";
-        return false;
-    }
 
-    if ($price < 0) {
-        echo "Price cannot be negative.";
-        return false;
-    }
+    // // Function to add a car
+    // public static function addCar($carModel)
+    // {
+    //     $carData = validateCarData($_POST);
 
-    if (str_word_count($description) > 25) {
-        echo "Description must be 25 words or fewer.";
-        return false;
-    }
+    //     // Check if validation was successful
+    //     if ($carData === false) {
+    //         echo "Invalid car data.";
+    //         return;
+    //     }
 
-    if (!in_array($drivenWheels, ['FWD', 'AWD', 'RWD', '4WD'])) {
-        echo "Driven wheels must be one of 'FWD', 'AWD', 'RWD', '4WD'.";
-        return false;
-    }
+    //     // Call the createCar method to add the car to the database
+    //     // if 
+    //     $carModel->createCar($carData);
+    //     //     echo "Car added successfully!";
+    //     // } else {
+    //     //     echo "Failed to add car.";
+    //     // }
+    // }
 
-    if ($doors % 2 != 0) {
-        echo "Doors must be an even number.";
-        return false;
-    }
 
-    if ($cylinders % 2 != 0) {
-        echo "Cylinders must be an even number.";
-        return false;
-    }
+    // public static function addCar(
+    //     $image,
+    //     $make,
+    //     $model,
+    //     $year,
+    //     $price,
+    //     $type,
+    //     $persona,
+    //     $engine,
+    //     $horsePower,
+    //     $doors,
+    //     $torque,
+    //     $topSpeed,
+    //     $acceleration,
+    //     $fuelEfficiency,
+    //     $fuelType,
+    //     $cylinders,
+    //     $transmission,
+    //     $drivenWheels,
+    //     $marketCategory,
+    //     $description,
+    //     $personaDescription
+    // ) {
+    //     CarsModel::createCar(
+    //         $image,
+    //         $make,
+    //         $model,
+    //         $year,
+    //         $price,
+    //         $type,
+    //         $persona,
+    //         $engine,
+    //         $horsePower,
+    //         $doors,
+    //         $torque,
+    //         $topSpeed,
+    //         $acceleration,
+    //         $fuelEfficiency,
+    //         $fuelType,
+    //         $cylinders,
+    //         $transmission,
+    //         $drivenWheels,
+    //         $marketCategory,
+    //         $description,
+    //         $personaDescription
+    //     );
+    // }
 
-    if (!in_array($fuelType, ['Gasoline', 'Diesel', 'Electric', 'Hybrid'])) {
-        echo "Fuel type must be one of 'Gasoline', 'Diesel', 'Electric', 'Hybrid'.";
-        return false;
-    }
 
-    $intFields = ['horsePower', 'torque', 'topSpeed', 'acceleration', 'fuelEfficiency'];
-    foreach ($intFields as $field) {
-        if ($$field < 0) {
-            echo ucfirst($field) . " cannot be negative.";
-            return false;
-        }
-    }
+    //     public static function updateCar($car_id,
+    //     $image,
+    //     $make,
+    //     $model,
+    //     $year,
+    //     $price,
+    //     $type,
+    //     $persona,
+    //     $engine,
+    //     $horsePower,
+    //     $doors,
+    //     $torque,
+    //     $topSpeed,
+    //     $acceleration,
+    //     $fuelEfficiency,
+    //     $fuelType,
+    //     $cylinders,
+    //     $transmission,
+    //     $drivenWheels,
+    //     $marketCategory,
+    //     $description,
+    //     $personaDescription)
+    // {
+    //     if (empty($make)) {
+    //         echo "Car make is required.";
+    //         return false;
+    //     }
 
-    //function call from cars model
-    carsModel::updateCar($car_id,
-    $image,
-    $make,
-    $model,
-    $year,
-    $price,
-    $type,
-    $persona,
-    $engine,
-    $horsePower,
-    $doors,
-    $torque,
-    $topSpeed,
-    $acceleration,
-    $fuelEfficiency,
-    $fuelType,
-    $cylinders,
-    $transmission,
-    $drivenWheels,
-    $marketCategory,
-    $description,
-    $personaDescription);
+    //     if ($persona < 1 || $persona > 7) {
+    //         echo "Persona must be between 1 and 7.";
+    //         return false;
+    //     }
 
-}
+    //     if ($price < 0) {
+    //         echo "Price cannot be negative.";
+    //         return false;
+    //     }
+
+    //     if (str_word_count($description) > 25) {
+    //         echo "Description must be 25 words or fewer.";
+    //         return false;
+    //     }
+
+    //     if (!in_array($drivenWheels, ['FWD', 'AWD', 'RWD', '4WD'])) {
+    //         echo "Driven wheels must be one of 'FWD', 'AWD', 'RWD', '4WD'.";
+    //         return false;
+    //     }
+
+    //     if ($doors % 2 != 0) {
+    //         echo "Doors must be an even number.";
+    //         return false;
+    //     }
+
+    //     if ($cylinders % 2 != 0) {
+    //         echo "Cylinders must be an even number.";
+    //         return false;
+    //     }
+
+    //     if (!in_array($fuelType, ['Gasoline', 'Diesel', 'Electric', 'Hybrid'])) {
+    //         echo "Fuel type must be one of 'Gasoline', 'Diesel', 'Electric', 'Hybrid'.";
+    //         return false;
+    //     }
+
+    //     $intFields = ['horsePower', 'torque', 'topSpeed', 'acceleration', 'fuelEfficiency'];
+    //     foreach ($intFields as $field) {
+    //         if ($$field < 0) {
+    //             echo ucfirst($field) . " cannot be negative.";
+    //             return false;
+    //         }
+    //     }
+
+    //     //function call from cars model
+    //     carsModel::updateCar($car_id,
+    //     $image,
+    //     $make,
+    //     $model,
+    //     $year,
+    //     $price,
+    //     $type,
+    //     $persona,
+    //     $engine,
+    //     $horsePower,
+    //     $doors,
+    //     $torque,
+    //     $topSpeed,
+    //     $acceleration,
+    //     $fuelEfficiency,
+    //     $fuelType,
+    //     $cylinders,
+    //     $transmission,
+    //     $drivenWheels,
+    //     $marketCategory,
+    //     $description,
+    //     $personaDescription);
+
+    // }
+
 
     // Function to update a car
     // public static function updateCar($carModel)
     // {
-    //     // $carId = $_POST['id']; // Get the car ID
-    //     // $carData = validateCarData($_POST, true);
+    //     $carId = $_POST['id']; // Get the car ID
+    //     $carData = validateCarData($_POST, true);
 
-    //     // // Check if validation was successful
-    //     // if ($carData === false) {
-    //     //     echo "Invalid car data.";
-    //     //     return;
-    //     // }
+    //     // Check if validation was successful
+    //     if ($carData === false) {
+    //         echo "Invalid car data.";
+    //         return;
+    //     }
 
-    //     // // Call the updateCar method to update the car in the database
-    //     // if ($carModel->updateCar($carId, $carData)) {
-    //     //     echo "Car updated successfully!";
-    //     // } else {
-    //     //     echo "Failed to update car.";
-    //     // }
+    //     // Call the updateCar method to update the car in the database
+    //     if ($carModel->updateCar($carId, $carData)) {
+    //         echo "Car updated successfully!";
+    //     } else {
+    //         echo "Failed to update car.";
+    //     }
     //     // Update a car
     //     // Update a car
 
@@ -316,7 +622,7 @@ class carController
 
 
 
-    
+
 
 
 
@@ -334,15 +640,7 @@ class carController
     //     }
     // }
 
-    //Delete Car
-        public static function deleteCar($ID){
-            carsModel::deleteCar($ID);
-        }
 
-    public static function getHighlyRecommendedCars()
-    {
-        return  CarsModel::getHighestRecommendedCars();
-    }
 }
 
 
@@ -371,6 +669,7 @@ function validateCarData($postData, $isUpdate = false)
         'drivenWheels' => $postData['drivenWheels'] ?? null,
         'marketCategory' => $postData['marketCategory'] ?? null,
         'description' => $postData['description'] ?? null,
+        'personaDescription' => $postData['personaDescription'] ?? null,
     ];
 
     // Validation Rules

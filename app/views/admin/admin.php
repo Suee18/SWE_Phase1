@@ -58,142 +58,141 @@ $reviewCategoryCounts = $reviewStatistics['reviewCategoryCounts'];
 //USER / CAR CRUDS
 $users = UserController::viewAllUsers();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $action = $_POST['action'] ?? 'read';
+// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//     $action = $_POST['action'] ?? 'read';
 
-    switch ($action) {
-        case 'add-user':
+//     switch ($action) {
+//         case 'add-user':
 
-            $username = $_POST['username'];
-            $birthdate = $_POST['age'];
-            $password = $_POST['password'];
-            $userType = $_POST['user_type'];
-            $email = $_POST['email'];
-            $gender = $_POST['gender'];
-            UserController::addNewUserCtrl($username, $password, $birthdate, $userType, $email, $gender);
-            break;
-        case 'update-user':
-            $user_id = $_POST['user_id'];
-            $username = $_POST['username'];
-            $birthdate = $_POST['age'];
-            $password = $_POST['password'];
-            $userType = $_POST['user_type'];
-            $email = $_POST['email'];
-            $gender = $_POST['gender'];
-            UserController::updateUserCtrl($user_id, $username, $birthdate, $gender, $password, $email, $userType);
-            break;
-        case 'delete-user':
-            $user_id = $_POST['user_id'];
-            UserController::deleteUserCtrl($user_id);
-            break;
+//             $username = $_POST['username'];
+//             $birthdate = $_POST['age'];
+//             $password = $_POST['password'];
+//             $userType = $_POST['user_type'];
+//             $email = $_POST['email'];
+//             $gender = $_POST['gender'];
+//             UserController::addNewUserCtrl($username, $password, $birthdate, $userType, $email, $gender);
+//             break;
+//         case 'update-user':
+//             $user_id = $_POST['user_id'];
+//             $username = $_POST['username'];
+//             $birthdate = $_POST['age'];
+//             $password = $_POST['password'];
+//             $userType = $_POST['user_type'];
+//             $email = $_POST['email'];
+//             $gender = $_POST['gender'];
+//             UserController::updateUserCtrl($user_id, $username, $birthdate, $gender, $password, $email, $userType);
+//             break;
+//         case 'delete-user':
+//             $user_id = $_POST['user_id'];
+//             UserController::deleteUserCtrl($user_id);
+//             break;
 
             //CAR CRUDS
-        case 'add-car':
+    //     case 'add-car':
 
-            $image = $_FILES['image']['name'] ?? '';
-            $make = $_POST['make'] ?? '';
-            $model = $_POST['model'] ?? '';
-            $year = $_POST['year'] ?? '';
-            $price = $_POST['price'] ?? '';
-            $type = $_POST['type'] ?? '';
-            $persona = $_POST['persona'] ?? '';
-            $engine = $_POST['Engine'] ?? '';
-            $horsePower = $_POST['horsePower'] ?? '';
-            $doors = $_POST['Doors'] ?? '';
-            $torque = $_POST['Torque'] ?? '';
-            $topSpeed = $_POST['topSpeed'] ?? '';
-            $acceleration = $_POST['acceleration'] ?? '';
-            $fuelEfficiency = $_POST['fuelEfficiency'] ?? '';
-            $fuelType = $_POST['fuelType'] ?? '';
-            $cylinders = $_POST['cylinders'] ?? '';
-            $transmission = $_POST['transmission'] ?? '';
-            $drivenWheels = $_POST['drivenWheels'] ?? '';
-            $marketCategory = $_POST['marketCategory'] ?? '';
-            $description = $_POST['description'] ?? '';
-            $personaDescription = $_POST['personaDescription'] ?? '';
+    //         $image = $_FILES['image']['name'] ?? '';
+    //         $make = $_POST['make'] ?? '';
+    //         $model = $_POST['model'] ?? '';
+    //         $year = $_POST['year'] ?? '';
+    //         $price = $_POST['price'] ?? '';
+    //         $type = $_POST['type'] ?? '';
+    //         $persona = $_POST['persona'] ?? '';
+    //         $engine = $_POST['Engine'] ?? '';
+    //         $horsePower = $_POST['horsePower'] ?? '';
+    //         $doors = $_POST['Doors'] ?? '';
+    //         $torque = $_POST['Torque'] ?? '';
+    //         $topSpeed = $_POST['topSpeed'] ?? '';
+    //         $acceleration = $_POST['acceleration'] ?? '';
+    //         $fuelEfficiency = $_POST['fuelEfficiency'] ?? '';
+    //         $fuelType = $_POST['fuelType'] ?? '';
+    //         $cylinders = $_POST['cylinders'] ?? '';
+    //         $transmission = $_POST['transmission'] ?? '';
+    //         $drivenWheels = $_POST['drivenWheels'] ?? '';
+    //         $marketCategory = $_POST['marketCategory'] ?? '';
+    //         $description = $_POST['description'] ?? '';
+    //         $personaDescription = $_POST['personaDescription'] ?? '';
 
-            CarController::addCar(
-                $image,
-                $make,
-                $model,
-                $year,
-                $price,
-                $type,
-                $persona,
-                $engine,
-                $horsePower,
-                $doors,
-                $torque,
-                $topSpeed,
-                $acceleration,
-                $fuelEfficiency,
-                $fuelType,
-                $cylinders,
-                $transmission,
-                $drivenWheels,
-                $marketCategory,
-                $description,
-                $personaDescription
-            );
-            break;
+    //         CarController::addCar(
+    //             $image,
+    //             $make,
+    //             $model,
+    //             $year,
+    //             $price,
+    //             $type,
+    //             $persona,
+    //             $engine,
+    //             $horsePower,
+    //             $doors,
+    //             $torque,
+    //             $topSpeed,
+    //             $acceleration,
+    //             $fuelEfficiency,
+    //             $fuelType,
+    //             $cylinders,
+    //             $transmission,
+    //             $drivenWheels,
+    //             $marketCategory,
+    //             $description,
+    //             $personaDescription
+    //         );
+    //         break;
 
-        case 'update-car':
-            $car_id = $_POST['car_id'] ?? '';
-            $image = $_FILES['image']['name'] ?? '';
-            $make = $_POST['make'] ?? '';
-            $model = $_POST['model'] ?? '';
-            $year = $_POST['year'] ?? '';
-            $price = $_POST['price'] ?? '';
-            $type = $_POST['type'] ?? '';
-            $persona = $_POST['persona'] ?? '';
-            $engine = $_POST['Engine'] ?? '';
-            $horsePower = $_POST['horsePower'] ?? '';
-            $doors = $_POST['Doors'] ?? '';
-            $torque = $_POST['Torque'] ?? '';
-            $topSpeed = $_POST['topSpeed'] ?? '';
-            $acceleration = $_POST['acceleration'] ?? '';
-            $fuelEfficiency = $_POST['fuelEfficiency'] ?? '';
-            $fuelType = $_POST['fuelType'] ?? '';
-            $cylinders = $_POST['cylinders'] ?? '';
-            $transmission = $_POST['transmission'] ?? '';
-            $drivenWheels = $_POST['drivenWheels'] ?? '';
-            $marketCategory = $_POST['marketCategory'] ?? '';
-            $description = $_POST['description'] ?? '';
-            $personaDescription = $_POST['personaDescription'] ?? '';
+    //     case 'update-car':
+    //         $car_id = $_POST['car_id'] ?? '';
+    //         $image = $_FILES['image']['name'] ?? '';
+    //         $make = $_POST['make'] ?? '';
+    //         $model = $_POST['model'] ?? '';
+    //         $year = $_POST['year'] ?? '';
+    //         $price = $_POST['price'] ?? '';
+    //         $type = $_POST['type'] ?? '';
+    //         $persona = $_POST['persona'] ?? '';
+    //         $engine = $_POST['Engine'] ?? '';
+    //         $horsePower = $_POST['horsePower'] ?? '';
+    //         $doors = $_POST['Doors'] ?? '';
+    //         $torque = $_POST['Torque'] ?? '';
+    //         $topSpeed = $_POST['topSpeed'] ?? '';
+    //         $acceleration = $_POST['acceleration'] ?? '';
+    //         $fuelEfficiency = $_POST['fuelEfficiency'] ?? '';
+    //         $fuelType = $_POST['fuelType'] ?? '';
+    //         $cylinders = $_POST['cylinders'] ?? '';
+    //         $transmission = $_POST['transmission'] ?? '';
+    //         $drivenWheels = $_POST['drivenWheels'] ?? '';
+    //         $marketCategory = $_POST['marketCategory'] ?? '';
+    //         $description = $_POST['description'] ?? '';
+    //         $personaDescription = $_POST['personaDescription'] ?? '';
 
-            var_dump($_POST);
-            carController::updateCar(
-                $car_id,
-                $image,
-                $make,
-                $model,
-                $year,
-                $price,
-                $type,
-                $persona,
-                $engine,
-                $horsePower,
-                $doors,
-                $torque,
-                $topSpeed,
-                $acceleration,
-                $fuelEfficiency,
-                $fuelType,
-                $cylinders,
-                $transmission,
-                $drivenWheels,
-                $marketCategory,
-                $description,
-                $personaDescription
-            );
-            break; 
-        case 'delete-car':
-            $carID = $_POST['carID'];
-            carController::deleteCar($carID);
-            break;
-    }
-    header('Location: admin.php');
-}
+    //                     carController::updateCar(
+    //             $car_id,
+    //             $image,
+    //             $make,
+    //             $model,
+    //             $year,
+    //             $price,
+    //             $type,
+    //             $persona,
+    //             $engine,
+    //             $horsePower,
+    //             $doors,
+    //             $torque,
+    //             $topSpeed,
+    //             $acceleration,
+    //             $fuelEfficiency,
+    //             $fuelType,
+    //             $cylinders,
+    //             $transmission,
+    //             $drivenWheels,
+    //             $marketCategory,
+    //             $description,
+    //             $personaDescription
+    //         );
+    //         break; 
+    //     case 'delete-car':
+    //         $carID = $_POST['carID'];
+    //         carController::deleteCar($carID);
+    //         break;
+    // }
+   // header('Location: admin.php');
+//}
 
 
 
@@ -731,7 +730,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
             <div class="small-container">
 
                 <div class="formContainer">
-                    <form id="carForm" method="POST" action="admin.php">
+                    <form id="carForm" method="POST" action="admin.php"  onclick="return validateForm()">
 
                         <div class="carFormInputfields">
 
@@ -802,6 +801,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                     <option value="5">Family First</option>
                                     <option value="6">Luxury Seeker</option>
                                     <option value="7">Budget Conscious</option>
+                                    <option value="8">Path Finder</option>
                                 </select>
                                 <span id="personaERR" class="error"></span>
                             </div>
@@ -833,10 +833,13 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                 <label class="formLabels" for="marketCategory">Market Category:</label>
                                 <select class="carInputs" name="marketCategory" id="marketCategory">
                                     <option value="">Select Market Category</option>
-                                    <option value="luxury">Luxury</option>
-                                    <option value="sports">Sports</option>
-                                    <option value="family">Family</option>
-                                    <option value="economy">Economy</option>
+                                    <option value="Luxury">Luxury</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Electric">Electric</option>
+                                    <option value="Economy">Economy</option>
+                                    <option value="Compact">Compact</option>
+                                    <option value="Mid-Size">Mid-Size</option>
+                                    <option value="Off-Road">Off-Road</option>
                                 </select>
                                 <span id="marketCategoryERR" class="error"></span>
                             </div>
@@ -855,7 +858,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                     <option value="">Select Doors</option>
                                     <option value="2">2</option>
                                     <option value="4">4</option>
-                                    <option value="5">5</option>
+                                    <option value="6">6</option>
                                 </select>
                                 <span id="doorsERR" class="error"></span>
                             </div>
@@ -872,6 +875,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                 <label class="formLabels" for="cylinders">Cylinders:</label>
                                 <select class="carInputs" id="cylinders" name="cylinders" required>
                                     <option value="" disabled selected>Select Cylinders</option>
+                                    <option value="2">2</option>
                                     <option value="4">4</option>
                                     <option value="6">6</option>
                                     <option value="8">8</option>
@@ -897,10 +901,11 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                             <div>
                                 <label class="formLabels" for="fuelType">Fuel Type :</label>
                                 <select class="carInputs" name="fuelType" id="fuelType">
-                                    <option value=""></option>
-                                    <option value="Petrol">Petrol</option>
-                                    <option value="Diesel">Gasoline</option>
+                                    <option value="" disabled selected>Select Type</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                    <option value="Diesel">Diesel</option>
                                     <option value="Electric">Electric</option>
+                                    <option value="Gasoline">Gasoline</option>
                                 </select>
                                 <span id="fuelTypeERR" class="error"></span>
                             </div>
@@ -910,9 +915,12 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                 <label class="formLabels" for="transmission">Transmission:</label>
                                 <select class="carInputs" id="transmission" name="transmission" required>
                                     <option value="" disabled selected>Select Transmission</option>
-                                    <option value="manual">Manual</option>
-                                    <option value="automatic">Automatic</option>
+                                    <option value="Manual">Manual</option>
+                                    <option value="Automatic">Automatic</option>
                                     <option value="CVT">CVT (Continuously Variable Transmission)</option>
+                                    <option value="Electric">Electric</option>
+                                    <option value="AMT">AMT</option>
+                                    <option value="DCT">DCT</option>
                                 </select>
                                 <span id="transmissionERR" class="error"></span>
                             </div>
@@ -921,9 +929,11 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                             <div>
                                 <label for="drivenWheels">Driven Wheels:</label>
                                 <select id="drivenWheels" name="drivenWheels" required>
+                                <option value="" disabled selected>Select Driven Wheels</option>
                                     <option value="FWD">FWD</option>
-                                    <option value="AWD">Rear</option>
-                                    <option value="all">All</option>
+                                    <option value="AWD">AWD</option>
+                                    <option value="4WD">4WD</option>
+                                    <option value="RWD">RWD</option>
                                 </select>
                                 <span id="drivenWheelsERR" class="error"></span>
                             </div>
