@@ -55,7 +55,7 @@ $reviewCategoryCounts = $reviewStatistics['reviewCategoryCounts'];
 
 
 
-//User Cruds 
+//USER / CAR CRUDS
 $users = UserController::viewAllUsers();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -602,8 +602,8 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
             <h3 class="logout-title">Are you sure?</h3>
             <span class="logout-btns">
-                <button class="yes-btn">Yes</button>
-                <button class="no-btn">No</button>
+            <a class="yes-btn" href="../../../helpers/logout.php">Yes</a>
+            <a class="no-btn" href="../admin/admin.php">No</a>
             </span>
         </div>
 

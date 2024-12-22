@@ -863,15 +863,20 @@ text-shadow: 5px 5px 15px rgb(133, 15, 15);
 }
 
 .yes-btn {
+    display: inline-block;
+    text-align: center;
     border-radius: 50px;
     width: 130px;
     height: 45px;
     margin-left: 27%;
     background-color: #4194bb;
+    text-decoration: none;
     color: #c9c9c9;
     font-size: 1rem;
     border: 0px transparent;
     cursor: pointer;
+    padding-top: 1%;
+
 
 }
 
@@ -882,6 +887,8 @@ text-shadow: 5px 5px 15px rgb(133, 15, 15);
 }
 
 .no-btn {
+    display: inline-block;
+    text-align: center;
     border-radius: 50px;
     width: 130px;
     height: 45px;
@@ -889,7 +896,9 @@ text-shadow: 5px 5px 15px rgb(133, 15, 15);
     background-color: #4194bb;
     color: #c9c9c9;
     border: 0px transparent;
+    text-decoration: none;
     cursor: pointer;
+    padding-top: 1%;
 
 }
 
