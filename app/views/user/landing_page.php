@@ -1,14 +1,11 @@
 <?php
-include_once __DIR__ . '\..\..\config\db_config.php';
-include __DIR__ . '\..\..\..\models\ReviewsClass.php';
+include_once __DIR__ . '\..\..\config\db_config.php';;
 include_once __DIR__ . '\..\..\..\controllers\ReviewController.php';
 include __DIR__ . '\..\..\..\models\UsersClass.php';
 include_once __DIR__ . '\..\..\..\controllers\SessionManager.php';
 include_once __DIR__ . '\..\..\..\models\CarsModel.php';
 include_once __DIR__ . '\..\..\..\controllers\carController.php';
 SessionManager::startSession();
-
-// $reviewsSliderArray = ReviewController::getNumberOfReviews(7);
 
 $reviewController = new ReviewController(new ReviewDatabaseStrategy());
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
@@ -260,7 +257,6 @@ $cars = carController::getHighlyRecommendedCars();
         </div>
     </div>
 
-    <!----------------PART 3:Reviews--------------------------->
     <!----------------PART 3:Reviews--------------------------->
     <div class="landingPage_part3">
         <div class="filter_reviews">
