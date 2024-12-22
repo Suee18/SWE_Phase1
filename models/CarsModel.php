@@ -70,8 +70,7 @@
             $personaDescription
         ) {
             global $conn;
-    
-            // Escape input values to prevent SQL injection
+
             $image = mysqli_real_escape_string($conn, $image);
             $make = mysqli_real_escape_string($conn, $make);
             $model = mysqli_real_escape_string($conn, $model);
@@ -93,8 +92,7 @@
             $marketCategory = mysqli_real_escape_string($conn, $marketCategory);
             $description = mysqli_real_escape_string($conn, $description);
             $personaDescription = mysqli_real_escape_string($conn, $personaDescription);
-    
-            // Insert query to add the car to the database
+
             $sql = "INSERT INTO `cars` (`image`, `make`, `model`, `year`, `price`, `type`, `persona`, 
                                     `engine`, `horsePower`, `doors`, `torque`, `topSpeed`, `acceleration`, 
                                     `fuelEfficiency`, `fuelType`, `cylinders`, `transmission`, `drivenWheels`, 
@@ -105,10 +103,10 @@
                         '$fuelEfficiency', '$fuelType', '$cylinders', '$transmission', '$drivenWheels', 
                         '$marketCategory', '$description',  
                         '$personaDescription')";
-    
+
             // Execute the query and return the result
             $result = mysqli_query($conn, $sql);
-    
+
             return $result;
         }
 
@@ -128,6 +126,65 @@
         //         return $result->fetch_all(MYSQLI_ASSOC);
         //     }
         // }
+
+
+        public static function updateCar(
+            $car_id,
+            $image,
+            $make,
+            $model,
+            $year,
+            $price,
+            $type,
+            $persona,
+            $engine,
+            $horsePower,
+            $doors,
+            $torque,
+            $topSpeed,
+            $acceleration,
+            $fuelEfficiency,
+            $fuelType,
+            $cylinders,
+            $transmission,
+            $drivenWheels,
+            $marketCategory,
+            $description,
+            $personaDescription
+        ) {
+            global $conn;
+
+            $car_id = mysqli_real_escape_string($conn, htmlspecialchars($car_id));
+            $image = mysqli_real_escape_string($conn, htmlspecialchars($image));
+            $make = mysqli_real_escape_string($conn, htmlspecialchars($make));
+            $model = mysqli_real_escape_string($conn, htmlspecialchars($model));
+            $year = mysqli_real_escape_string($conn, htmlspecialchars($year));
+            $price = mysqli_real_escape_string($conn, htmlspecialchars($price));
+            $type = mysqli_real_escape_string($conn, htmlspecialchars($type));
+            $persona = mysqli_real_escape_string($conn, htmlspecialchars($persona));
+            $engine = mysqli_real_escape_string($conn, htmlspecialchars($engine));
+            $horsePower = mysqli_real_escape_string($conn, htmlspecialchars($horsePower));
+            $doors = mysqli_real_escape_string($conn, htmlspecialchars($doors));
+            $torque = mysqli_real_escape_string($conn, htmlspecialchars($torque));
+            $topSpeed = mysqli_real_escape_string($conn, htmlspecialchars($topSpeed));
+            $acceleration = mysqli_real_escape_string($conn, htmlspecialchars($acceleration));
+            $fuelEfficiency = mysqli_real_escape_string($conn, htmlspecialchars($fuelEfficiency));
+            $fuelType = mysqli_real_escape_string($conn, htmlspecialchars($fuelType));
+            $cylinders = mysqli_real_escape_string($conn, htmlspecialchars($cylinders));
+            $transmission = mysqli_real_escape_string($conn, htmlspecialchars($transmission));
+            $drivenWheels = mysqli_real_escape_string($conn, htmlspecialchars($drivenWheels));
+            $marketCategory = mysqli_real_escape_string($conn, htmlspecialchars($marketCategory));
+            $description = mysqli_real_escape_string($conn, htmlspecialchars($description));
+            $personaDescription = mysqli_real_escape_string($conn, htmlspecialchars($personaDescription));
+
+
+            $sql = "UPDATE Cars 
+            SET image='$image', make='$make', model='$model', year='$year', price='$price', type='$type', persona='$persona', engine='$engine', horsePower='$horsePower', doors='$doors', torque='$torque', topSpeed='$topSpeed', acceleration='$acceleration', fuelEfficiency='$fuelEfficiency', fuelType='$fuelType', cylinders='$cylinders', transmission='$transmission', drivenWheels='$drivenWheels', marketCategory='$marketCategory', description='$description',  personaDescription='$personaDescription' 
+            WHERE ID='$car_id'";
+
+            return mysqli_query($conn, $sql);
+        }
+
 
         public static function viewAllCars()
         {
@@ -190,13 +247,28 @@
 
 
         // Delete a car
-        public function deleteCar($id)
+        // public function deleteCar($id)
+        // {
+        //     $query = "DELETE FROM cars WHERE ID = ?";
+        //     $stmt = $this->db->prepare($query);
+        //     $stmt->bind_param("i", $id);
+        //     return $stmt->execute();
+        // }
+
+        //Delete Car
+        public static function deleteCar($car_id)
         {
-            $query = "DELETE FROM cars WHERE ID = ?";
-            $stmt = $this->db->prepare($query);
-            $stmt->bind_param("i", $id);
-            return $stmt->execute();
+            global $conn;
+
+            $sql = "DELETE FROM cars WHERE ID = '$car_id'";
+
+            if (mysqli_query($conn, $sql)) {
+                return true;
+            } else {
+                return false;
+            }
         }
+
 
 
         public static function getHighestRecommendedCars()
@@ -218,7 +290,7 @@
 
             $conn->close();
 
-            
+
             return $cars;
         }
     }

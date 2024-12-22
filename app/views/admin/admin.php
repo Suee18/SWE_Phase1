@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action = $_POST['action'] ?? 'read';
 
     switch ($action) {
-        case 'add':
+        case 'add-user':
 
             $username = $_POST['username'];
             $birthdate = $_POST['age'];
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $gender = $_POST['gender'];
             UserController::addNewUserCtrl($username, $password, $birthdate, $userType, $email, $gender);
             break;
-        case 'update':
+        case 'update-user':
             $user_id = $_POST['user_id'];
             $username = $_POST['username'];
             $birthdate = $_POST['age'];
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $gender = $_POST['gender'];
             UserController::updateUserCtrl($user_id, $username, $birthdate, $gender, $password, $email, $userType);
             break;
-        case 'delete':
+        case 'delete-user':
             $user_id = $_POST['user_id'];
             UserController::deleteUserCtrl($user_id);
             break;
@@ -133,6 +133,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $description,
                 $personaDescription
             );
+            break;
+
+        case 'update-car':
+            $car_id = $_POST['ID'] ?? '';
+            $image = $_FILES['image']['name'] ?? '';
+            $make = $_POST['make'] ?? '';
+            $model = $_POST['model'] ?? '';
+            $year = $_POST['year'] ?? '';
+            $price = $_POST['price'] ?? '';
+            $type = $_POST['type'] ?? '';
+            $persona = $_POST['persona'] ?? '';
+            $engine = $_POST['Engine'] ?? '';
+            $horsePower = $_POST['horsePower'] ?? '';
+            $doors = $_POST['Doors'] ?? '';
+            $torque = $_POST['Torque'] ?? '';
+            $topSpeed = $_POST['topSpeed'] ?? '';
+            $acceleration = $_POST['acceleration'] ?? '';
+            $fuelEfficiency = $_POST['fuelEfficiency'] ?? '';
+            $fuelType = $_POST['fuelType'] ?? '';
+            $cylinders = $_POST['cylinders'] ?? '';
+            $transmission = $_POST['transmission'] ?? '';
+            $drivenWheels = $_POST['drivenWheels'] ?? '';
+            $marketCategory = $_POST['marketCategory'] ?? '';
+            $description = $_POST['description'] ?? '';
+            $personaDescription = $_POST['personaDescription'] ?? '';
+
+            carController::updateCar(
+                $car_id,
+                $image,
+                $make,
+                $model,
+                $year,
+                $price,
+                $type,
+                $persona,
+                $engine,
+                $horsePower,
+                $doors,
+                $torque,
+                $topSpeed,
+                $acceleration,
+                $fuelEfficiency,
+                $fuelType,
+                $cylinders,
+                $transmission,
+                $drivenWheels,
+                $marketCategory,
+                $description,
+                $personaDescription
+            );
+        case 'delete-car':
+            $carID = $_POST['carID'];
+            carController::deleteCar($carID);
             break;
     }
     header('Location: admin.php');
@@ -407,7 +460,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                     <form id="userForm" method="POST" action="admin.php" onsubmit="return validate(this)">
 
                         <div class="formInputfields">
-                            <input type="hidden" name="form_type" value="user">
+
                             <div>
                                 <label class="formLabels" for="userSelect">Select User:</label>
                                 <select id="userSelect" name="user_id" onchange="populateForm()">
@@ -497,7 +550,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                     </button>
 
                                     <button style="display:none" class="button" name="addButton" type="submit"
-                                        id="addButton" onclick="setAction('add')">
+                                        id="addButton" onclick="setAction('add-user')">
                                         <span class="button__text">Add user</span>
                                         <span class="button__icon">
                                             <i class="fa-solid fa-user-plus" style="color: #ffffff;"></i>
@@ -514,14 +567,14 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                     </button>
                                     <!-- save -->
                                     <button style="display:none" class="button" type="submit" id="saveButton"
-                                        onclick=" setAction('update')">
+                                        onclick=" setAction('update-user')">
                                         <span class="button__text"> Save info</span>
                                         <span class="button__icon">
                                             <i class="fa-regular fa-floppy-disk" style="color: #ffffff;"></i>
                                     </button>
                                     <!-- delete -->
                                     <button class="button" type="submit" id="deleteButton" style="display:none"
-                                        onclick="setAction('delete')">
+                                        onclick="setAction('delete-user')">
                                         <span class="button__text">Delete user</span>
                                         <span class="button__icon">
                                             <i class="fa-solid fa-trash-can"></i>
@@ -584,18 +637,49 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                                     </td> -->
 
 
-                                    <td> <!-- Edit Button -->
-                                        <button type="button" name="editCar" id="editCar-btn" onclick="toggleDivs('div5','div7')">
+                                    <!-- Edit Button -->
+                                    <td>
+                                        <button type="button" name="editCar" class="editCar-btn" data-id="<?php echo htmlspecialchars($allCars['ID']); ?>"
+                                            data-make="<?php echo htmlspecialchars($allCars['make']); ?>"
+                                            data-model="<?php echo htmlspecialchars($allCars['model']); ?>"
+                                            data-year="<?php echo htmlspecialchars($allCars['year']); ?>"
+                                            data-price="<?php echo htmlspecialchars($allCars['price']); ?>"
+                                            data-type="<?php echo htmlspecialchars($allCars['type']); ?>"
+                                            data-persona="<?php echo htmlspecialchars($allCars['persona']); ?>"
+                                            data-persona-description="<?php echo htmlspecialchars($allCars['personaDescription']); ?>"
+                                            data-top-speed="<?php echo htmlspecialchars($allCars['topSpeed']); ?>"
+                                            data-acceleration="<?php echo htmlspecialchars($allCars['acceleration']); ?>"
+                                            data-market-category="<?php echo htmlspecialchars($allCars['marketCategory']); ?>"
+                                            data-horsepower="<?php echo htmlspecialchars($allCars['horsePower']); ?>"
+                                            data-doors="<?php echo htmlspecialchars($allCars['Doors']); ?>"
+                                            data-engine="<?php echo htmlspecialchars($allCars['Engine']); ?>"
+                                            data-cylinders="<?php echo htmlspecialchars($allCars['cylinders']); ?>"
+                                            data-torque="<?php echo htmlspecialchars($allCars['Torque']); ?>"
+                                            data-fuel-efficiency="<?php echo htmlspecialchars($allCars['fuelEfficiency']); ?>"
+                                            data-fuel-type="<?php echo htmlspecialchars($allCars['fuelType']); ?>"
+                                            data-transmission="<?php echo htmlspecialchars($allCars['transmission']); ?>"
+                                            data-driven-wheels="<?php echo htmlspecialchars($allCars['drivenWheels']); ?>"
+                                            data-description="<?php echo htmlspecialchars($allCars['description']); ?>"
+                                            onclick=" toggleDivs('div5','div7'); populateCarForm(this)">
                                             <i class="fa-solid fa-pen"></i>
                                         </button>
-
                                     </td>
+
 
                                     <td> <!-- Delete Button -->
-                                        <button type="submit" name="deleteCar" id="deleteCar-btn">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </button>
+                                        <form method="POST" action="admin.php" style="display:inline;">
+                                            <input type="hidden" name="carID" value="<?php echo htmlspecialchars($allCars['ID']); ?>">
+                                            <input type="hidden" name="action" value="delete-car">
+                                            <button type="submit" name="deleteCar" id="deleteCar-btn">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </form>
+
+
+
+
                                     </td>
+
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -648,7 +732,6 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                         <div class="carFormInputfields">
 
                             <!-- Hidden Input -->
-
                             <input type="hidden" name="action" value="add-car">
                             <input type="hidden" name="car_id" id="car_id" value="">
 
@@ -851,7 +934,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
 
                             <div>
-                                <input class="formSubmit" type="submit" value="Submit">
+                                <input type="submit" value="Submit" onclick="setAction('add-car')">
                             </div>
 
                         </div>

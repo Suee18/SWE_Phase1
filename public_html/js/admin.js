@@ -431,10 +431,6 @@ function setAction(action) {
 }
 
 
-function setActionCarForm(action) {
-     document.getElementById('carformAction').value = action;
-    document.getElementById('carForm').submit();
-}
 // Form validation
 function validate(form) {
     let isValid = true;
@@ -523,3 +519,92 @@ function validate(form) {
 }
 
 
+// function populateCarForm(id, make, model, year, price) {
+//     // Set form field values
+//     document.getElementById('car_id').value = id;
+//     document.getElementById('make').value = make;
+//     document.getElementById('model').value = model;
+//     document.getElementById('year').value = year;
+//     document.getElementById('price').value = price;
+
+//     // Enable the form fields if necessary
+//     enableFormFields();
+// }
+
+// function populateCarForm(buttonElement) {
+//     // Retrieve car data from the button's data attributes
+//     var carData = buttonElement.dataset;
+
+//     // Fill the form fields with the car data
+//     document.getElementById('car_id').value = carData.id;    
+//     document.getElementById('make').value = carData.make;
+//     document.getElementById('model').value = carData.model;
+//     document.getElementById('year').value = carData.year;
+//     document.getElementById('price').value = carData.price;
+//     document.getElementById('type').value = carData.type;
+//     document.getElementById('persona').value = carData.persona;
+//     document.getElementById('Engine').value = carData.engine;
+//     document.getElementById('horsePower').value = carData.horsepower;
+//     document.getElementById('Doors').value = carData.doors;
+//     document.getElementById('Torque').value = carData.torque;
+//     document.getElementById('topSpeed').value = carData.topspeed;
+//     document.getElementById('acceleration').value = carData.acceleration;
+//     document.getElementById('fuelEfficiency').value = carData.fuelefficiency;
+//     document.getElementById('fuelType').value = carData.fueltype;
+//     document.getElementById('cylinders').value = carData.cylinders;
+//     document.getElementById('transmission').value = carData.transmission;
+//     document.getElementById('drivenWheels').value = carData.drivenwheels;
+//     document.getElementById('marketCategory').value = carData.marketcategory;
+//     document.getElementById('description').value = carData.description;
+//     document.getElementById('personaDescription').value = carData.personadescription;
+// }
+
+
+function populateCarForm(button) {
+    // Get the data attributes from the clicked button
+    const carId = button.getAttribute('data-id');
+    const make = button.getAttribute('data-make');
+    const model = button.getAttribute('data-model');
+    const year = button.getAttribute('data-year');
+    const price = button.getAttribute('data-price');
+    const type = button.getAttribute('data-type');
+    const persona = button.getAttribute('data-persona');
+    const personaDescription = button.getAttribute('data-persona-description');
+    const topSpeed = button.getAttribute('data-top-speed');
+    const acceleration = button.getAttribute('data-acceleration');
+    const marketCategory = button.getAttribute('data-market-category');
+    const horsepower = button.getAttribute('data-horsepower');
+    const doors = button.getAttribute('data-doors');
+    const engine = button.getAttribute('data-engine');
+    const cylinders = button.getAttribute('data-cylinders');
+    const torque = button.getAttribute('data-torque');
+    const fuelEfficiency = button.getAttribute('data-fuel-efficiency');
+    const fuelType = button.getAttribute('data-fuel-type');
+    const transmission = button.getAttribute('data-transmission');
+    const drivenWheels = button.getAttribute('data-driven-wheels');
+    const description = button.getAttribute('data-description');
+
+    // Populate the form fields with the retrieved data
+    document.getElementById('car_id').value = carId;
+    document.getElementById('make').value = make;
+    document.getElementById('model').value = model;
+    document.getElementById('year').value = year;
+    document.getElementById('price').value = price;
+    document.getElementById('type').value = type;
+    document.getElementById('persona').value = persona;
+    document.getElementById('personaDescription').value = personaDescription;
+    document.getElementById('topSpeed').value = topSpeed;
+    document.getElementById('acceleration').value = acceleration;
+    document.getElementById('marketCategory').value = marketCategory;
+    document.getElementById('horsePower').value = horsepower;
+    document.getElementById('doors').value = doors;
+    document.getElementById('engine').value = engine;
+    document.getElementById('cylinders').value = cylinders;
+    document.getElementById('torque').value = torque;
+    document.getElementById('fuelEfficiency').value = fuelEfficiency;
+    document.getElementById('fuelType').value = fuelType;
+    document.getElementById('transmission').value = transmission;
+    document.getElementById('drivenWheels').value = drivenWheels;
+    document.getElementById('description').value = description;
+
+}
