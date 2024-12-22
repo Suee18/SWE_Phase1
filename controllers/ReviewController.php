@@ -1,14 +1,16 @@
 <?php
-include_once __DIR__.'/../models/ReviewsClass.php';
 
-interface ReviewStrategyInterface {
+interface ReviewStrategyInterface
+{
     public function addReview($reviewData);
     public function deleteReview($reviewID);
 }
 
 
-class ReviewDatabaseStrategy implements ReviewStrategyInterface {
-    public function addReview($reviewData) {
+class ReviewDatabaseStrategy implements ReviewStrategyInterface
+{
+    public function addReview($reviewData)
+    {
         $review = new Reviews(
             $reviewData['reviewText'],
             $reviewData['reviewCategory'],
@@ -19,45 +21,49 @@ class ReviewDatabaseStrategy implements ReviewStrategyInterface {
         return $review->addReviewIntoDB($review);
     }
 
-    public function deleteReview($reviewID) {
+    public function deleteReview($reviewID)
+    {
         return Reviews::deleteReviewFromDB($reviewID);
     }
-    public function getCategories(){
+  
+    public function getCategories()
+    {
         return Reviews::getAllCategoriesFromDB();
     }
 }
 
 
-class ReviewController {
+class ReviewController
+{
     private $strategy;
 
-    public function __construct(ReviewStrategyInterface $strategy) {
+    public function __construct(ReviewStrategyInterface $strategy)
+    {
         $this->strategy = $strategy;
     }
 
-    public static function getHighRatedReviews($rating = 3) {
+    public static function getHighRatedReviews($rating = 3)
+    {
         return Reviews::getReviewsByRating($rating);
     }
 
-    public function addReview($reviewData) {
+    public function addReview($reviewData)
+    {
         return $this->strategy->addReview($reviewData);
     }
 
-    public function deleteReview($reviewID) {
+    public function deleteReview($reviewID)
+    {
         return $this->strategy->deleteReview($reviewID);
     }
 
-    public static function getAllCategories() {
+    public static function getAllCategories()
+    {
         return Reviews::getAllCategoriesFromDB();
     }
-    
 
-    public static function getReviews(){
-        return Reviews::getAllReviews();
-        }
-
-        public static function deleteReviewfromDB($reviewID){
-            return Reviews::deleteReviewFromDB($reviewID);
-            }
+    public static function getNumberOfReviews($numberOfReviews)
+    {
+        return Reviews::getLastNumberOfReviews($numberOfReviews);
+    }
 }
-?>
