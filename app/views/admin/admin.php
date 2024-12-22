@@ -39,17 +39,19 @@ $postData = UserController::getPostsCountByMonth();
 $postMonths = $postData['months'];
 $postCounts = $postData['postCounts'];
 
-//Generating Recommendation Statstics 
+//Generating Recommendat// Generating Recommendation Statistics
 $RecommendationData = UserController::getRecommendationCounts();
 
+// Extract categories and recommendations
 $categories = $RecommendationData['categories'];
 $recommendations = $RecommendationData['recommendations'];
 
-//Generating Reviews Statistics
-$reviewData = UserController::getReviewsStatistics();
 
-$months = $reviewData['months'];
-$reviewCounts = $reviewData['reviewCounts'];
+$reviewStatistics = UserController::getReviewsStatistics();
+
+$reviewCategories = $reviewStatistics['reviewCategories'];
+$reviewCategoryCounts = $reviewStatistics['reviewCategoryCounts'];
+
 
 
 
@@ -136,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
 
         case 'update-car':
-            $car_id = $_POST['ID'] ?? '';
+            $car_id = $_POST['car_id'] ?? '';
             $image = $_FILES['image']['name'] ?? '';
             $make = $_POST['make'] ?? '';
             $model = $_POST['model'] ?? '';
@@ -159,6 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $description = $_POST['description'] ?? '';
             $personaDescription = $_POST['personaDescription'] ?? '';
 
+            var_dump($_POST);
             carController::updateCar(
                 $car_id,
                 $image,
@@ -183,6 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $description,
                 $personaDescription
             );
+            break; 
         case 'delete-car':
             $carID = $_POST['carID'];
             carController::deleteCar($carID);
@@ -376,16 +380,16 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
             <div class="small-container">
                 <div id="div1" class="stats-div">
                     <p class="stat-title"> Reviews per Month</p>
-                    <canvas id="reviewsChart" width="400" height="200"></canvas>
+                    <canvas id="reviewsChart"  width="400" height="300"></canvas>
                 </div>
                 <script>
-                    var months = <?php echo json_encode($months); ?>;
-                    var reviewCounts = <?php echo json_encode($reviewCounts); ?>;
+                     var reviewCategories = <?php echo json_encode($reviewCategories); ?>;
+                     var reviewCategoryCounts = <?php echo json_encode($reviewCategoryCounts); ?>;
                 </script>
 
                 <div id="div1" class="stats-div">
                     <p class="stat-title">Logins Per Month </p>
-                    <canvas id="loginsChart" width="400" height="200"></canvas>
+                    <canvas id="loginsChart"  width="400" height="300"></canvas>
                 </div>
                 <script>
                     var months = <?php echo json_encode($months); ?>;
@@ -394,7 +398,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
                 <div id="div1" class="stats-div">
                     <p class="stat-title">Favourited Cars</p class="stat-title">
-                    <canvas id="FavouritesChart" width="400" height="200"></canvas>
+                    <canvas id="FavouritesChart"  width="400" height="300"></canvas>
 
                 </div>
                 <script>
@@ -403,7 +407,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                 </script>
                 <div id="div1" class="stats-div">
                     <p class="stat-title"> Posts Per Month</p>
-                    <canvas id="postsChart" width="400" height="200"></canvas>
+                    <canvas id="postsChart" width="400" height="300"></canvas>
                 </div>
                 <script>
                     var months = <?php echo json_encode($postMonths); ?>;
@@ -411,13 +415,13 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                 </script>
 
 
-                <div id="div2" class="stats-div">
+                <div id="div1" class="stats-div">
                     <p class="stat-title">Recommendation Statistics</p>
-                    <canvas id="RecommendationChart" width="400" height="200"></canvas>
+                    <canvas id="RecommendationChart" width="400" height="300"></canvas>
                 </div>
 
                 <script>
-                    var categories = <?php echo json_encode($categories); ?>;
+                    var recommendationCategories = <?php echo json_encode($categories); ?>;
                     var recommendations = <?php echo json_encode($recommendations); ?>;
                 </script>
 
@@ -425,7 +429,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                 <div id="div1" class="stats-div">
                     <p>
                     <p class="stat-title"> Generated Personas</p>
-                    <canvas id="personasChart" width="400" height="200"></canvas></p>
+                    <canvas id="personasChart"  width="400" height="300"></canvas></p>
                 </div>
 
                 <script>
@@ -639,7 +643,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
                                     <!-- Edit Button -->
                                     <td>
-                                        <button type="button" name="editCar" class="editCar-btn" data-id="<?php echo htmlspecialchars($allCars['ID']); ?>"
+                                        <button type="button" name="editCar" id="editCar-btn" data-id="<?php echo htmlspecialchars($allCars['ID']); ?>"
                                             data-make="<?php echo htmlspecialchars($allCars['make']); ?>"
                                             data-model="<?php echo htmlspecialchars($allCars['model']); ?>"
                                             data-year="<?php echo htmlspecialchars($allCars['year']); ?>"
@@ -732,7 +736,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
                         <div class="carFormInputfields">
 
                             <!-- Hidden Input -->
-                            <input type="hidden" name="action" value="add-car">
+                            <input type="hidden" name="action" id="carFormAction" value="add-car">
                             <input type="hidden" name="car_id" id="car_id" value="">
 
                             <!-- Image -->
@@ -934,7 +938,7 @@ $highlyRecommended = carController::getHighlyRecommendedCars();
 
 
                             <div>
-                                <input type="submit" value="Submit" onclick="setAction('add-car')">
+                                <input type="submit" value="Submit" onclick="setActionCarForm();">
                             </div>
 
                         </div>

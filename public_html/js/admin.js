@@ -144,12 +144,12 @@ var personasChart = new Chart(ctx, {
         responsive: true,
         plugins: {
             legend: {
-                position: 'top', 
+                position: 'top',
             },
             tooltip: {
                 callbacks: {
                     label: function (tooltipItem) {
-                        return tooltipItem.label + ': ' + tooltipItem.raw + ' personas'; 
+                        return tooltipItem.label + ': ' + tooltipItem.raw + ' personas';
                     }
                 }
             }
@@ -224,7 +224,7 @@ var favoritesChart = new Chart(ctx, {
 //Statistics For Posts
 var ctx = document.getElementById('postsChart').getContext('2d');
 var postChart = new Chart(ctx, {
-    type: 'bar',  // Type of chart (bar chart)
+    type: 'line',  // Type of chart (bar chart)
     data: {
         labels: months,  // x-axis labels (months)
         datasets: [{
@@ -249,19 +249,19 @@ var postChart = new Chart(ctx, {
 //Recommendation Statistics
 var ctx = document.getElementById('RecommendationChart').getContext('2d');
 var recommendationChart = new Chart(ctx, {
-    type: 'line', // Bar chart type
+    type: 'bar', // Bar chart type
     data: {
-        labels: categories, // Categories as labels
+        labels: recommendationCategories, // Categories as labels
         datasets: [{
             label: 'Total Recommendations',
             data: recommendations, // Recommendation data
-            borderColor: 'rgb(54, 162, 235)',
-            backgroundColor: 'rgba(54, 162, 235, 0.3)',
+            borderColor: 'rgb(213, 104, 230)',
+            backgroundColor: 'rgba(139, 43, 170, 0.3)',
             fill: true,
             tension: 0.1
         }]
     },
-    options: {
+    options: {  
         responsive: true,
         scales: {
             y: {
@@ -275,6 +275,11 @@ var recommendationChart = new Chart(ctx, {
                 title: {
                     display: true,
                     text: 'Market Categories'
+                },
+                ticks: {
+                    autoSkip: false, // Ensure all categories are shown
+                    maxRotation: 45, // Rotate labels if they overlap
+                    minRotation: 45
                 }
             }
         },
@@ -291,19 +296,20 @@ var recommendationChart = new Chart(ctx, {
             }
         }
     }
+
 });
 
 //Reviews statistics
 var ctx = document.getElementById('reviewsChart').getContext('2d');
 var reviewsChart = new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: {
-        labels: months,
+        labels: reviewCategories,
         datasets: [{
             label: 'Monthly Review Counts',
-            data: reviewCounts,
-            borderColor: 'rgb(75, 192, 192)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            data: reviewCategoryCounts,
+            borderColor: 'rgb(208, 206, 144)',
+            backgroundColor: 'rgba(228, 212, 91, 0.2)',
             fill: true,
             tension: 0.4
         }]
@@ -519,49 +525,14 @@ function validate(form) {
 }
 
 
-// function populateCarForm(id, make, model, year, price) {
-//     // Set form field values
-//     document.getElementById('car_id').value = id;
-//     document.getElementById('make').value = make;
-//     document.getElementById('model').value = model;
-//     document.getElementById('year').value = year;
-//     document.getElementById('price').value = price;
-
-//     // Enable the form fields if necessary
-//     enableFormFields();
-// }
-
-// function populateCarForm(buttonElement) {
-//     // Retrieve car data from the button's data attributes
-//     var carData = buttonElement.dataset;
-
-//     // Fill the form fields with the car data
-//     document.getElementById('car_id').value = carData.id;    
-//     document.getElementById('make').value = carData.make;
-//     document.getElementById('model').value = carData.model;
-//     document.getElementById('year').value = carData.year;
-//     document.getElementById('price').value = carData.price;
-//     document.getElementById('type').value = carData.type;
-//     document.getElementById('persona').value = carData.persona;
-//     document.getElementById('Engine').value = carData.engine;
-//     document.getElementById('horsePower').value = carData.horsepower;
-//     document.getElementById('Doors').value = carData.doors;
-//     document.getElementById('Torque').value = carData.torque;
-//     document.getElementById('topSpeed').value = carData.topspeed;
-//     document.getElementById('acceleration').value = carData.acceleration;
-//     document.getElementById('fuelEfficiency').value = carData.fuelefficiency;
-//     document.getElementById('fuelType').value = carData.fueltype;
-//     document.getElementById('cylinders').value = carData.cylinders;
-//     document.getElementById('transmission').value = carData.transmission;
-//     document.getElementById('drivenWheels').value = carData.drivenwheels;
-//     document.getElementById('marketCategory').value = carData.marketcategory;
-//     document.getElementById('description').value = carData.description;
-//     document.getElementById('personaDescription').value = carData.personadescription;
-// }
-
-
+//Populating Car Form
 function populateCarForm(button) {
-    // Get the data attributes from the clicked button
+
+    const form = document.getElementById('carForm');
+
+    // Set the action to "update-car"
+    document.getElementById('carFormAction').value = 'update-car';
+
     const carId = button.getAttribute('data-id');
     const make = button.getAttribute('data-make');
     const model = button.getAttribute('data-model');
@@ -607,4 +578,15 @@ function populateCarForm(button) {
     document.getElementById('drivenWheels').value = drivenWheels;
     document.getElementById('description').value = description;
 
+}
+
+
+function setActionCarForm() {
+    const actionField = document.getElementById('carFormAction');
+    const carIdField = document.getElementById('car_id');
+
+    // If `car_id` is empty, it's an add action; otherwise, it's an update
+    if (carIdField.value === '') {
+        actionField.value = 'add-car';
+    }
 }

@@ -244,10 +244,10 @@ background-image: url('../media/admin-icon2.png');
 
 }
 
-.viewsChart,
-.plansChart,
-.usersChart,
-.personasChart {
+#reviewsChart,
+#loginsChart,
+#RecommendationChart,
+#personasChart {
     width: 60%;
     height: 60%;
 

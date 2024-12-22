@@ -377,6 +377,32 @@ class Users
         }
     }
 
+
+
+
+    // public static function getLoginStatistics() {
+    //     global $conn;  // Assuming a global database connection
+
+    //     $sql = "SELECT userName, loginCounter FROM user";  // Adjust table/column names as needed
+    //     $result = $conn->query($sql);
+
+    //     // Initialize arrays to store the data
+    //     $userNames = [];
+    //     $loginCounters = [];
+
+    //     if ($result->num_rows > 0) {
+    //         while ($row = $result->fetch_assoc()) {
+    //             $userNames[] = $row['userName'];  // Fetch the user name
+    //             $loginCounters[] = $row['loginCounter'];  // Fetch the login counter value
+    //         }
+    //     } else {
+    //         echo "No login statistics found";
+    //     }
+
+    //     // Return the data as an associative array
+    //     return ['userNames' => $userNames, 'loginCounters' => $loginCounters];
+    // }
+
     //Persona Statistics
     public static function getPersonas()
     {
@@ -406,16 +432,16 @@ class Users
 
         // Query to calculate login statistics grouped by month and year
         $query = "
-            SELECT 
-                DATE_FORMAT(Timestamp, '%b %Y') AS formattedMonth, -- Abbreviated month name (e.g., Jan 2024)
-                SUM(loginCounter) AS totalLogins                  -- Sum of loginCounter for each month
-            FROM 
-                user                                              -- Replace with your actual table name
-            GROUP BY 
-                YEAR(Timestamp), MONTH(Timestamp)                 -- Group by year and month
-            ORDER BY 
-                MIN(Timestamp) ASC                                -- Sort by earliest date in each group
-        ";
+                SELECT 
+                    DATE_FORMAT(Timestamp, '%b %Y') AS formattedMonth, -- Abbreviated month name (e.g., Jan 2024)
+                    SUM(loginCounter) AS totalLogins                  -- Sum of loginCounter for each month
+                FROM 
+                    user                                              -- Replace with your actual table name
+                GROUP BY 
+                    YEAR(Timestamp), MONTH(Timestamp)                 -- Group by year and month
+                ORDER BY 
+                    MIN(Timestamp) ASC                                -- Sort by earliest date in each group
+            ";
 
         // Execute the query
         $queryResult = $conn->query($query);
@@ -443,30 +469,6 @@ class Users
         // Return the arrays with formatted months and total login counts
         return ['formattedMonths' => $formattedMonths, 'totalLoginCounts' => $totalLoginCounts];
     }
-
-
-    // public static function getLoginStatistics() {
-    //     global $conn;  // Assuming a global database connection
-
-    //     $sql = "SELECT userName, loginCounter FROM user";  // Adjust table/column names as needed
-    //     $result = $conn->query($sql);
-
-    //     // Initialize arrays to store the data
-    //     $userNames = [];
-    //     $loginCounters = [];
-
-    //     if ($result->num_rows > 0) {
-    //         while ($row = $result->fetch_assoc()) {
-    //             $userNames[] = $row['userName'];  // Fetch the user name
-    //             $loginCounters[] = $row['loginCounter'];  // Fetch the login counter value
-    //         }
-    //     } else {
-    //         echo "No login statistics found";
-    //     }
-
-    //     // Return the data as an associative array
-    //     return ['userNames' => $userNames, 'loginCounters' => $loginCounters];
-    // }
 
 
     //Favourites Statistics
@@ -545,73 +547,75 @@ class Users
         ];
     }
 
-    //Recommendation Statistics
+    // Recommendation Statistics
     public static function getRecommendationStatistics()
     {
         global $conn;
 
+        // SQL query to get the market categories and their respective recommendation counts
         $sql = "
         SELECT 
-            marketCategory, 
+            marketCategory,                    
             SUM(RecommendationCount) AS totalRecommendations
         FROM 
-            cars 
+            cars                              
         GROUP BY 
-            marketCategory
+            marketCategory                           
         ORDER BY 
-            marketCategory ";
-
+            marketCategory ASC";
 
         $result = $conn->query($sql);
 
-
+        // Arrays to store categories and their total recommendations
         $categories = [];
         $recommendations = [];
 
-
+        // Check if there are any results, then store them in the arrays
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $categories[] = $row['marketCategory'];
                 $recommendations[] = $row['totalRecommendations'];
             }
         } else {
-
+            // If no results, return empty arrays
             return ['categories' => [], 'recommendations' => []];
         }
 
+        // Return categories and their recommendation counts
         return ['categories' => $categories, 'recommendations' => $recommendations];
     }
+
 
     //Reviews Statistics
     public static function getReviewsStatistics()
     {
-
         global $conn;
 
         $sql = "
-                SELECT 
-                    DATE_FORMAT(reviewDate, '%b %Y') AS month, 
-                    COUNT(*) AS reviewCount 
-                FROM 
-                    reviews 
-                GROUP BY 
-                    month 
-                ORDER BY 
-                    MIN(reviewDate) ASC
-            ";
+            SELECT 
+                reviewCategory, 
+                COUNT(*) AS reviewCount 
+            FROM 
+                reviews 
+            GROUP BY 
+                reviewCategory 
+            ORDER BY 
+                reviewCategory ASC
+        ";
 
         $result = $conn->query($sql);
 
-        $months = [];
-        $reviewCounts = [];
+        $reviewCategories = [];
+        $reviewCategoryCounts = [];
 
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $months[] = $row['month'];
-                $reviewCounts[] = $row['reviewCount'];
+                // Use the correct column name from the SQL query
+                $reviewCategories[] = $row['reviewCategory'];
+                $reviewCategoryCounts[] = $row['reviewCount'];
             }
         }
 
-        return ['months' => $months, 'reviewCounts' => $reviewCounts];
+        return ['reviewCategories' => $reviewCategories, 'reviewCategoryCounts' => $reviewCategoryCounts];
     }
 }
