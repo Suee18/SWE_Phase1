@@ -175,6 +175,38 @@ class PlatformModel
         }
     }
 
+    public function getUserPosts($userID)
+    {
+        $query = "
+            SELECT p.postID, p.userID, p.postText, p.postLikes, p.timestamp, u.username
+            FROM post p
+            LEFT JOIN user u ON p.userID = u.ID
+            WHERE p.userID = ?  -- Filter posts by user ID
+            ORDER BY p.timestamp DESC
+        ";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i', $userID);
+        $stmt->execute();
+
+        $posts = [];
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $posts[] = new Post(
+                $row['postID'],
+                $row['userID'],
+                $row['postText'],
+                null,
+                $row['postLikes'],
+                $row['timestamp'],
+                $row['username']
+            );
+        }
+
+        return $posts;
+    }
+
     public function insertLike($postID, $userID)
     {
         $query = "INSERT INTO likes (postID, userID) VALUES (?, ?)";
@@ -211,5 +243,4 @@ class PlatformModel
         $row = $result->fetch_assoc();
         return $row['likesCount'];
     }
-
 }
