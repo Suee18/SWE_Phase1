@@ -68,4 +68,8 @@ class ReviewController
     {
         return Reviews::getLastNumberOfReviews($numberOfReviews);
     }
+
+    public static function getReviews(){
+        return Reviews::getAllReviews();
+    }
 }

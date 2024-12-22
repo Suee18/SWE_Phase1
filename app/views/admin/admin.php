@@ -195,14 +195,9 @@ $users = UserController::viewAllUsers();
    // header('Location: admin.php');
 //}
 
-
-
-
-
-
-
-
 //Reviews Cruds
+
+
 $reviews = ReviewController::getReviews();
 
 if (isset($_POST['deleteReview'])) {
