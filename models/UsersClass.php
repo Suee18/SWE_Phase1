@@ -5,15 +5,15 @@ include_once __DIR__ . '/../controllers/SessionManager.php';
 class Users
 {
     public $id;
-    public $username;
-    public $birthdate;
-    public $gender;
-    public $password;
-    public $email;
-    public $userTypeID;
-    public $loginMethod;
-    public $personaID;
-    public $loginCounter;
+    public $username; //
+    public $birthdate; //
+    public $gender; //
+    public $password; //
+    public $email; //
+    public $userTypeID; 
+    public $loginMethod; //
+    public $personaID; //
+    public $loginCounter; //
     public $timeStamp;
 
     function __construct($username, $birthdate, $gender, $password, $email, $userTypeID, $loginMethod, $personaID, $loginCounter, $timeStamp)
@@ -34,6 +34,112 @@ class Users
     {
         $this->id = $id;
     }
+
+    function getId()
+    {
+        return $this->id;
+    }
+
+    function getUsername()
+    {
+        return $this->username;
+    }
+
+    function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+    function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+    }
+
+    function getGender()
+    {
+        return $this->gender;
+    }
+
+    function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    function getPassword()
+    {
+        return $this->password;
+    }
+
+    function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    function getEmail()
+    {
+        return $this->email;
+    }
+
+    function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    function getUserTypeID()
+    {
+        return $this->userTypeID;
+    }
+
+    function setUserTypeID($userTypeID)
+    {
+        $this->userTypeID = $userTypeID;
+    }
+
+    function getLoginMethod()
+    {
+        return $this->loginMethod;
+    }
+
+    function setLoginMethod($loginMethod)
+    {
+        $this->loginMethod = $loginMethod;
+    }
+
+    function getPersonaID()
+    {
+        return $this->personaID;
+    }
+
+    function setPersonaID($personaID)
+    {
+        $this->personaID = $personaID;
+    }
+
+    function getLoginCounter()
+    {
+        return $this->loginCounter;
+    }
+
+    function setLoginCounter($loginCounter)
+    {
+        $this->loginCounter = $loginCounter;
+    }
+
+    function getTimeStamp()
+    {
+        return $this->timeStamp;
+    }
+
+    function setTimeStamp($timeStamp)
+    {
+        $this->timeStamp = $timeStamp;
+    }
+
 
     // Check if userTypeID exists in the userType table
     private static function isValidUserType($userTypeID)
@@ -379,6 +485,32 @@ class Users
         }
     }
 
+
+
+
+    // public static function getLoginStatistics() {
+    //     global $conn;  // Assuming a global database connection
+
+    //     $sql = "SELECT userName, loginCounter FROM user";  // Adjust table/column names as needed
+    //     $result = $conn->query($sql);
+
+    //     // Initialize arrays to store the data
+    //     $userNames = [];
+    //     $loginCounters = [];
+
+    //     if ($result->num_rows > 0) {
+    //         while ($row = $result->fetch_assoc()) {
+    //             $userNames[] = $row['userName'];  // Fetch the user name
+    //             $loginCounters[] = $row['loginCounter'];  // Fetch the login counter value
+    //         }
+    //     } else {
+    //         echo "No login statistics found";
+    //     }
+
+    //     // Return the data as an associative array
+    //     return ['userNames' => $userNames, 'loginCounters' => $loginCounters];
+    // }
+
     //Persona Statistics
     public static function getPersonas()
     {
@@ -407,69 +539,44 @@ class Users
         global $conn;
 
         // Query to calculate login statistics grouped by month and year
-        $sql = "
-        SELECT 
-            DATE_FORMAT(Timestamp, '%b %Y') AS month,  -- Use abbreviated month name (e.g., Jan 2024)
-            SUM(loginCounter) AS loginCount           -- Sum of loginCounter for each month
-        FROM 
-            user                                       -- Replace with your actual table name
-        GROUP BY 
-        MONTH(Timestamp)         -- Group by year and month
-        ORDER BY 
-            MONTH(Timestamp) ASC;  -- Sort by year and month
-      ";
-
+        $query = "
+                SELECT 
+                    DATE_FORMAT(Timestamp, '%b %Y') AS formattedMonth, -- Abbreviated month name (e.g., Jan 2024)
+                    SUM(loginCounter) AS totalLogins                  -- Sum of loginCounter for each month
+                FROM 
+                    user                                              -- Replace with your actual table name
+                GROUP BY 
+                    YEAR(Timestamp), MONTH(Timestamp)                 -- Group by year and month
+                ORDER BY 
+                    MIN(Timestamp) ASC                                -- Sort by earliest date in each group
+            ";
 
         // Execute the query
-        $result = $conn->query($sql);
+        $queryResult = $conn->query($query);
 
-        // Initialize arrays to store months and login counts
-        $months = [];
-        $logins = [];
+        // Initialize arrays to store formatted months and login counts
+        $formattedMonths = [];
+        $totalLoginCounts = [];
 
-        if ($result) { // Check if query execution was successful
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $months[] = $row['month'];        // Add month to months array
-                    $logins[] = $row['loginCount'];  // Add loginCount to logins array
+        if ($queryResult) { // Check if query execution was successful
+            if ($queryResult->num_rows > 0) {
+                while ($dataRow = $queryResult->fetch_assoc()) {
+                    $formattedMonths[] = $dataRow['formattedMonth'];      // Add formatted month to the array
+                    $totalLoginCounts[] = $dataRow['totalLogins'];        // Add total logins to the array
                 }
             } else {
                 // No data found, return empty arrays
-                return ['months' => [], 'logins' => []];
+                return ['formattedMonths' => [], 'totalLoginCounts' => []];
             }
         } else {
             // If the query fails, log or handle the error (optional)
             error_log("SQL Error: " . $conn->error);
-            return ['months' => [], 'logins' => []];
+            return ['formattedMonths' => [], 'totalLoginCounts' => []];
         }
 
-        // Return the arrays with months and login counts
-        return ['months' => $months, 'logins' => $logins];
+        // Return the arrays with formatted months and total login counts
+        return ['formattedMonths' => $formattedMonths, 'totalLoginCounts' => $totalLoginCounts];
     }
-
-
-    // public static function getLoginStatistics() {
-    //     global $conn;  // Assuming a global database connection
-
-    //     $sql = "SELECT userName, loginCounter FROM user";  // Adjust table/column names as needed
-    //     $result = $conn->query($sql);
-
-    //     // Initialize arrays to store the data
-    //     $userNames = [];
-    //     $loginCounters = [];
-
-    //     if ($result->num_rows > 0) {
-    //         while ($row = $result->fetch_assoc()) {
-    //             $userNames[] = $row['userName'];  // Fetch the user name
-    //             $loginCounters[] = $row['loginCounter'];  // Fetch the login counter value
-    //         }
-    //     } else {
-    //         echo "No login statistics found";
-    //     }
-
-    //     // Return the data as an associative array
-    //     return ['userNames' => $userNames, 'loginCounters' => $loginCounters];
-    // }
 
 
     //Favourites Statistics
@@ -507,7 +614,7 @@ class Users
 
 
     //Posts Statstics
-    public static   function getPostsCountByMonth()
+    public static function getPostsCountByMonth()
     {
 
         global $conn;
@@ -548,65 +655,72 @@ class Users
         ];
     }
 
-    //Recommendation Statistics
+    // Recommendation Statistics
     public static function getRecommendationStatistics()
     {
         global $conn;
 
+        // SQL query to get the market categories and their respective recommendation counts
         $sql = "
         SELECT 
-            marketCategory, 
+            marketCategory,                    
             SUM(RecommendationCount) AS totalRecommendations
         FROM 
-            cars 
+            cars                              
         GROUP BY 
-            marketCategory
+            marketCategory                           
         ORDER BY 
-            marketCategory ";
-
+            marketCategory ASC";
 
         $result = $conn->query($sql);
 
-
+        // Arrays to store categories and their total recommendations
         $categories = [];
         $recommendations = [];
 
-
+        // Check if there are any results, then store them in the arrays
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $categories[] = $row['marketCategory'];
                 $recommendations[] = $row['totalRecommendations'];
             }
         } else {
-
-            return ['categories' => [], 'recommendations' => []];
-        }
-
+        // Return categories and their recommendation counts
         return ['categories' => $categories, 'recommendations' => $recommendations];
+        }
     }
 
 
-    public static function getReviewsStatistics() {}
-
-
-
-
-    //user Persona ID after 
-    public function postGeneratedPersonaId($personaID)
+    //Reviews Statistics
+    public static function getReviewsStatistics()
     {
         global $conn;
 
-        // Update the personaID for this user in the database
-        $sql = "UPDATE user SET personaID = ? WHERE ID = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ii', $personaID, $this->id);
+        $sql = "
+            SELECT 
+                reviewCategory, 
+                COUNT(*) AS reviewCount 
+            FROM 
+                reviews 
+            GROUP BY 
+                reviewCategory 
+            ORDER BY 
+                reviewCategory ASC
+        ";
 
-        if ($stmt->execute()) {
-            $this->personaID = $personaID;  // Update the personaID in the current user object
-            return true;
-        } else {
-            return false;
+        $result = $conn->query($sql);
+
+        $reviewCategories = [];
+        $reviewCategoryCounts = [];
+
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                // Use the correct column name from the SQL query
+                $reviewCategories[] = $row['reviewCategory'];
+                $reviewCategoryCounts[] = $row['reviewCount'];
+            }
         }
-    }
 
+        return ['reviewCategories' => $reviewCategories, 'reviewCategoryCounts' => $reviewCategoryCounts];
+    }
 }
