@@ -49,7 +49,7 @@ foreach ($cars as &$car) {
             const action = checkbox.checked ? 'add' : 'remove';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost/SWE_Phase1/controllers/FavoritesController.php', true);
+            xhr.open('POST', '../../../controllers/FavoritesController.php', true);
 
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function() {

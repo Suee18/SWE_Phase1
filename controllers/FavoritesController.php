@@ -37,12 +37,19 @@ class FavoritesController
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conn = new mysqli('localhost', 'root', '', 'apexnew'); 
+    global $conn;
     $controller = new FavoritesController($conn);
 
-    $userId = $_POST['userId'];
-    $carId = $_POST['carId'];
-    $action = $_POST['action'];
+    // Safely retrieve POST data
+    $userId = isset($_POST['userId']) ? $_POST['userId'] : null;
+    $carId = isset($_POST['carId']) ? $_POST['carId'] : null;
+    $action = isset($_POST['action']) ? $_POST['action'] : null;
+
+    // Validate inputs
+    if (!$userId || !$carId || !$action) {
+        echo json_encode(['success' => false, 'message' => 'Invalid input. Missing required fields.']);
+        exit;
+    }
 
     if ($action === 'add') {
         $response = $controller->addFavorite($carId, $userId);
@@ -50,6 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($action === 'remove') {
         $response = $controller->removeFavorite($carId, $userId);
         echo json_encode(['success' => true, 'message' => $response]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Invalid action.']);
     }
 }
 ?>
