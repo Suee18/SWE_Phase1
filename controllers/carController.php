@@ -207,29 +207,7 @@ class carController
         }
 
         // Proceed to create the car if validation is successful
-        CarsModel::createCar(
-            $carData['image'],
-            $carData['make'],
-            $carData['model'],
-            $carData['year'],
-            $carData['price'],
-            $carData['type'],
-            $carData['persona'],
-            $carData['Engine'],
-            $carData['horsePower'],
-            $carData['Doors'],
-            $carData['Torque'],
-            $carData['topSpeed'],
-            $carData['acceleration'],
-            $carData['fuelEfficiency'],
-            $carData['fuelType'],
-            $carData['cylinders'],
-            $carData['transmission'],
-            $carData['drivenWheels'],
-            $carData['marketCategory'],
-            $carData['description'],
-            $carData['personaDescription'] 
-        );
+        CarsModel::createCar($carData);
     }
 
 
