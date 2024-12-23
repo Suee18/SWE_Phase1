@@ -1,13 +1,13 @@
 <?php
-include_once __DIR__ . '/../models/Favorites.php';
+include_once __DIR__ . '/../models/favoriteClass.php';
 
 class FavoritesController
 {
     private $model;
 
-    public function __construct($db)
+    public function __construct($conn)
     {
-        $this->model = new Favorites($db);
+        $this->model = new FavoritesModel($conn);
     }
 
     public function fetchFavorites($userID)
@@ -17,11 +17,17 @@ class FavoritesController
 
     public function addFavorite($carID, $userID)
     {
-        return $this->model->createFavorite($carID, $userID);
+        $favorite = new Favorites($carID, $userID);
+        return $this->model->createFavorite($favorite);
     }
 
     public function removeFavorite($favoriteID)
     {
         return $this->model->deleteFavorite($favoriteID);
+    }
+
+    public function fetchFavoriteCars($userID)
+    {
+        return $this->model->fetchFavoriteCars($userID);
     }
 }
