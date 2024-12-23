@@ -1,5 +1,5 @@
 <?php
-include_once  __DIR__ . '/../../../models/UsersClass.php';
+include_once __DIR__ . '/../../../models/UsersClass.php';
 require_once __DIR__ . '/../../../middleware/user_auth.php';
 include_once __DIR__ . '/../../config/db_config.php';
 include_once __DIR__ . '/../../../controllers/PlatformController.php';
@@ -35,9 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($updateSuccess) {
     $updatedUser = Users::getUserById($user_id);
     if ($updatedUser) {
-        $_SESSION['user'] = $updatedUser; 
+      $_SESSION['user'] = $updatedUser;
     }
-}
+  }
 
   header('Location: profile.php');
 }
@@ -68,20 +68,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="info-section">
         <h2 class="info-title">Full Name:</h2>
         <!-- <div class="info-content editable" contenteditable="false">John Doe</div> -->
-        <input type="text" name="fullName" value="<?php echo htmlspecialchars($_SESSION['user']->username); ?>" class="info-content" readonly disbaled>
+        <input type="text" name="fullName" value="<?php echo htmlspecialchars($_SESSION['user']->username); ?>"
+          class="info-content" readonly >
         <span class="material-symbols-outlined edit-icon" onclick="editInfo(this)">edit</span>
       </div>
       <div class="info-section">
         <h2 class="info-title">Email:</h2>
         <!-- <div class="info-content editable" contenteditable="false">john.doe@example.com</div> -->
-        <input type="email" name="email" value="<?php echo htmlspecialchars($_SESSION['user']->email); ?>" class="info-content" readonly disbaled>
+        <input type="email" name="email" value="<?php echo htmlspecialchars($_SESSION['user']->email); ?>"
+          class="info-content" readonly >
         <span class="material-symbols-outlined edit-icon" onclick="editInfo(this)">edit</span>
       </div>
 
       <div class="info-section">
         <h2 class="info-title">Password:</h2>
         <!-- <div class="info-content editable" contenteditable="false">********</div> -->
-        <input type="password" name="password" value="<?php echo htmlspecialchars($_SESSION['user']->password); ?>" class="info-content" readonly disbaled>
+        <input type="password" name="password" value="<?php echo htmlspecialchars($_SESSION['user']->password); ?>"
+          class="info-content" readonly >
         <span class="material-symbols-outlined edit-icon" onclick="editInfo(this)">edit</span>
       </div>
 
@@ -103,23 +106,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Check The Latest News!</h2>
     </div>
 
-  <div class="news-header">
-    <h2>Check Out Your Posts!</h2>
-  </div>
-  <div class="rightSidebar">
-    <div class="news-slider">
-      <div class="news-container">
-        <?php foreach ($userPosts as $post): ?>
-          <div class="news-card">
-            <div class="header">
-            <img src="https://avatar.vercel.sh/jill" alt="Jill" class="avatar">
-              <p class="name"><?= $post->username ?></p>
-            </div>
-            <p class="news"><?= $post->postText ?></p>
-          </div>
-        <?php endforeach; ?>
-      </div>
+    <div class="news-header">
+      <h2>Check Out Your Posts!</h2>
     </div>
+    <div class="rightSidebar">
+      <div class="news-slider">
+        <div class="news-container">
+          <?php foreach ($userPosts as $post): ?>
+            <div class="news-card">
+              <div class="header">
+                <img src="https://avatar.vercel.sh/jill" alt="Jill" class="avatar">
+                <p class="name"><?= $post->username ?></p>
+              </div>
+              <p class="news"><?= $post->postText ?></p>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
 </body>
 
 </html>

@@ -1,33 +1,33 @@
 //****LATEST NEWS JS*****
 document.addEventListener("DOMContentLoaded", function () {
-  const reviews = document.querySelector(".news-container");
-  const reviewCards = reviews.innerHTML;
-  reviews.innerHTML += reviewCards;
-  let position = 0;
-  let isPaused = false;
-  function moveMarquee() {
-    if (!isPaused) {
-      position -= 0.4;
+    const reviews = document.querySelector(".news-container");
+    const reviewCards = reviews.innerHTML;
+    reviews.innerHTML += reviewCards;
+    let position = 0;
+    let isPaused = false;
+    function moveMarquee() {
+        if (!isPaused) {
+            position -= 0.4;
+        }
+
+        if (Math.abs(position) >= reviews.scrollHeight / 2) {
+            position = 0;
+        }
+
+        reviews.style.transform = `translateY(${position}px)`;
+
+        requestAnimationFrame(moveMarquee);
     }
 
-    if (Math.abs(position) >= reviews.scrollHeight / 2) {
-      position = 0;
-    }
+    reviews.addEventListener("mouseover", () => {
+        isPaused = true;
+    });
 
-    reviews.style.transform = `translateY(${position}px)`;
+    reviews.addEventListener("mouseout", () => {
+        isPaused = false;
+    });
 
-    requestAnimationFrame(moveMarquee);
-  }
-
-  reviews.addEventListener("mouseover", () => {
-    isPaused = true;
-  });
-
-  reviews.addEventListener("mouseout", () => {
-    isPaused = false;
-  });
-
-  moveMarquee();
+    moveMarquee();
 });
 
 //********Edit button js*******
@@ -46,24 +46,21 @@ document.addEventListener("DOMContentLoaded", function () {
 // }
 
 function editInfo(icon) {
-  // Select the input field preceding the icon
-  const inputField = icon.previousElementSibling;
+    // Select the input field preceding the icon
+    const inputField = icon.previousElementSibling;
 
-  if (inputField.hasAttribute("readonly")) {
-    // Make the input editable
-    inputField.removeAttribute("readonly");
-    inputField.focus(); // Focus on the input field
-    icon.textContent = "check"; // Change the icon to indicate saving
-  } else {
-    // Lock the input again
-    inputField.setAttribute("readonly", true);
-    icon.textContent = "edit"; // Revert the icon back to edit
-    inputField.form.submit();
-  }
-
+    if (inputField.hasAttribute("readonly")) {
+        // Make the input editable
+        inputField.removeAttribute("readonly");
+        inputField.focus(); // Focus on the input field
+        icon.textContent = "check"; // Change the icon to indicate saving
+    } else {
+        // Lock the input again
+        inputField.setAttribute("readonly", true);
+        icon.textContent = "edit"; // Revert the icon back to edit
+        inputField.form.submit();
+    }
 }
-
-
 
 // function editInfo(icon) {
 //   const inputField = icon.previousElementSibling; // Get the input field before the span element
@@ -92,4 +89,3 @@ function editInfo(icon) {
 //       icon.textContent = "edit";
 //   }
 // }
-
