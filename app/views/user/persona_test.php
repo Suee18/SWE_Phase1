@@ -80,7 +80,7 @@ try {
 
                 <!-- Final Slide -->
                 <div class="swiper-slide last-slide">
-                    <button type="submit" class="mybutton">Find My Persona no bug button</button>
+                    <button type="submit" class="submit-button">Find My Persona</button>
                 </div>
 
                 
