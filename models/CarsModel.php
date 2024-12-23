@@ -11,11 +11,13 @@ class CarsModel
     }
 
     // Create a new car entry
-    public function createCar($carData)
+    public static function createCar($carData)
     {
+        global $conn;
+
         $query = "INSERT INTO cars (image, make, model, year, price, type, persona, Engine, horsePower, Doors, Torque, topSpeed, acceleration, fuelEfficiency, fuelType, cylinders, transmission, drivenWheels, marketCategory, description) 
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $this->db->prepare($query);
+        $stmt = $conn->prepare($query);
 
         $stmt->bind_param(
             "ssssdsdssddsdsdssdss",
@@ -282,14 +284,24 @@ class CarsModel
     {
         global $conn;
 
-        $sql = "SELECT * FROM cars";
+        // Updated SQL query to join cars with persona and fetch personaDescription
+        $sql = "
+        SELECT 
+            cars.*, 
+            persona.personaDescription 
+        FROM 
+            cars 
+        LEFT JOIN 
+            persona 
+        ON 
+            cars.persona = persona.personaID
+    ";
+
         $result = mysqli_query($conn, $sql);
 
         if (!$result) {
-
-            die("Error fetching users: " . mysqli_error($conn));
+            die("Error fetching cars: " . mysqli_error($conn));
         }
-
 
         $cars = [];
         while ($row = mysqli_fetch_assoc($result)) {
@@ -298,4 +310,5 @@ class CarsModel
 
         return $cars;
     }
+
 }
