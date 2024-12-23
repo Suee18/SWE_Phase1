@@ -47,7 +47,6 @@ $RecommendationData = UserController::getRecommendationCounts();
 $categories = $RecommendationData['categories'];
 $recommendations = $RecommendationData['recommendations'];
 
-
 $reviewStatistics = UserController::getReviewsStatistics();
 
 $reviewCategories = $reviewStatistics['reviewCategories'];

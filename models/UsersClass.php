@@ -10,7 +10,7 @@ class Users
     public $gender; //
     public $password; //
     public $email; //
-    public $userTypeID; 
+    public $userTypeID;
     public $loginMethod; //
     public $personaID; //
     public $loginCounter; //
@@ -359,7 +359,7 @@ class Users
             return "User does not exist.";
         }
 
-        
+
     }
 
     static function signUpUser($username, $birthdate, $gender, $password, $email, $userType, $timeStamp, $loginMethod)
@@ -685,9 +685,10 @@ class Users
                 $recommendations[] = $row['totalRecommendations'];
             }
         } else {
-        // Return categories and their recommendation counts
-        return ['categories' => $categories, 'recommendations' => $recommendations];
+            // Return categories and their recommendation counts
+            return ['categories' => $categories, 'recommendations' => $recommendations];
         }
+        return ['categories' => $categories, 'recommendations' => $recommendations];
     }
 
 

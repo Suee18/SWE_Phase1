@@ -53,7 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['loginSubmit'])) {
     } elseif ($user instanceof Users) {
         SessionManager::setSessionUser($user);
 
-        $redirect_url = $user->userTypeID === 2 ? "../admin/admin.php" : "../../../public_html/index.php";
+
+        var_dump($user);
+        $redirect_url = $user->userTypeID === '2' ? "../admin/admin.php" : "../../../public_html/index.php";
         header("Location: $redirect_url");
         exit();
     }
