@@ -49,7 +49,7 @@ foreach ($cars as &$car) {
             const action = checkbox.checked ? 'add' : 'remove';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost/SWE_Phase1/controllers/FavoritesController.php', true);
+            xhr.open('POST', '../../../controllers/FavoritesController.php', true);
 
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function() {
@@ -92,7 +92,8 @@ foreach ($cars as &$car) {
                             alt="<?php echo $car['make'] . ' ' . $car['model']; ?>">
                     </div>
 
-                    <?php if ($user): ?>
+                    <?php 
+                    if ($user): ?>
                         <div class="con-like">
                             <input class="like" type="checkbox" title="like" onchange="toggleFavorite(this, <?php echo $car['ID']; ?>)"
                                 <?php echo $car['isFavorite'] ? 'checked' : ''; ?>

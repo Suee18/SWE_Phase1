@@ -325,8 +325,27 @@ class Users
 
         // Ensure cascading deletes or handle userPages deletion (if needed)
         $user_id = mysqli_real_escape_string($conn, htmlspecialchars($user_id));
-        $sql = "DELETE FROM User WHERE ID='$user_id'";
-        return mysqli_query($conn, $sql);
+
+        // Delete from related tables first
+        $sql_comments = "DELETE FROM comments WHERE userID='$user_id'";
+        $sql_favorites = "DELETE FROM favorites WHERE userID='$user_id'";
+        $sql_likes = "DELETE FROM likes WHERE userID='$user_id'";
+        $sql_post = "DELETE FROM post WHERE userID='$user_id'";
+        $sql_reviews = "DELETE FROM reviews WHERE userID='$user_id'";
+
+        // Execute all deletions
+        mysqli_query($conn, $sql_comments);
+        mysqli_query($conn, $sql_favorites);
+        mysqli_query($conn, $sql_likes);
+        mysqli_query($conn, $sql_post);
+        mysqli_query($conn, $sql_reviews);
+
+        // Finally, delete the user from the User table
+        $sql_user = "DELETE FROM User WHERE ID='$user_id'";
+
+        // Execute user deletion
+        return mysqli_query($conn, $sql_user);
+
     }
 
 

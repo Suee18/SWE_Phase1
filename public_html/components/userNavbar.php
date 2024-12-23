@@ -125,9 +125,7 @@ include_once __DIR__ . '/../../controllers/SessionManager.php';
 
             const confirmBtn = document.getElementById("confirm");
             confirmBtn.addEventListener("click", function() {
-                alert("Account deleted!");
-                warningPopup.classList.add("hidden");
-                overlay.classList.remove("show");
+                window.location.href = '../../../helpers/deleteAccount.php';
             });
         });
     </script>

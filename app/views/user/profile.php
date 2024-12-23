@@ -101,11 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- </div> -->
 
-
-    <div class="news-header">
-      <h2>Check The Latest News!</h2>
-    </div>
-
     <div class="news-header">
       <h2>Check Out Your Posts!</h2>
     </div>
