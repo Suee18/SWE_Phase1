@@ -342,7 +342,7 @@ foreach ($cars as &$car) {
                             '<div class="swiper-slide">
                                         <div class="review-card">
                                             <h4 class="reviewUserName">' . 'Anonymous' . '</h4>
-                                            <p class="review-paragraph">"' . htmlspecialchars($review->reviewText) . '"</p>
+                                            <p class="review-paragraph">"' . htmlspecialchars_decode($review->reviewText, ENT_QUOTES) . '"</p>
                                             <div class="review-rating">' . $stars . '</div>
                                         </div>
                                 </div>';
@@ -424,6 +424,7 @@ foreach ($cars as &$car) {
                     <input type="hidden" id="reviewCategory" name="reviewCategory">
                     <textarea id="reviewText" placeholder="Write your review here..." name="reviewText"
                         required></textarea>
+                        
                     <div id="starRatingContainer" style="display: none;"></div>
                     <input type="hidden" id="starRating" name="starRating">
                     <input class="submitBtn" type="submit" id="submitReview" name="Submit">
