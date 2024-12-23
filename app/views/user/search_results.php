@@ -92,7 +92,8 @@ foreach ($cars as &$car) {
                             alt="<?php echo $car['make'] . ' ' . $car['model']; ?>">
                     </div>
 
-                    <?php if ($user): ?>
+                    <?php 
+                    if ($user): ?>
                         <div class="con-like">
                             <input class="like" type="checkbox" title="like" onchange="toggleFavorite(this, <?php echo $car['ID']; ?>)"
                                 <?php echo $car['isFavorite'] ? 'checked' : ''; ?>
