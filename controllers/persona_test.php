@@ -407,12 +407,12 @@ class PersonasController
                             'scores' => ['Tech Geek' => 5]
                         ],
                         'B' => [
-                            'text' => 'I prefer tech that enhances performance; advanced driving modes and precision handling systems.',
+                            'text' => 'performance tech; advanced driving modes, precision handling systems.',
                             'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/balance-icon.png',
                             'scores' => ['Performance Enthusiast'=>5]
                         ],
                         'C' => [
-                            'text' => 'only if it helps keep my family safe and comfortable; rearview cameras and entertainment systems',
+                            'text' => 'family related; rearview cameras and entertainment systems',
                             'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/performance-icon.png',
                             'scores' => ['Family First'=>5]
     
@@ -439,7 +439,7 @@ class PersonasController
                             'scores' => ['Performance Enthusiast'=>5]
                         ],
                         'B' => [
-                            'text' => '4-5, fit the whole family comfortably.',
+                            'text' => '4-5.',
                             'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/group-of-people-icon.png',
                             'scores' => ['Family First'=>5]
                         ],
@@ -526,7 +526,7 @@ class PersonasController
     
                     'answers' => [
                         'A' => [
-                            'text' => 'premium materials, massage seats, and advanced climate control for ultimate comfort.',
+                            'text' => 'premium materials, massage seats, climate control for ultimate luxury.',
                             'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/city-icon.png',
                             'scores' => ['Luxury Seeker' => 5]
                         ],
@@ -541,7 +541,7 @@ class PersonasController
                             'scores' => ['Eco Warrior' => 5]
                         ],
                         'D' => [
-                            'text' => ' fully integrated AI assistant, autonomous driving capabilities, and the latest connectivity features for a smart driving experience',
+                            'text' => 'AI assistant, autonomous driving, and connectivity features for smart driving experience',
                             'icon' => '../../../public_html/media/Persona_Test_Images/Test_Images/icons/scenic-icon.png',
                             'scores' => ['Tech Geek' => 5]
                         ],
@@ -693,7 +693,7 @@ class PersonasController
             ];
         }
 
-        
+
     // Calculate persona weights based on responses
     public function calculatePersonas($responses)
     {
