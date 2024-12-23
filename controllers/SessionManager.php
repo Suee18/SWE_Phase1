@@ -97,14 +97,6 @@ class SessionManager
         $result = mysqli_query($conn, $sql);
 
         return $result;
-
-        // Specify the path to the debug file
-        $filePath = __DIR__ . '/../debug/debug_sessionManager.txt';
-
-        // Write the data to the file (APPEND mode to keep adding to the file)
-
-        file_put_contents($filePath, print_r($_SESSION, true));  // Check if session data is available
-
     }
 
 }

@@ -43,8 +43,8 @@ class CarsModel
 
         return $stmt->execute();
     }
-  
-//   public static function createCar(
+
+    //   public static function createCar(
 //             $image,
 //             $make,
 //             $model,
@@ -69,7 +69,7 @@ class CarsModel
 //         ) {
 //             global $conn;
 
-//             $image = mysqli_real_escape_string($conn, $image);
+    //             $image = mysqli_real_escape_string($conn, $image);
 //             $make = mysqli_real_escape_string($conn, $make);
 //             $model = mysqli_real_escape_string($conn, $model);
 //             $year = mysqli_real_escape_string($conn, $year);
@@ -91,7 +91,7 @@ class CarsModel
 //             $description = mysqli_real_escape_string($conn, $description);
 //             $personaDescription = mysqli_real_escape_string($conn, $personaDescription);
 
-//             $sql = "INSERT INTO `cars` (`image`, `make`, `model`, `year`, `price`, `type`, `persona`, 
+    //             $sql = "INSERT INTO `cars` (`image`, `make`, `model`, `year`, `price`, `type`, `persona`, 
 //                                     `engine`, `horsePower`, `doors`, `torque`, `topSpeed`, `acceleration`, 
 //                                     `fuelEfficiency`, `fuelType`, `cylinders`, `transmission`, `drivenWheels`, 
 //                                     `marketCategory`, `description`, 
@@ -102,69 +102,69 @@ class CarsModel
 //                         '$marketCategory', '$description',  
 //                         '$personaDescription')";
 
-//             // Execute the query and return the result
+    //             // Execute the query and return the result
 //             $result = mysqli_query($conn, $sql);
 
-//             return $result;
+    //             return $result;
 //         }
-  
-  
-  public static function updateCar(
-            $car_id,
-            $image,
-            $make,
-            $model,
-            $year,
-            $price,
-            $type,
-            $persona,
-            $engine,
-            $horsePower,
-            $doors,
-            $torque,
-            $topSpeed,
-            $acceleration,
-            $fuelEfficiency,
-            $fuelType,
-            $cylinders,
-            $transmission,
-            $drivenWheels,
-            $marketCategory,
-            $description,
-            $personaDescription
-        ) {
-            global $conn;
-
-            $car_id = mysqli_real_escape_string($conn, htmlspecialchars($car_id));
-            $image = mysqli_real_escape_string($conn, htmlspecialchars($image));
-            $make = mysqli_real_escape_string($conn, htmlspecialchars($make));
-            $model = mysqli_real_escape_string($conn, htmlspecialchars($model));
-            $year = mysqli_real_escape_string($conn, htmlspecialchars($year));
-            $price = mysqli_real_escape_string($conn, htmlspecialchars($price));
-            $type = mysqli_real_escape_string($conn, htmlspecialchars($type));
-            $persona = mysqli_real_escape_string($conn, htmlspecialchars($persona));
-            $engine = mysqli_real_escape_string($conn, htmlspecialchars($engine));
-            $horsePower = mysqli_real_escape_string($conn, htmlspecialchars($horsePower));
-            $doors = mysqli_real_escape_string($conn, htmlspecialchars($doors));
-            $torque = mysqli_real_escape_string($conn, htmlspecialchars($torque));
-            $topSpeed = mysqli_real_escape_string($conn, htmlspecialchars($topSpeed));
-            $acceleration = mysqli_real_escape_string($conn, htmlspecialchars($acceleration));
-            $fuelEfficiency = mysqli_real_escape_string($conn, htmlspecialchars($fuelEfficiency));
-            $fuelType = mysqli_real_escape_string($conn, htmlspecialchars($fuelType));
-            $cylinders = mysqli_real_escape_string($conn, htmlspecialchars($cylinders));
-            $transmission = mysqli_real_escape_string($conn, htmlspecialchars($transmission));
-            $drivenWheels = mysqli_real_escape_string($conn, htmlspecialchars($drivenWheels));
-            $marketCategory = mysqli_real_escape_string($conn, htmlspecialchars($marketCategory));
-            $description = mysqli_real_escape_string($conn, htmlspecialchars($description));
-            $personaDescription = mysqli_real_escape_string($conn, htmlspecialchars($personaDescription));
 
 
-            $sql = "UPDATE Cars 
+    public static function updateCar(
+        $car_id,
+        $image,
+        $make,
+        $model,
+        $year,
+        $price,
+        $type,
+        $persona,
+        $engine,
+        $horsePower,
+        $doors,
+        $torque,
+        $topSpeed,
+        $acceleration,
+        $fuelEfficiency,
+        $fuelType,
+        $cylinders,
+        $transmission,
+        $drivenWheels,
+        $marketCategory,
+        $description,
+        $personaDescription
+    ) {
+        global $conn;
+
+        $car_id = mysqli_real_escape_string($conn, htmlspecialchars($car_id));
+        $image = mysqli_real_escape_string($conn, htmlspecialchars($image));
+        $make = mysqli_real_escape_string($conn, htmlspecialchars($make));
+        $model = mysqli_real_escape_string($conn, htmlspecialchars($model));
+        $year = mysqli_real_escape_string($conn, htmlspecialchars($year));
+        $price = mysqli_real_escape_string($conn, htmlspecialchars($price));
+        $type = mysqli_real_escape_string($conn, htmlspecialchars($type));
+        $persona = mysqli_real_escape_string($conn, htmlspecialchars($persona));
+        $engine = mysqli_real_escape_string($conn, htmlspecialchars($engine));
+        $horsePower = mysqli_real_escape_string($conn, htmlspecialchars($horsePower));
+        $doors = mysqli_real_escape_string($conn, htmlspecialchars($doors));
+        $torque = mysqli_real_escape_string($conn, htmlspecialchars($torque));
+        $topSpeed = mysqli_real_escape_string($conn, htmlspecialchars($topSpeed));
+        $acceleration = mysqli_real_escape_string($conn, htmlspecialchars($acceleration));
+        $fuelEfficiency = mysqli_real_escape_string($conn, htmlspecialchars($fuelEfficiency));
+        $fuelType = mysqli_real_escape_string($conn, htmlspecialchars($fuelType));
+        $cylinders = mysqli_real_escape_string($conn, htmlspecialchars($cylinders));
+        $transmission = mysqli_real_escape_string($conn, htmlspecialchars($transmission));
+        $drivenWheels = mysqli_real_escape_string($conn, htmlspecialchars($drivenWheels));
+        $marketCategory = mysqli_real_escape_string($conn, htmlspecialchars($marketCategory));
+        $description = mysqli_real_escape_string($conn, htmlspecialchars($description));
+        $personaDescription = mysqli_real_escape_string($conn, htmlspecialchars($personaDescription));
+
+
+        $sql = "UPDATE Cars 
             SET image='$image', make='$make', model='$model', year='$year', price='$price', type='$type', persona='$persona', engine='$engine', horsePower='$horsePower', doors='$doors', torque='$torque', topSpeed='$topSpeed', acceleration='$acceleration', fuelEfficiency='$fuelEfficiency', fuelType='$fuelType', cylinders='$cylinders', transmission='$transmission', drivenWheels='$drivenWheels', marketCategory='$marketCategory', description='$description',  personaDescription='$personaDescription' 
             WHERE ID='$car_id'";
 
-            return mysqli_query($conn, $sql);
-        }
+        return mysqli_query($conn, $sql);
+    }
 
     // Read car data (single or all cars)
     public function getCars($id = null)
@@ -202,7 +202,12 @@ class CarsModel
     // Get cars by persona
     public function getCarsByPersona($personaNumber)
     {
-        $query = "SELECT * FROM cars WHERE persona = ?";
+        $query = "SELECT cars.*, persona.personaDescription 
+              FROM cars 
+              JOIN persona 
+              ON cars.persona = persona.personaID 
+              WHERE persona.personaID = ?;";
+
         $stmt = $this->db->prepare($query);
 
         if ($stmt === false) {
@@ -210,6 +215,7 @@ class CarsModel
             die("Error in prepare() statement: " . $this->db->error);
         }
 
+        // Bind the single parameter
         $stmt->bind_param("i", $personaNumber);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -222,73 +228,74 @@ class CarsModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    
-// Increment RecommendationCount for a car
-public function incrementRecommendationCount($carId)
-{
-    $query = "UPDATE cars SET RecommendationCount = RecommendationCount + 1 WHERE ID = ?";
-    $stmt = $this->db->prepare($query);
 
-    if ($stmt === false) {
-        die("Error in prepare() statement: " . $this->db->error);
+
+    // Increment RecommendationCount for a car
+    public function incrementRecommendationCount($carId)
+    {
+        $query = "UPDATE cars SET RecommendationCount = RecommendationCount + 1 WHERE ID = ?";
+        $stmt = $this->db->prepare($query);
+
+        if ($stmt === false) {
+            die("Error in prepare() statement: " . $this->db->error);
+        }
+
+        $stmt->bind_param("i", $carId);
+        return $stmt->execute();
     }
 
-    $stmt->bind_param("i", $carId);
-    return $stmt->execute();
-}
 
-    
-   
-  
-  public static function getHighestRecommendedCars()
-        {
-            global $conn;
-            $sql = "SELECT * FROM cars ORDER BY RecommendationCount DESC LIMIT 11";
-            $result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
 
-                $cars = [];
-                while ($row = $result->fetch_assoc()) {
-                    $cars[] = $row;
-                }
-            } else {
-                $cars = [];
-            }
-            return $cars;
-        }
-  
-  public static function deleteCar($car_id)
-        {
-            global $conn;
+    public static function getHighestRecommendedCars()
+    {
+        global $conn;
+        $sql = "SELECT * FROM cars ORDER BY RecommendationCount DESC LIMIT 11";
+        $result = $conn->query($sql);
 
-            $sql = "DELETE FROM cars WHERE ID = '$car_id'";
-
-            if (mysqli_query($conn, $sql)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-  
-  public static function viewAllCars()
-        {
-            global $conn;
-
-            $sql = "SELECT * FROM cars";
-            $result = mysqli_query($conn, $sql);
-
-            if (!$result) {
-
-                die("Error fetching users: " . mysqli_error($conn));
-            }
-
+        if ($result->num_rows > 0) {
 
             $cars = [];
-            while ($row = mysqli_fetch_assoc($result)) {
+            while ($row = $result->fetch_assoc()) {
                 $cars[] = $row;
             }
-
-            return $cars;
+        } else {
+            $cars = [];
         }
+        return $cars;
+    }
+
+    public static function deleteCar($car_id)
+    {
+        global $conn;
+
+        $sql = "DELETE FROM cars WHERE ID = '$car_id'";
+
+        if (mysqli_query($conn, $sql)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function viewAllCars()
+    {
+        global $conn;
+
+        $sql = "SELECT * FROM cars";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+
+            die("Error fetching users: " . mysqli_error($conn));
+        }
+
+
+        $cars = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $cars[] = $row;
+        }
+
+        return $cars;
+    }
 }
