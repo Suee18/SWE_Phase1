@@ -27,27 +27,28 @@ class FavoritesModel
         $this->db = $conn;
     }
 
-    public function createFavorite(Favorites $favorite)
+    public function createFavorite($carID, $userID)
     {
         $query = "INSERT INTO favorites (carID, userID) VALUES (?, ?)";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param("ii", $favorite->carID, $favorite->userID);
-        $stmt->execute();
+        $stmt->bind_param("ii", $carID, $userID);
+        if ($stmt->execute()) {
+            return "Favorite added successfully!";
+        } else {
+            return "Failed to add favorite.";
+        }
     }
-
-    public function deleteFavorite($favoriteID)
+    public function deleteFavorite($carID, $userID)
     {
-        $query = "DELETE FROM favorites WHERE favoriteID = ?";
+        $query = "DELETE FROM favorites WHERE carID = ? AND userID = ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam('i', $favoriteID);
-
+        $stmt->bind_param("ii", $carID, $userID);
         if ($stmt->execute()) {
             return "Favorite deleted successfully!";
         } else {
             return "Failed to delete favorite.";
         }
     }
-
     public function getFavoritesByUser($userID)
     {
         $query = "SELECT * FROM favorites WHERE userID = ?";
@@ -94,5 +95,13 @@ class FavoritesModel
         }
         $cars = $result->fetch_all(MYSQLI_ASSOC);
         return $cars;
+    }
+
+    public function checkIfFavoriteExists($carID, $userID) {
+        $stmt = $this->db->prepare("SELECT 1 FROM favorites WHERE carID = ? AND userID = ?");
+        $stmt->bind_param("ii", $carID, $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0;
     }
 }

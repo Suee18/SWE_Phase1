@@ -17,17 +17,39 @@ class FavoritesController
 
     public function addFavorite($carID, $userID)
     {
-        $favorite = new Favorites($carID, $userID);
-        return $this->model->createFavorite($favorite);
+        return $this->model->createFavorite($carID, $userID);
     }
 
-    public function removeFavorite($favoriteID)
+    public function removeFavorite($carID, $userID)
     {
-        return $this->model->deleteFavorite($favoriteID);
+        return $this->model->deleteFavorite($carID, $userID);
     }
 
     public function fetchFavoriteCars($userID)
     {
         return $this->model->fetchFavoriteCars($userID);
     }
+
+    public function checkIfFavoriteExists($carID, $userID)
+    {
+        return $this->model->checkIfFavoriteExists($carID, $userID);
+    }
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $conn = new mysqli('localhost', 'root', '', 'apexnew'); 
+    $controller = new FavoritesController($conn);
+
+    $userId = $_POST['userId'];
+    $carId = $_POST['carId'];
+    $action = $_POST['action'];
+
+    if ($action === 'add') {
+        $response = $controller->addFavorite($carId, $userId);
+        echo json_encode(['success' => true, 'message' => $response]);
+    } elseif ($action === 'remove') {
+        $response = $controller->removeFavorite($carId, $userId);
+        echo json_encode(['success' => true, 'message' => $response]);
+    }
+}
+?>
